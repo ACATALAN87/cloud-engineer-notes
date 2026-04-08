@@ -1,17 +1,53 @@
 ---
-
+import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout
+  title="Ángel | Cloud Engineer"
+  description="Notas prácticas sobre cloud, Azure y automatización."
+>
+  <section class="hero">
+    <div>
+      <div class="badge">Web estática + Markdown + GitHub Pages</div>
+      <h1>Notas prácticas sobre cloud, Azure y automatización.</h1>
+      <p class="lead">
+        Web personal orientada a posicionarme como Cloud Engineer: análisis de novedades,
+        laboratorios reproducibles y contenido técnico con foco en ejecución real.
+      </p>
+
+      <div class="button-row">
+        <a class="btn btn-primary" href="/blog">Ver artículos</a>
+        <a class="btn btn-secondary" href="/labs">Explorar labs</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <p class="muted">Cloud Briefing</p>
+      <h3>Resumen técnico con criterio, no solo titulares</h3>
+      <p class="muted">
+        Esta web mezclará contenido propio con briefings cloud revisados manualmente,
+        para convertir novedades en análisis útil para ingeniería.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Qué encontrarás aquí</h2>
+    <div class="grid grid-3">
+      <article class="card">
+        <h3>Blog técnico</h3>
+        <p class="muted">Artículos sobre Azure, Terraform, AKS, identidad, observabilidad y operaciones cloud.</p>
+      </article>
+
+      <article class="card">
+        <h3>Labs</h3>
+        <p class="muted">Proyectos reproducibles, decisiones de arquitectura, costes y lecciones aprendidas.</p>
+      </article>
+
+      <article class="card">
+        <h3>Briefings</h3>
+        <p class="muted">Resúmenes de novedades cloud con foco en impacto operativo y criterio técnico.</p>
+      </article>
+    </div>
+  </section>
+</BaseLayout>
