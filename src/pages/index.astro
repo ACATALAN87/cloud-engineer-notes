@@ -1,5 +1,14 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+const posts = (await getCollection("blog", ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 3);
+
+const labs = (await getCollection("labs", ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 2);
 ---
 
 <BaseLayout
@@ -8,26 +17,56 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 >
   <section class="hero">
     <div>
-      <div class="badge">Web estática + Markdown + GitHub Pages</div>
-      <h1>Notas prácticas sobre cloud, Azure y automatización.</h1>
+      <div class="badge">Cloud Engineer · Azure · Automatización</div>
+      <h1>Notas prácticas sobre cloud, Azure y ejecución real.</h1>
       <p class="lead">
-        Web personal orientada a posicionarme como Cloud Engineer: análisis de novedades,
-        laboratorios reproducibles y contenido técnico con foco en ejecución real.
+        Web personal técnica orientada a documentar aprendizaje, compartir análisis
+        útiles y enseñar laboratorios reproducibles sobre cloud engineering.
       </p>
 
       <div class="button-row">
         <a class="btn btn-primary" href="/blog">Ver artículos</a>
-        <a class="btn btn-secondary" href="/labs">Explorar labs</a>
+        <a class="btn btn-secondary" href="/labs">Ver labs</a>
       </div>
     </div>
 
     <div class="card">
       <p class="muted">Cloud Briefing</p>
-      <h3>Resumen técnico con criterio, no solo titulares</h3>
+      <h3>Contenido técnico con criterio</h3>
       <p class="muted">
-        Esta web mezclará contenido propio con briefings cloud revisados manualmente,
-        para convertir novedades en análisis útil para ingeniería.
+        Esta web combina contenido propio, documentación práctica y en el futuro
+        briefings cloud asistidos por IA, siempre revisados manualmente.
       </p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Últimos artículos</h2>
+    <div class="grid grid-3">
+      {posts.map((post) => (
+        <article class="card">
+          <p class="muted">{post.data.date.toLocaleDateString("es-ES")}</p>
+          <h3>
+            <a href={`/blog/${post.slug}`}>{post.data.title}</a>
+          </h3>
+          <p class="muted">{post.data.description}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section>
+    <h2>Labs recientes</h2>
+    <div class="grid grid-2">
+      {labs.map((lab) => (
+        <article class="card">
+          <p class="muted">{lab.data.date.toLocaleDateString("es-ES")}</p>
+          <h3>
+            <a href={`/labs/${lab.slug}`}>{lab.data.title}</a>
+          </h3>
+          <p class="muted">{lab.data.description}</p>
+        </article>
+      ))}
     </div>
   </section>
 
@@ -36,17 +75,23 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     <div class="grid grid-3">
       <article class="card">
         <h3>Blog técnico</h3>
-        <p class="muted">Artículos sobre Azure, Terraform, AKS, identidad, observabilidad y operaciones cloud.</p>
+        <p class="muted">
+          Artículos sobre Azure, Terraform, AKS, observabilidad, identidad e infraestructura.
+        </p>
       </article>
 
       <article class="card">
-        <h3>Labs</h3>
-        <p class="muted">Proyectos reproducibles, decisiones de arquitectura, costes y lecciones aprendidas.</p>
+        <h3>Labs reproducibles</h3>
+        <p class="muted">
+          Proyectos reales con enfoque en ejecución, arquitectura y decisiones técnicas.
+        </p>
       </article>
 
       <article class="card">
-        <h3>Briefings</h3>
-        <p class="muted">Resúmenes de novedades cloud con foco en impacto operativo y criterio técnico.</p>
+        <h3>Briefings cloud</h3>
+        <p class="muted">
+          Resúmenes de novedades con foco en impacto operativo y criterio de ingeniería.
+        </p>
       </article>
     </div>
   </section>
