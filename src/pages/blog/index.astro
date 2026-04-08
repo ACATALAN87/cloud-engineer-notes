@@ -1,22 +1,29 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+const posts = (await getCollection("blog", ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime()
+);
 ---
 
 <BaseLayout title="Blog | Ángel" description="Artículos técnicos sobre cloud y Azure.">
   <section>
     <h1>Blog</h1>
-    <p class="muted">Aquí irán tus artículos técnicos en Markdown.</p>
+    <p class="muted">Artículos técnicos escritos en Markdown.</p>
 
     <div class="grid">
-      <article class="card">
-        <h3>Terraform + Azure: estructura mínima para trabajar bien</h3>
-        <p class="muted">Próximamente.</p>
-      </article>
-
-      <article class="card">
-        <h3>AKS: errores comunes al empezar</h3>
-        <p class="muted">Próximamente.</p>
-      </article>
+      {posts.map((post) => (
+        <article class="card">
+          <h3>
+            <a href={`/blog/${post.slug}`}>{post.data.title}</a>
+          </h3>
+          <p class="muted">{post.data.description}</p>
+          <p class="muted">
+            {post.data.date.toLocaleDateString("es-ES")}
+          </p>
+        </article>
+      ))}
     </div>
   </section>
 </BaseLayout>
