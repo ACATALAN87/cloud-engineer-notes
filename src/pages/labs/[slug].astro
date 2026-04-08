@@ -1,0 +1,25 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection, render } from "astro:content";
+
+export async function getStaticPaths() {
+  const labs = await getCollection("labs", ({ data }) => !data.draft);
+
+  return labs.map((lab) => ({
+    params: { slug: lab.id.replace(/\.md$/, "") },
+    props: { lab },
+  }));
+}
+
+const { lab } = Astro.props;
+const { Content } = await render(lab);
+---
+
+<BaseLayout title={`${lab.data.title} | Ángel`} description={lab.data.description}>
+  <article class="card">
+    <p class="muted">{lab.data.date.toLocaleDateString("es-ES")}</p>
+    <h1>{lab.data.title}</h1>
+    <p class="lead">{lab.data.description}</p>
+    <Content />
+  </article>
+</BaseLayout>

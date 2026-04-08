@@ -3,23 +3,23 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import { getCollection, render } from "astro:content";
 
 export async function getStaticPaths() {
-  const labs = await getCollection("labs", ({ data }) => !data.draft);
+  const posts = await getCollection("blog", ({ data }) => !data.draft);
 
-  return labs.map((lab) => ({
-    params: { slug: lab.slug },
-    props: { lab },
+  return posts.map((post) => ({
+    params: { slug: post.id.replace(/\.md$/, "") },
+    props: { post },
   }));
 }
 
-const { lab } = Astro.props;
-const { Content } = await render(lab);
+const { post } = Astro.props;
+const { Content } = await render(post);
 ---
 
-<BaseLayout title={`${lab.data.title} | Ángel`} description={lab.data.description}>
+<BaseLayout title={`${post.data.title} | Ángel`} description={post.data.description}>
   <article class="card">
-    <p class="muted">{lab.data.date.toLocaleDateString("es-ES")}</p>
-    <h1>{lab.data.title}</h1>
-    <p class="lead">{lab.data.description}</p>
+    <p class="muted">{post.data.date.toLocaleDateString("es-ES")}</p>
+    <h1>{post.data.title}</h1>
+    <p class="lead">{post.data.description}</p>
     <Content />
   </article>
 </BaseLayout>

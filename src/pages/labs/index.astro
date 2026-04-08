@@ -20,7 +20,7 @@ const labs = (await getCollection("labs", ({ data }) => !data.draft)).sort(
       {labs.map((lab) => (
         <article class="card">
           <h3>
-            <a href={`${base}labs/${lab.slug}/`}>{lab.data.title}</a>
+            <a href={`${base}labs/${lab.id.replace(/\.md$/, "")}/`}>{lab.data.title}</a>
           </h3>
           <p class="muted">{lab.data.description}</p>
           <p class="muted">{lab.data.date.toLocaleDateString("es-ES")}</p>

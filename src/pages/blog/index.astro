@@ -18,7 +18,7 @@ const posts = (await getCollection("blog", ({ data }) => !data.draft)).sort(
       {posts.map((post) => (
         <article class="card">
           <h3>
-            <a href={`${base}blog/${post.slug}/`}>{post.data.title}</a>
+           <a href={`${base}blog/${post.id.replace(/\.md$/, "")}/`}>{post.data.title}</a>
           </h3>
           <p class="muted">{post.data.description}</p>
           <p class="muted">
