@@ -1,19 +1,31 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+const base = import.meta.env.BASE_URL;
+
+const labs = (await getCollection("labs", ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime()
+);
 ---
 
 <BaseLayout title="Labs | Ángel" description="Laboratorios y proyectos cloud reproducibles.">
   <section>
     <h1>Labs</h1>
     <p class="muted">
-      Espacio para enseñar proyectos reproducibles, arquitectura, decisiones técnicas y mejoras iterativas.
+      Laboratorios y proyectos reproducibles con foco en arquitectura y operación.
     </p>
 
     <div class="grid">
-      <article class="card">
-        <h3>Lab 01 — Base Terraform para entornos cloud</h3>
-        <p class="muted">Próximamente.</p>
-      </article>
+      {labs.map((lab) => (
+        <article class="card">
+          <h3>
+            <a href={`${base}labs/${lab.slug}/`}>{lab.data.title}</a>
+          </h3>
+          <p class="muted">{lab.data.description}</p>
+          <p class="muted">{lab.data.date.toLocaleDateString("es-ES")}</p>
+        </article>
+      ))}
     </div>
   </section>
 </BaseLayout>
