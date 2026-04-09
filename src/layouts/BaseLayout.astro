@@ -761,12 +761,22 @@ const base = import.meta.env.BASE_URL;
 }
 /* ===== LAB DETAIL ===== */
 
-.lab-article {
-  max-width: 920px;
+.lab-header {
+  margin-bottom: 1.75rem;
 }
 
-.lab-header {
-  margin-bottom: 1.5rem;
+.lab-header .lead {
+  max-width: 42ch;
+  font-size: 1.15rem;
+  line-height: 1.75;
+  color: var(--muted);
+}
+
+.lab-article h1 {
+  font-size: clamp(2.7rem, 5vw, 4.8rem);
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  margin: 0.6rem 0 1rem;
 }
 
 .lab-tags {
@@ -786,11 +796,12 @@ const base = import.meta.env.BASE_URL;
 }
 
 .lab-cover {
-  margin: 1.5rem 0 2rem;
-  border: 1px solid var(--border);
-  border-radius: 22px;
+  margin: 2rem 0 2.5rem;
+  border: 1px solid rgba(148, 163, 184, 0.12);
+  border-radius: 24px;
   overflow: hidden;
-  background: rgba(15, 23, 42, 0.55);
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.72), rgba(2, 6, 23, 0.92));
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.22);
 }
 
 .lab-cover img {
@@ -803,26 +814,35 @@ const base = import.meta.env.BASE_URL;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1rem;
-  margin: 0 0 2rem;
+  margin: 0 0 2.25rem;
 }
 
 .lab-summary-card {
-  border: 1px solid var(--border);
-  border-radius: 18px;
-  padding: 1rem;
-  background: rgba(15, 23, 42, 0.55);
+  border: 1px solid rgba(148, 163, 184, 0.12);
+  border-radius: 20px;
+  padding: 1.15rem;
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.72), rgba(2, 6, 23, 0.92));
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.lab-summary-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(125, 211, 252, 0.18);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.14);
 }
 
 .lab-summary-card h3 {
-  margin: 0 0 0.5rem;
-  font-size: 1rem;
+  margin: 0 0 0.55rem;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  color: #e2e8f0;
 }
 
 .lab-summary-card p {
   margin: 0;
   color: var(--muted);
   font-size: 0.95rem;
-  line-height: 1.6;
+  line-height: 1.65;
 }
 
 @media (max-width: 900px) {
@@ -860,6 +880,19 @@ const base = import.meta.env.BASE_URL;
   content: "●";
   margin-right: 0.4rem;
   font-size: 0.6rem;
+}
+
+.lab-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(125, 211, 252, 0.08);
+  border: 1px solid rgba(125, 211, 252, 0.16);
+  color: #7dd3fc;
+  font-size: 0.8rem;
+  letter-spacing: 0.03em;
+  margin-bottom: 1rem;
 }
     </style>
   </head>
