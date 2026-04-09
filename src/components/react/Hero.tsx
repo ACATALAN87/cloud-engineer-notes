@@ -1,11 +1,8 @@
-import type { ReactNode } from 'react';
-
 interface HeroProps {
-  base?:     string;
-  children?: ReactNode;
+  base?: string;
 }
 
-export default function Hero({ base = '/', children }: HeroProps) {
+export default function Hero({ base = '/' }: HeroProps) {
   return (
     <section
       className="relative border-b border-slate-800 py-28 sm:py-36"
@@ -86,9 +83,6 @@ export default function Hero({ base = '/', children }: HeroProps) {
               LinkedIn
             </a>
           </div>
-
-          {/* Injected slot — used for HeroNewsCard from Astro */}
-          {children && <div className="mt-6">{children}</div>}
         </div>
       </div>
     </section>

@@ -30,16 +30,21 @@ const latestNews = newsData.latest;
   title="Ángel Luis Catalán | Senior Cloud Engineer"
   description="Senior Cloud Engineer specialised in Azure, Terraform, DevOps and enterprise infrastructure. Based in Madrid, Spain."
 >
-  <Hero base={base}>
-    {latestNews && (
-      <HeroNewsCard
-        title={latestNews.title}
-        url={latestNews.url}
-        publishedAt={latestNews.publishedAt}
-        source={latestNews.source}
-      />
-    )}
-  </Hero>
+  <Hero base={base} />
+
+  {/* News card — rendered as pure Astro outside React component */}
+  {latestNews && (
+    <div style="background-color: #0a0f1e; border-bottom: 1px solid rgb(30 41 59);">
+      <div class="mx-auto max-w-6xl px-4 pb-10 sm:px-6 lg:px-8">
+        <HeroNewsCard
+          title={latestNews.title}
+          url={latestNews.url}
+          publishedAt={latestNews.publishedAt}
+          source={latestNews.source}
+        />
+      </div>
+    </div>
+  )}
 
   <ValueProps />
 
