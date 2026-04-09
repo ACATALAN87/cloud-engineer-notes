@@ -439,6 +439,64 @@ const base = import.meta.env.BASE_URL;
           max-width: none;
         }
       }
+      /* ===== ABOUT ===== */
+
+.about {
+  max-width: 900px;
+}
+
+.about-hero {
+  margin-bottom: 3rem;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.about-block ul {
+  margin-top: 1rem;
+}
+
+.about-stack {
+  margin-top: 4rem;
+}
+
+.stack-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.stack-card {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1rem;
+  background: rgba(15, 23, 42, 0.6);
+}
+
+.about-project {
+  margin-top: 4rem;
+}
+
+.about-links {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+/* responsive */
+
+@media (max-width: 900px) {
+  .about-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stack-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
     </style>
   </head>
   <body>

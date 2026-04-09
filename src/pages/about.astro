@@ -1,25 +1,95 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+
+const base = import.meta.env.BASE_URL;
 ---
 
-<BaseLayout title="Sobre mí | Ángel Luis" description="Perfil técnico y enfoque profesional.">
-  <section>
-    <h1>Sobre mí</h1>
-    <p class="lead">
-      Soy Cloud Engineer centrado en Azure, automatización e infraestructura práctica.
-      Esta web funciona como portfolio técnico vivo: contenido, laboratorios y criterio de ingeniería.
-    </p>
+<BaseLayout title="Sobre mí | Ángel" description="Perfil técnico de Cloud Engineer especializado en Azure, automatización e infraestructura.">
+  <section class="about">
+    <div class="about-hero">
+      <h1>Cloud Engineer centrado en ejecución real</h1>
 
-    <div class="grid grid-2">
-      <div class="card">
-        <h3>Áreas de interés</h3>
-        <p class="muted">Azure, IaC, CI/CD, AKS, observabilidad, identidad, optimización operativa.</p>
+      <p class="lead">
+        Trabajo con Azure, automatización e infraestructura como código.
+        Me enfoco en diseñar soluciones simples, reproducibles y mantenibles.
+      </p>
+    </div>
+
+    <div class="about-grid">
+      <div class="about-block">
+        <h2>Qué hago</h2>
+        <p>
+          Diseño y construyo infraestructura cloud con foco en claridad operativa,
+          automatización y escalabilidad. Trabajo principalmente con entornos Azure,
+          aplicando principios de infraestructura como código y CI/CD.
+        </p>
+
+        <ul>
+          <li>Arquitectura cloud en Azure</li>
+          <li>Infraestructura como código (Terraform)</li>
+          <li>Automatización y pipelines (CI/CD)</li>
+          <li>Diseño de entornos reproducibles</li>
+        </ul>
       </div>
 
-      <div class="card">
-        <h3>Objetivo de esta web</h3>
-        <p class="muted">Documentar aprendizaje, enseñar ejecución real y posicionarme mejor en el mercado cloud.</p>
+      <div class="about-block">
+        <h2>Cómo trabajo</h2>
+        <p>
+          Priorizo soluciones simples y bien estructuradas frente a complejidad innecesaria.
+          Me interesa más que algo sea mantenible y claro que “perfecto” en teoría.
+        </p>
+
+        <ul>
+          <li>Separación clara de entornos</li>
+          <li>Uso de módulos reutilizables</li>
+          <li>Automatización desde el inicio</li>
+          <li>Decisiones basadas en operación real</li>
+        </ul>
       </div>
     </div>
+
+    <section class="about-stack">
+      <h2>Stack principal</h2>
+
+      <div class="stack-grid">
+        <div class="stack-card">
+          <h3>Cloud</h3>
+          <p class="muted">Azure (compute, networking, identity)</p>
+        </div>
+
+        <div class="stack-card">
+          <h3>Infraestructura</h3>
+          <p class="muted">Terraform</p>
+        </div>
+
+        <div class="stack-card">
+          <h3>Automatización</h3>
+          <p class="muted">GitHub Actions · CI/CD</p>
+        </div>
+
+        <div class="stack-card">
+          <h3>Otros</h3>
+          <p class="muted">Linux · Git · scripting</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="about-project">
+      <h2>Sobre esta web</h2>
+
+      <p>
+        Esta web es un proyecto personal donde documento decisiones técnicas,
+        laboratorios reproducibles y aprendizajes reales trabajando con cloud.
+      </p>
+
+      <p class="muted">
+        Está construida con Astro, contenido en Markdown y desplegada mediante GitHub Pages.
+      </p>
+
+      <div class="about-links">
+        <a class="btn btn-primary" href={`${base}labs/`}>Ver labs</a>
+        <a class="btn btn-secondary" href={`${base}blog/`}>Ver artículos</a>
+      </div>
+    </section>
   </section>
 </BaseLayout>
