@@ -1,0 +1,85 @@
+---
+/**
+ * HeroNewsCard.astro
+ *
+ * Compact news card for the Hero section.
+ * Renders only when valid data is provided — silently hides if not.
+ *
+ * Props:
+ *   title       - Article headline
+ *   url         - Link to the full article (external)
+ *   publishedAt - ISO date string
+ *   source      - Feed label, e.g. "Azure Blog"
+ */
+
+interface Props {
+  title:       string;
+  url:         string;
+  publishedAt: string;
+  source:      string;
+}
+
+const { title, url, publishedAt, source } = Astro.props;
+
+// Guard: hide the card if any required field is missing
+if (!title || !url) return;
+
+// Format date as "Apr 1, 2026"
+const formattedDate = new Date(publishedAt).toLocaleDateString('en-US', {
+  year:  'numeric',
+  month: 'short',
+  day:   'numeric',
+});
+---
+
+<a
+  href={url}
+  target="_blank"
+  rel="noopener noreferrer"
+  class="group mt-8 inline-flex w-full max-w-xl items-start gap-3 rounded-xl border border-slate-800 px-4 py-3 transition-colors hover:border-slate-700"
+  style="background-color: rgba(15,23,42,0.7);"
+  aria-label={`Read: ${title}`}
+>
+  {/* Left accent line */}
+  <span
+    class="mt-0.5 h-full w-0.5 flex-shrink-0 self-stretch rounded-full"
+    style="background: linear-gradient(to bottom, #3b82f6, transparent);"
+    aria-hidden="true"
+  ></span>
+
+  <div class="min-w-0 flex-1">
+    {/* Source + date */}
+    <div class="flex flex-wrap items-center gap-2">
+      <span class="font-mono text-[10px] font-semibold uppercase tracking-widest text-blue-400">
+        {source}
+      </span>
+      <span class="text-[10px] text-slate-600" aria-hidden="true">·</span>
+      <time
+        datetime={publishedAt}
+        class="font-mono text-[10px] text-slate-500"
+      >
+        {formattedDate}
+      </time>
+    </div>
+
+    {/* Title */}
+    <p class="mt-1 line-clamp-2 text-sm font-medium leading-snug text-slate-300 group-hover:text-white transition-colors">
+      {title}
+    </p>
+  </div>
+
+  {/* External link icon */}
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 16 16"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    class="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-slate-600 transition-colors group-hover:text-slate-400"
+    aria-hidden="true"
+  >
+    <path d="M3 13 13 3M7 3h6v6"/>
+  </svg>
+</a>
