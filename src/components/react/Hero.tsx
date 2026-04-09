@@ -23,7 +23,7 @@ export default function Hero({ base = '/' }: HeroProps) {
           <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-blue-800 px-3 py-1" style={{ backgroundColor: 'rgba(30,58,138,0.25)' }}>
             <span className="h-2 w-2 rounded-full bg-blue-400" />
             <span className="text-xs font-medium text-blue-300">
-              Madrid, España · Open to senior cloud roles
+              Madrid, España
             </span>
           </div>
 

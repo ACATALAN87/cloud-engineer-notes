@@ -10,8 +10,8 @@ export default function CTASection() {
             ¿Hablamos?
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-slate-400">
-            Abierto a proyectos cloud enterprise, posiciones senior y colaboraciones
-            técnicas en Azure, Terraform e infraestructura de plataforma.
+            Si tienes alguna pregunta técnica o quieres intercambiar ideas sobre cloud,
+            no dudes en contactarme.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <a
