@@ -8,6 +8,8 @@
   "scripts": {
     "dev": "astro dev",
     "news": "node scripts/fetch-azure-news.mjs",
+    "labs": "node scripts/suggest-labs.mjs",
+    "labs:generate": "node scripts/suggest-labs.mjs --generate",
     "prebuild": "node scripts/fetch-azure-news.mjs",
     "build": "astro build",
     "preview": "astro preview",

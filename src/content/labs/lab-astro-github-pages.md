@@ -1,10 +1,14 @@
 ---
-title: "Lab 01 — Web técnica estática con Astro y GitHub Pages"
-description: "Construcción de una web personal técnica con Astro, contenido Markdown y despliegue automático mediante GitHub Actions."
+title: "Lab 01 — Static technical site with Astro and GitHub Pages"
+description: "Building a personal technical site with Astro, Markdown content and automatic deployment via GitHub Actions."
 date: 2026-04-08
 draft: false
 stack: ["Astro", "GitHub Pages", "GitHub Actions", "Markdown"]
 cover: "/images/lab-astro-flow.svg"
+difficulty: "beginner"
+labType: "devops"
+source: "https://docs.astro.build/en/guides/deploy/github/"
+sourceName: "Astro Docs"
 ---
 
 ## Contexto

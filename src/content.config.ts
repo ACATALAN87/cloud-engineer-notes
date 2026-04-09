@@ -19,12 +19,16 @@ const blog = defineCollection({
 const labs = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./src/content/labs" }),
   schema: z.object({
-    title: z.string(),
+    title:       z.string(),
     description: z.string(),
-    date: z.coerce.date(),
-    draft: z.boolean().default(false),
-    stack: z.array(z.string()).default([]),
-    cover: z.string().optional(),
+    date:        z.coerce.date(),
+    draft:       z.boolean().default(false),
+    stack:       z.array(z.string()).default([]),
+    cover:       z.string().optional(),
+    difficulty:  z.enum(['beginner', 'intermediate', 'advanced']).optional(),
+    labType:     z.enum(['hands-on', 'architecture', 'devops', 'security']).optional(),
+    source:      z.string().url().optional(),
+    sourceName:  z.string().optional(),
   }),
 });
 
