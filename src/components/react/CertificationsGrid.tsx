@@ -3,6 +3,7 @@ interface Cert {
   issuer:  string;
   level?:  string;
   abbr:    string;
+  url?:    string;
   borderColor: string;
   bgColor:     string;
   textColor:   string;
@@ -14,6 +15,7 @@ const certs: Cert[] = [
     issuer:      'Microsoft Certified',
     level:       'Associate',
     abbr:        'MS',
+    url:         'https://learn.microsoft.com/es-es/users/angelluiscatalansanchez-8010/credentials/9a4e6132874c2fba',
     borderColor: 'border-blue-700',
     bgColor:     'rgba(30,58,138,0.15)',
     textColor:   'text-blue-400',
@@ -23,6 +25,7 @@ const certs: Cert[] = [
     issuer:      'Microsoft Certified',
     level:       'Associate',
     abbr:        'MS',
+    url:         'https://learn.microsoft.com/es-es/users/angelluiscatalansanchez-8010/credentials/43b23aeb5aebe71c',
     borderColor: 'border-blue-700',
     bgColor:     'rgba(30,58,138,0.15)',
     textColor:   'text-blue-400',
@@ -31,6 +34,7 @@ const certs: Cert[] = [
     name:        'Terraform Associate (003)',
     issuer:      'HashiCorp Certified',
     abbr:        'HC',
+    url:         'https://www.credly.com/badges/f8611b40-d882-4f77-9309-951c70450149/linked_in_profile',
     borderColor: 'border-violet-700',
     bgColor:     'rgba(76,29,149,0.15)',
     textColor:   'text-violet-400',
@@ -48,6 +52,7 @@ const certs: Cert[] = [
     issuer:      'Microsoft Certified',
     level:       'Expert',
     abbr:        'MS',
+    url:         'https://learn.microsoft.com/es-es/users/angelluiscatalansanchez-8010/credentials/77d36ccff4a12de2',
     borderColor: 'border-blue-700',
     bgColor:     'rgba(30,58,138,0.15)',
     textColor:   'text-blue-400',
@@ -56,6 +61,7 @@ const certs: Cert[] = [
     name:        'Associate Cloud Engineer',
     issuer:      'Google Cloud',
     abbr:        'GCP',
+    url:         'https://www.credly.com/badges/8f0a62a8-9ed8-4537-9083-a8959cf65bb5/linked_in_profile',
     borderColor: 'border-emerald-700',
     bgColor:     'rgba(6,78,59,0.15)',
     textColor:   'text-emerald-400',
@@ -65,6 +71,7 @@ const certs: Cert[] = [
     issuer:      'Microsoft Certified',
     level:       'Associate',
     abbr:        'MS',
+    url:         'https://learn.microsoft.com/es-es/users/angelluiscatalansanchez-8010/credentials/cabb1b2f0c2e4a0e',
     borderColor: 'border-blue-700',
     bgColor:     'rgba(30,58,138,0.15)',
     textColor:   'text-blue-400',
@@ -86,12 +93,9 @@ export default function CertificationsGrid() {
         </p>
 
         <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {certs.map((cert) => (
-            <div
-              key={cert.name}
-              className={`rounded-lg border p-5 ${cert.borderColor}`}
-              style={{ backgroundColor: cert.bgColor }}
-            >
+          {certs.map((cert) => {
+            const cardClass = `rounded-lg border p-5 ${cert.borderColor} ${cert.url ? 'transition-opacity hover:opacity-80 cursor-pointer' : ''}`;
+            const inner = (
               <div className="flex items-start gap-3">
                 <span
                   className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-md font-mono text-xs font-bold ${cert.textColor}`}
@@ -114,8 +118,28 @@ export default function CertificationsGrid() {
                   )}
                 </div>
               </div>
-            </div>
-          ))}
+            );
+            return cert.url ? (
+              <a
+                key={cert.name}
+                href={cert.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={cardClass}
+                style={{ backgroundColor: cert.bgColor }}
+              >
+                {inner}
+              </a>
+            ) : (
+              <div
+                key={cert.name}
+                className={cardClass}
+                style={{ backgroundColor: cert.bgColor }}
+              >
+                {inner}
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>
