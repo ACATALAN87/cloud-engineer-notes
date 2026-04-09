@@ -54,6 +54,42 @@ const base = import.meta.env.BASE_URL;
       </div>
     </div>
 
+{lab.id === "lab-astro-github-pages.md" || lab.id === "lab-astro-github-pages" ? (
+  <>
+    <section class="lab-issues">
+      <div class="lab-issues-header">
+        <h2>Problemas encontrados y resolución</h2>
+        <p class="muted">
+          Los principales problemas aparecieron en runtime, routing y generación de rutas
+          dinámicas a partir del contenido.
+        </p>
+      </div>
+
+      <div class="lab-issues-grid">
+        <article class="lab-issue-card issue-runtime">
+          <h3>Runtime</h3>
+          <p class="muted"><strong>Problema:</strong> Node 20 incompatible</p>
+          <p><strong>Solución:</strong> actualizar a Node 22</p>
+        </article>
+
+        <article class="lab-issue-card issue-routing">
+          <h3>Routing</h3>
+          <p class="muted"><strong>Problema:</strong> rutas rotas en GitHub Pages</p>
+          <p><strong>Solución:</strong> usar <code>import.meta.env.BASE_URL</code></p>
+        </article>
+
+        <article class="lab-issue-card issue-content">
+          <h3>Content</h3>
+          <p class="muted"><strong>Problema:</strong> uso incorrecto de <code>slug</code></p>
+          <p><strong>Solución:</strong> usar <code>id.replace(/\.md$/, "")</code></p>
+        </article>
+      </div>
+    </section>
+
     <Content />
+  </>
+) : (
+  <Content />
+)}
   </article>
 </BaseLayout>

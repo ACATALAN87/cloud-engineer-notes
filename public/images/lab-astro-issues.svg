@@ -1,0 +1,75 @@
+<svg width="1200" height="680" viewBox="0 0 1200 680" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="680" rx="28" fill="#020617"/>
+  <rect x="40" y="40" width="1120" height="600" rx="24" fill="url(#bg)" stroke="#1E293B"/>
+
+  <text x="70" y="110" fill="#E2E8F0" font-family="Inter, Arial, sans-serif" font-size="42" font-weight="700">
+    Problemas encontrados y resolución
+  </text>
+  <text x="70" y="150" fill="#94A3B8" font-family="Inter, Arial, sans-serif" font-size="22">
+    Runtime · Routing · Content collections
+  </text>
+
+  <!-- Card 1 -->
+  <rect x="85" y="220" width="300" height="300" rx="22" fill="#0F172A" stroke="#334155"/>
+  <rect x="85" y="220" width="300" height="8" rx="4" fill="#38BDF8"/>
+  <text x="115" y="275" fill="#E2E8F0" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700">
+    Runtime
+  </text>
+  <text x="115" y="325" fill="#94A3B8" font-family="Inter, Arial, sans-serif" font-size="20">
+    Problema:
+  </text>
+  <text x="115" y="358" fill="#E2E8F0" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="600">
+    Node 20 incompatible
+  </text>
+  <text x="115" y="415" fill="#94A3B8" font-family="Inter, Arial, sans-serif" font-size="20">
+    Solución:
+  </text>
+  <text x="115" y="448" fill="#7DD3FC" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="600">
+    Actualizar a Node 22
+  </text>
+
+  <!-- Card 2 -->
+  <rect x="450" y="220" width="300" height="300" rx="22" fill="#0F172A" stroke="#334155"/>
+  <rect x="450" y="220" width="300" height="8" rx="4" fill="#A78BFA"/>
+  <text x="480" y="275" fill="#E2E8F0" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700">
+    Routing
+  </text>
+  <text x="480" y="325" fill="#94A3B8" font-family="Inter, Arial, sans-serif" font-size="20">
+    Problema:
+  </text>
+  <text x="480" y="358" fill="#E2E8F0" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="600">
+    Rutas rotas en Pages
+  </text>
+  <text x="480" y="415" fill="#94A3B8" font-family="Inter, Arial, sans-serif" font-size="20">
+    Solución:
+  </text>
+  <text x="480" y="448" fill="#A78BFA" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="600">
+    import.meta.env.BASE_URL
+  </text>
+
+  <!-- Card 3 -->
+  <rect x="815" y="220" width="300" height="300" rx="22" fill="#0F172A" stroke="#334155"/>
+  <rect x="815" y="220" width="300" height="8" rx="4" fill="#22C55E"/>
+  <text x="845" y="275" fill="#E2E8F0" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700">
+    Content
+  </text>
+  <text x="845" y="325" fill="#94A3B8" font-family="Inter, Arial, sans-serif" font-size="20">
+    Problema:
+  </text>
+  <text x="845" y="358" fill="#E2E8F0" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="600">
+    Uso incorrecto de slug
+  </text>
+  <text x="845" y="415" fill="#94A3B8" font-family="Inter, Arial, sans-serif" font-size="20">
+    Solución:
+  </text>
+  <text x="845" y="448" fill="#86EFAC" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="600">
+    id.replace(/\.md$/, "")
+  </text>
+
+  <defs>
+    <linearGradient id="bg" x1="40" y1="40" x2="1160" y2="640" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0F172A"/>
+      <stop offset="1" stop-color="#020617"/>
+    </linearGradient>
+  </defs>
+</svg>
