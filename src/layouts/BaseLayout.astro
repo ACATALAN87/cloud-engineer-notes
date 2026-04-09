@@ -497,6 +497,110 @@ const base = import.meta.env.BASE_URL;
     grid-template-columns: 1fr 1fr;
   }
 }
+
+/* ===== FOOTER PREMIUM ===== */
+
+.site-footer {
+  margin-top: 6rem;
+  padding: 0 0 2rem;
+}
+
+.footer-shell {
+  border-top: 1px solid rgba(148, 163, 184, 0.12);
+  padding-top: 2.5rem;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr;
+  gap: 2.5rem;
+  align-items: start;
+}
+
+.footer-brand-top {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.8rem;
+}
+
+.footer-brand-top h3 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.footer-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #7dd3fc, #a78bfa);
+  box-shadow: 0 0 18px rgba(125, 211, 252, 0.55);
+}
+
+.footer-description {
+  max-width: 42ch;
+  line-height: 1.8;
+  margin-bottom: 1rem;
+}
+
+.footer-stack-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 0.85rem;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  color: #cbd5e1;
+  border: 1px solid rgba(148, 163, 184, 0.14);
+  background: rgba(15, 23, 42, 0.7);
+}
+
+.footer-title {
+  margin: 0 0 0.9rem;
+  font-size: 0.9rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #cbd5e1;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li {
+  margin: 0.7rem 0;
+}
+
+.footer-links a {
+  color: var(--muted);
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.footer-links a:hover {
+  color: white;
+}
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 2.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(148, 163, 184, 0.08);
+}
+
+@media (max-width: 900px) {
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+  }
+}
     </style>
   </head>
   <body>
@@ -522,10 +626,61 @@ const base = import.meta.env.BASE_URL;
       <slot />
     </main>
 
-    <footer>
-      <div class="container">
-        <p>Web personal técnica de Ángel. Construida con Astro, Markdown y despliegue estático.</p>
+<footer class="site-footer">
+  <div class="container footer-shell">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-brand-top">
+          <span class="footer-dot"></span>
+          <h3>Ángel | Cloud Engineer</h3>
+        </div>
+
+        <p class="muted footer-description">
+          Notas prácticas sobre Azure, automatización e infraestructura reproducible.
+        </p>
+
+        <div class="footer-stack-pill">
+          Built with Astro · Markdown · GitHub Pages
+        </div>
       </div>
-    </footer>
+
+      <div>
+        <h4 class="footer-title">Navegación</h4>
+        <ul class="footer-links">
+          <li><a href={base}>Inicio</a></li>
+          <li><a href={`${base}blog/`}>Blog</a></li>
+          <li><a href={`${base}labs/`}>Labs</a></li>
+          <li><a href={`${base}about/`}>Sobre mí</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="footer-title">Presencia</h4>
+        <ul class="footer-links">
+          <li>
+            <a href="https://github.com/acatalan87" target="_blank" rel="noopener noreferrer">
+              GitHub
+            </a>
+          </li>
+          <li>
+            <a href="https://www.linkedin.com/in/angel-luis-catal%C3%A1n-s%C3%A1nchez-35a68352/" target="_blank" rel="noopener noreferrer">
+              LinkedIn
+            </a>
+          </li>
+          <li>
+            <a href="mailto:acatalan87@outlook.com">
+              Contacto
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="muted">Portfolio técnico personal orientado a cloud engineering.</p>
+      <p class="muted">© 2026 Ángel</p>
+    </div>
+  </div>
+</footer>
   </body>
 </html>
