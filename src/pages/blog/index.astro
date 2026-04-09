@@ -29,13 +29,21 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
       {posts.length > 0 ? (
         <div class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {posts.map((post) => (
-            <ArticleCard
-              title={post.data.title}
-              description={post.data.description}
-              href={`${base}blog/${post.id.replace(/\.md$/, '')}/`}
-              date={post.data.date.toLocaleDateString('es-ES')}
-              tags={post.data.tags}
-            />
+            <div class="relative">
+              {post.data.category === 'Azure News' && (
+                <span class="absolute -top-2 left-3 z-10 inline-flex items-center gap-1 rounded-full bg-blue-600/20 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-widest text-blue-400 ring-1 ring-blue-500/30">
+                  <svg class="h-2.5 w-2.5" viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="8" r="8"/></svg>
+                  Azure News
+                </span>
+              )}
+              <ArticleCard
+                title={post.data.title}
+                description={post.data.description}
+                href={`${base}blog/${post.id.replace(/\.md$/, '')}/`}
+                date={post.data.date.toLocaleDateString('es-ES')}
+                tags={post.data.tags}
+              />
+            </div>
           ))}
         </div>
       ) : (

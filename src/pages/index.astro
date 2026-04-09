@@ -1,7 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/react/Hero';
-import HeroNewsCard from '../components/HeroNewsCard.astro';
 import ValueProps from '../components/react/ValueProps';
 import SkillGrid from '../components/react/SkillGrid';
 import ExperienceTimeline from '../components/react/ExperienceTimeline';
@@ -10,7 +9,6 @@ import CTASection from '../components/react/CTASection';
 import ProjectCard from '../components/react/ProjectCard';
 import ArticleCard from '../components/react/ArticleCard';
 import { getCollection } from 'astro:content';
-import newsData from '../data/azure-news.json';
 
 const rawBase = import.meta.env.BASE_URL ?? '/';
 const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
@@ -22,8 +20,6 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
 const labs = (await getCollection('labs', ({ data }) => !data.draft))
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
   .slice(0, 3);
-
-const latestNews = newsData.latest;
 ---
 
 <BaseLayout
@@ -33,15 +29,6 @@ const latestNews = newsData.latest;
   <Hero base={base} />
 
   <ValueProps />
-
-  {latestNews && (
-    <HeroNewsCard
-      title={latestNews.title}
-      url={latestNews.url}
-      publishedAt={latestNews.publishedAt}
-      source={latestNews.source}
-    />
-  )}
 
   <SkillGrid />
 
