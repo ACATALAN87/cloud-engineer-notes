@@ -1,126 +1,112 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
-import { getCollection } from "astro:content";
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/react/Hero';
+import SkillGrid from '../components/react/SkillGrid';
+import ExperienceTimeline from '../components/react/ExperienceTimeline';
+import CertificationsGrid from '../components/react/CertificationsGrid';
+import CTASection from '../components/react/CTASection';
+import ProjectCard from '../components/react/ProjectCard';
+import ArticleCard from '../components/react/ArticleCard';
+import { getCollection } from 'astro:content';
 
 const base = import.meta.env.BASE_URL;
 
-const posts = (await getCollection("blog", ({ data }) => !data.draft))
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
   .slice(0, 3);
 
-const labs = (await getCollection("labs", ({ data }) => !data.draft))
+const labs = (await getCollection('labs', ({ data }) => !data.draft))
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
-  .slice(0, 2);
-  const latestLab = labs[0];
+  .slice(0, 3);
 ---
 
 <BaseLayout
-  title="Ángel | Cloud Engineer"
-  description="Notas prácticas sobre cloud, Azure y automatización."
+  title="Ángel Luis Catalán | Senior Cloud Engineer"
+  description="Senior Cloud Engineer especializado en Azure, Terraform, DevOps e infraestructura enterprise. Madrid, España."
 >
-  <section class="hero hero-modern">
-    <div class="hero-copy">
-      <div class="hero-badge">Infraestructura · CI/CD · Terraform</div>
+  <Hero base={base} />
 
-      <h1 class="hero-title">
-        Construyendo soluciones cloud
-        <span>con enfoque práctico</span>
-      </h1>
+  <SkillGrid />
 
-      <p class="hero-text">
-        Notas reales sobre Azure, Terraform y arquitectura cloud.
-        Sin teoría innecesaria, centrado en ejecución.
-      </p>
+  <ExperienceTimeline />
 
-      <div class="hero-actions">
-        <a class="hero-btn hero-btn-primary" href={`${base}blog/`}>Ver artículos</a>
-        <a class="hero-btn hero-btn-secondary" href={`${base}labs/`}>Ver labs</a>
-      </div>
-    </div>
+  <CertificationsGrid />
 
-   <div class="hero-panel">
-  {latestLab && (
-    <a
-      class="window-card-link"
-      href={`${base}labs/${latestLab.id.replace(/\.md$/, "")}/`}
-    >
-      <div class="window-card">
-        <div class="window-topbar">
-          <span></span>
-          <span></span>
-          <span></span>
+  <!-- Featured Labs -->
+  <section class="border-b border-slate-800 py-20">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <div class="mb-10 flex items-end justify-between gap-4">
+        <div>
+          <span class="text-xs font-semibold uppercase tracking-widest text-blue-400">
+            Labs
+          </span>
+          <h2 class="mt-2 text-2xl font-bold text-white sm:text-3xl">
+            Proyectos técnicos
+          </h2>
         </div>
-
-        <div class="window-content">
-          <p class="window-kicker">Lab reciente</p>
-          <h3>{latestLab.data.title}</h3>
-          <p>{latestLab.data.description}</p>
-
-          <div class="window-tags">
-            {latestLab.data.stack?.slice(0, 3).map((item) => (
-              <span>{item}</span>
-            ))}
-          </div>
-        </div>
+        <a
+          href={`${base}labs/`}
+          class="whitespace-nowrap text-sm text-slate-400 hover:text-white transition-colors"
+        >
+          Ver todos →
+        </a>
       </div>
-    </a>
-  )}
-</div>
-  </section>
 
-  <section>
-    <h2>Últimos artículos</h2>
-    <div class="grid grid-3">
-      {posts.map((post) => (
-        <article class="card">
-          <p class="muted">{post.data.date.toLocaleDateString("es-ES")}</p>
-          <h3>
-            <a href={`${base}blog/${post.id.replace(/\.md$/, "")}/`}>{post.data.title}</a>
-          </h3>
-          <p class="muted">{post.data.description}</p>
-        </article>
-      ))}
+      {labs.length > 0 ? (
+        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {labs.map((lab) => (
+            <ProjectCard
+              title={lab.data.title}
+              description={lab.data.description}
+              stack={lab.data.stack}
+              href={`${base}labs/${lab.id.replace(/\.md$/, '')}/`}
+              date={lab.data.date.toLocaleDateString('es-ES')}
+            />
+          ))}
+        </div>
+      ) : (
+        <p class="text-sm text-slate-500">No hay labs publicados todavía.</p>
+      )}
     </div>
   </section>
 
-  <section>
-    <h2>Labs recientes</h2>
-    <div class="grid grid-2">
-      {labs.map((lab) => (
-        <article class="card">
-          <p class="muted">{lab.data.date.toLocaleDateString("es-ES")}</p>
-          <h3>
-            <a href={`${base}labs/${lab.id.replace(/\.md$/, "")}/`}>{lab.data.title}</a>
-          </h3>
-          <p class="muted">{lab.data.description}</p>
-        </article>
-      ))}
+  <!-- Latest Articles -->
+  <section class="border-b border-slate-800 py-20">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <div class="mb-10 flex items-end justify-between gap-4">
+        <div>
+          <span class="text-xs font-semibold uppercase tracking-widest text-blue-400">
+            Blog
+          </span>
+          <h2 class="mt-2 text-2xl font-bold text-white sm:text-3xl">
+            Últimos artículos
+          </h2>
+        </div>
+        <a
+          href={`${base}blog/`}
+          class="whitespace-nowrap text-sm text-slate-400 hover:text-white transition-colors"
+        >
+          Ver todos →
+        </a>
+      </div>
+
+      {posts.length > 0 ? (
+        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {posts.map((post) => (
+            <ArticleCard
+              title={post.data.title}
+              description={post.data.description}
+              href={`${base}blog/${post.id.replace(/\.md$/, '')}/`}
+              date={post.data.date.toLocaleDateString('es-ES')}
+              tags={post.data.tags}
+            />
+          ))}
+        </div>
+      ) : (
+        <p class="text-sm text-slate-500">No hay artículos publicados todavía.</p>
+      )}
     </div>
   </section>
 
-  <section>
-    <h2>Qué encontrarás aquí</h2>
-    <div class="grid grid-3">
-      <article class="card">
-        <h3>Blog técnico</h3>
-        <p class="muted">
-          Artículos sobre Azure, Terraform, AKS, observabilidad, identidad e infraestructura.
-        </p>
-      </article>
-
-      <article class="card">
-        <h3>Labs reproducibles</h3>
-        <p class="muted">
-          Proyectos reales con foco en ejecución, arquitectura y decisiones técnicas.
-        </p>
-      </article>
-
-      <article class="card">
-        <h3>Briefings cloud</h3>
-        <p class="muted">
-          Resúmenes de novedades con foco en impacto operativo y criterio de ingeniería.
-        </p>
-      </article>
-    </div>
-  </section>
+  <CTASection />
 </BaseLayout>

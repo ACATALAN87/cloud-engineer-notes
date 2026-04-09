@@ -1,95 +1,91 @@
 ---
-import BaseLayout from "../../layouts/BaseLayout.astro";
-import { getCollection, render } from "astro:content";
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+const base = import.meta.env.BASE_URL;
 
 export async function getStaticPaths() {
-  const labs = await getCollection("labs", ({ data }) => !data.draft);
-
+  const labs = await getCollection('labs', ({ data }) => !data.draft);
   return labs.map((lab) => ({
-    params: { slug: lab.id.replace(/\.md$/, "") },
+    params: { slug: lab.id.replace(/\.md$/, '') },
     props: { lab },
   }));
 }
 
 const { lab } = Astro.props;
 const { Content } = await render(lab);
-const base = import.meta.env.BASE_URL;
 ---
 
-<BaseLayout title={`${lab.data.title} | Ángel`} description={lab.data.description}>
-  <article class="card lab-article">
-    <div class="lab-header">
-      <p class="lab-eyebrow">Case study · Static site · CI/CD</p>
-      <p class="muted">{lab.data.date.toLocaleDateString("es-ES")}</p>
-      <h1>{lab.data.title}</h1>
-      <p class="lead">{lab.data.description}</p>
+<BaseLayout title={lab.data.title} description={lab.data.description}>
+  <article class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-20">
 
-      {lab.data.stack?.length > 0 && (
-        <div class="lab-tags">
-          {lab.data.stack.map((item) => (
-            <span>{item}</span>
+    <!-- Back -->
+    <a
+      href={`${base}labs/`}
+      class="mb-8 inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-300 transition-colors"
+    >
+      ← Labs
+    </a>
+
+    <!-- Header -->
+    <header class="mb-10 border-b border-slate-800 pb-8">
+      <p class="mb-3 font-mono text-xs text-slate-500">
+        {lab.data.date.toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' })}
+      </p>
+      <h1 class="text-2xl font-bold text-white sm:text-3xl leading-tight">
+        {lab.data.title}
+      </h1>
+      <p class="mt-3 text-slate-400 leading-relaxed">{lab.data.description}</p>
+
+      {lab.data.stack && lab.data.stack.length > 0 && (
+        <div class="mt-4 flex flex-wrap gap-2">
+          {lab.data.stack.map((tech: string) => (
+            <span
+              class="rounded border border-slate-700 px-2.5 py-0.5 font-mono text-xs text-slate-400"
+              style="background-color: rgba(51,65,85,0.3);"
+            >
+              {tech}
+            </span>
           ))}
         </div>
       )}
-    </div>
+    </header>
 
+    <!-- Cover image -->
     {lab.data.cover && (
-      <div class="lab-cover">
-        <img src={`${base}${lab.data.cover?.replace(/^\/+/, "")}`} alt={lab.data.title} />
+      <div class="mb-10">
+        <img
+          src={`${base}${lab.data.cover.replace(/^\/+/, '')}`}
+          alt={lab.data.title}
+          class="w-full rounded-lg border border-slate-800"
+        />
       </div>
     )}
 
-    <div class="lab-summary-grid">
-      <div class="lab-summary-card">
-        <h3>Objetivo</h3>
-        <p>Construir una web técnica con contenido versionado, despliegue automático y coste mínimo.</p>
-      </div>
-      <div class="lab-summary-card">
-        <h3>Enfoque</h3>
-        <p>Arquitectura static-first con Astro, Markdown y publicación continua mediante GitHub Actions.</p>
-      </div>
-      <div class="lab-summary-card">
-        <h3>Resultado</h3>
-        <p>Portfolio técnico público, mantenible y preparado para evolucionar sin infraestructura compleja.</p>
-      </div>
+    <!-- Content -->
+    <div class="prose prose-invert prose-slate max-w-none
+                prose-headings:font-semibold prose-headings:tracking-tight prose-headings:text-white
+                prose-h2:mt-10 prose-h2:mb-4 prose-h2:text-xl
+                prose-h3:mt-6 prose-h3:mb-3 prose-h3:text-lg
+                prose-p:text-slate-400 prose-p:leading-7
+                prose-a:text-blue-400 prose-a:no-underline hover:prose-a:underline
+                prose-strong:text-slate-200 prose-strong:font-semibold
+                prose-code:text-slate-300 prose-code:font-mono prose-code:text-sm
+                prose-pre:border prose-pre:border-slate-700/80
+                prose-li:text-slate-400
+                prose-hr:border-slate-800
+                prose-blockquote:border-l-blue-600 prose-blockquote:text-slate-400">
+      <Content />
     </div>
 
-{lab.id === "lab-astro-github-pages.md" || lab.id === "lab-astro-github-pages" ? (
-  <>
-    <section class="lab-issues">
-      <div class="lab-issues-header">
-        <h2>Problemas encontrados y resolución</h2>
-        <p class="muted">
-          Los principales problemas aparecieron en runtime, routing y generación de rutas
-          dinámicas a partir del contenido.
-        </p>
-      </div>
-
-      <div class="lab-issues-grid">
-        <article class="lab-issue-card issue-runtime">
-          <h3>Runtime</h3>
-          <p class="muted"><strong>Problema:</strong> Node 20 incompatible</p>
-          <p><strong>Solución:</strong> actualizar a Node 22</p>
-        </article>
-
-        <article class="lab-issue-card issue-routing">
-          <h3>Routing</h3>
-          <p class="muted"><strong>Problema:</strong> rutas rotas en GitHub Pages</p>
-          <p><strong>Solución:</strong> usar <code>import.meta.env.BASE_URL</code></p>
-        </article>
-
-        <article class="lab-issue-card issue-content">
-          <h3>Content</h3>
-          <p class="muted"><strong>Problema:</strong> uso incorrecto de <code>slug</code></p>
-          <p><strong>Solución:</strong> usar <code>id.replace(/\.md$/, "")</code></p>
-        </article>
-      </div>
-    </section>
-
-    <Content />
-  </>
-) : (
-  <Content />
-)}
+    <!-- Footer nav -->
+    <div class="mt-16 border-t border-slate-800 pt-8">
+      <a
+        href={`${base}labs/`}
+        class="text-sm text-slate-400 hover:text-white transition-colors"
+      >
+        ← Volver a Labs
+      </a>
+    </div>
   </article>
 </BaseLayout>
