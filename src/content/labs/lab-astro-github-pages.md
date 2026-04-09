@@ -4,6 +4,7 @@ description: "Construcción de una web personal técnica con Astro, contenido Ma
 date: 2026-04-08
 draft: false
 stack: ["Astro", "GitHub Pages", "GitHub Actions", "Markdown"]
+cover: "/images/lab-astro-flow.svg"
 ---
 
 ## Contexto

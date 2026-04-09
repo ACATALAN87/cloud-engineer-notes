@@ -20,6 +20,7 @@ const labs = defineCollection({
     date: z.coerce.date(),
     draft: z.boolean().default(false),
     stack: z.array(z.string()).default([]),
+    cover: z.string().optional(),
   }),
 });
 

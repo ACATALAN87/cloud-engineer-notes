@@ -13,13 +13,46 @@ export async function getStaticPaths() {
 
 const { lab } = Astro.props;
 const { Content } = await render(lab);
+const base = import.meta.env.BASE_URL;
 ---
 
 <BaseLayout title={`${lab.data.title} | Ángel`} description={lab.data.description}>
-  <article class="card">
-    <p class="muted">{lab.data.date.toLocaleDateString("es-ES")}</p>
-    <h1>{lab.data.title}</h1>
-    <p class="lead">{lab.data.description}</p>
+  <article class="card lab-article">
+    <div class="lab-header">
+      <p class="muted">{lab.data.date.toLocaleDateString("es-ES")}</p>
+      <h1>{lab.data.title}</h1>
+      <p class="lead">{lab.data.description}</p>
+
+      {lab.data.stack?.length > 0 && (
+        <div class="lab-tags">
+          {lab.data.stack.map((item) => (
+            <span>{item}</span>
+          ))}
+        </div>
+      )}
+    </div>
+
+    {lab.data.cover && (
+      <div class="lab-cover">
+        <img src={`${base}${lab.data.cover?.replace(/^\/+/, "")}`} alt={lab.data.title} />
+      </div>
+    )}
+
+    <div class="lab-summary-grid">
+      <div class="lab-summary-card">
+        <h3>Objetivo</h3>
+        <p>Construir una web técnica con contenido versionado, despliegue automático y coste mínimo.</p>
+      </div>
+      <div class="lab-summary-card">
+        <h3>Enfoque</h3>
+        <p>Arquitectura static-first con Astro, Markdown y publicación continua mediante GitHub Actions.</p>
+      </div>
+      <div class="lab-summary-card">
+        <h3>Resultado</h3>
+        <p>Portfolio técnico público, mantenible y preparado para evolucionar sin infraestructura compleja.</p>
+      </div>
+    </div>
+
     <Content />
   </article>
 </BaseLayout>

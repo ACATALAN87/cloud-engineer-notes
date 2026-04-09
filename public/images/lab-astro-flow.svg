@@ -1,0 +1,63 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" rx="28" fill="#020617"/>
+  <rect x="40" y="40" width="1120" height="550" rx="24" fill="url(#bg)" stroke="#1E293B"/>
+
+  <text x="70" y="120" fill="#E2E8F0" font-family="Inter, Arial, sans-serif" font-size="44" font-weight="700">
+    Lab 01 — Astro + GitHub Pages
+  </text>
+  <text x="70" y="165" fill="#94A3B8" font-family="Inter, Arial, sans-serif" font-size="22">
+    Static site · Markdown · CI/CD · GitHub Actions
+  </text>
+
+  <rect x="90" y="260" width="220" height="120" rx="20" fill="#0F172A" stroke="#334155"/>
+  <text x="200" y="305" text-anchor="middle" fill="#E2E8F0" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700">
+    Local
+  </text>
+  <text x="200" y="342" text-anchor="middle" fill="#94A3B8" font-family="Inter, Arial, sans-serif" font-size="18">
+    Astro + Markdown
+  </text>
+
+  <rect x="490" y="260" width="220" height="120" rx="20" fill="#0F172A" stroke="#334155"/>
+  <text x="600" y="305" text-anchor="middle" fill="#E2E8F0" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700">
+    GitHub
+  </text>
+  <text x="600" y="342" text-anchor="middle" fill="#94A3B8" font-family="Inter, Arial, sans-serif" font-size="18">
+    Repo + Actions
+  </text>
+
+  <rect x="890" y="260" width="220" height="120" rx="20" fill="#0F172A" stroke="#334155"/>
+  <text x="1000" y="305" text-anchor="middle" fill="#E2E8F0" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700">
+    Pages
+  </text>
+  <text x="1000" y="342" text-anchor="middle" fill="#94A3B8" font-family="Inter, Arial, sans-serif" font-size="18">
+    Static deploy
+  </text>
+
+  <path d="M310 320H470" stroke="url(#line1)" stroke-width="6" stroke-linecap="round"/>
+  <path d="M710 320H870" stroke="url(#line2)" stroke-width="6" stroke-linecap="round"/>
+
+  <circle cx="470" cy="320" r="8" fill="#7DD3FC"/>
+  <circle cx="870" cy="320" r="8" fill="#A78BFA"/>
+
+  <text x="390" y="295" text-anchor="middle" fill="#7DD3FC" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="600">
+    push
+  </text>
+  <text x="790" y="295" text-anchor="middle" fill="#A78BFA" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="600">
+    build + deploy
+  </text>
+
+  <defs>
+    <linearGradient id="bg" x1="40" y1="40" x2="1160" y2="590" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0F172A"/>
+      <stop offset="1" stop-color="#020617"/>
+    </linearGradient>
+    <linearGradient id="line1" x1="310" y1="320" x2="470" y2="320" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#38BDF8"/>
+      <stop offset="1" stop-color="#60A5FA"/>
+    </linearGradient>
+    <linearGradient id="line2" x1="710" y1="320" x2="870" y2="320" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#60A5FA"/>
+      <stop offset="1" stop-color="#A78BFA"/>
+    </linearGradient>
+  </defs>
+</svg>
