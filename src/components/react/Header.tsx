@@ -8,10 +8,10 @@ export default function Header({ base = '/' }: HeaderProps) {
   const [open, setOpen] = useState(false);
 
   const nav = [
-    { label: 'Inicio', href: `${base}` },
-    { label: 'About',  href: `${base}about/` },
-    { label: 'Labs',   href: `${base}labs/` },
-    { label: 'Blog',   href: `${base}blog/` },
+    { label: 'Home',  href: `${base}` },
+    { label: 'About', href: `${base}about/` },
+    { label: 'Labs',  href: `${base}labs/` },
+    { label: 'Blog',  href: `${base}blog/` },
   ];
 
   return (
@@ -35,7 +35,7 @@ export default function Header({ base = '/' }: HeaderProps) {
           </a>
 
           {/* Desktop nav */}
-          <nav className="hidden md:flex items-center gap-1" aria-label="Navegación principal">
+          <nav className="hidden md:flex items-center gap-1" aria-label="Main navigation">
             {nav.map((item) => (
               <a
                 key={item.href}
@@ -59,7 +59,7 @@ export default function Header({ base = '/' }: HeaderProps) {
           <button
             onClick={() => setOpen(!open)}
             className="md:hidden rounded-md p-2 text-slate-400 hover:bg-slate-800 hover:text-white transition-colors"
-            aria-label="Abrir menú"
+            aria-label="Open menu"
             aria-expanded={open}
           >
             {open ? (
@@ -76,7 +76,7 @@ export default function Header({ base = '/' }: HeaderProps) {
 
         {/* Mobile nav */}
         {open && (
-          <nav className="border-t border-slate-800 pb-4 pt-2 md:hidden flex flex-col gap-0.5" aria-label="Menú móvil">
+          <nav className="border-t border-slate-800 pb-4 pt-2 md:hidden flex flex-col gap-0.5" aria-label="Mobile menu">
             {nav.map((item) => (
               <a
                 key={item.href}

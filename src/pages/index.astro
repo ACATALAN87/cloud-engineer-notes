@@ -120,5 +120,29 @@ const labs = (await getCollection('labs', ({ data }) => !data.draft))
     </div>
   </section>
 
+  <!-- Azure Blog reference strip -->
+  <div class="border-b border-slate-800/60 py-5" style="background-color: #060b16;">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <span class="font-mono text-[10px] font-semibold uppercase tracking-widest text-slate-600">External</span>
+          <span class="h-3 w-px bg-slate-800" aria-hidden="true"></span>
+          <span class="text-xs text-slate-500">Following the Azure Blog for platform and infrastructure updates</span>
+        </div>
+        <a
+          href="https://azure.microsoft.com/en-us/blog/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-1.5 text-xs font-medium text-slate-500 hover:text-blue-400 transition-colors"
+        >
+          azure.microsoft.com/blog
+          <svg class="h-3 w-3" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M6 3H3a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-3M9 2h5m0 0v5m0-5L7 10"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
   <CTASection />
 </BaseLayout>

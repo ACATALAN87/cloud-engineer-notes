@@ -25,10 +25,10 @@ export default function Footer({ base = '/' }: FooterProps) {
           {/* Nav */}
           <div>
             <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-slate-500">
-              Navegación
+              Navigation
             </p>
             <ul className="space-y-2">
-              <li><a href={`${base}`} className="text-sm text-slate-400 hover:text-white transition-colors">Inicio</a></li>
+              <li><a href={`${base}`} className="text-sm text-slate-400 hover:text-white transition-colors">Home</a></li>
               <li><a href={`${base}about/`} className="text-sm text-slate-400 hover:text-white transition-colors">About</a></li>
               <li><a href={`${base}labs/`} className="text-sm text-slate-400 hover:text-white transition-colors">Labs</a></li>
               <li><a href={`${base}blog/`} className="text-sm text-slate-400 hover:text-white transition-colors">Blog</a></li>
@@ -38,7 +38,7 @@ export default function Footer({ base = '/' }: FooterProps) {
           {/* Contact */}
           <div>
             <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-slate-500">
-              Contacto
+              Contact
             </p>
             <ul className="space-y-2">
               <li>
@@ -65,9 +65,9 @@ export default function Footer({ base = '/' }: FooterProps) {
 
         <div className="mt-10 border-t border-slate-800/60 pt-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
           <p className="text-xs text-slate-600">
-            © {year} Ángel Luis Catalán · Portfolio técnico personal
+            © {year} Ángel Luis Catalán · Personal technical portfolio
           </p>
-          <p className="text-xs text-slate-700">Madrid, España</p>
+          <p className="text-xs text-slate-700">Madrid, Spain</p>
         </div>
       </div>
     </footer>

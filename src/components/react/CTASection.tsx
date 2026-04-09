@@ -32,7 +32,7 @@ export default function CTASection() {
               </a>
               <a
                 href="mailto:acatalan87@outlook.com"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-lg border border-slate-700 px-7 py-3 text-sm font-medium text-slate-300 hover:border-slate-500 hover:text-white transition-colors"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-lg border border-slate-600 px-7 py-3 text-sm font-medium text-slate-300 hover:border-slate-400 hover:text-white hover:bg-slate-800/50 transition-colors"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4" aria-hidden="true">
                   <rect x="2" y="4" width="20" height="16" rx="2"/>

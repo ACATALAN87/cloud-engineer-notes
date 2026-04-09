@@ -25,6 +25,7 @@ const certs: Cert[] = [
   {
     name:        'Terraform Associate (003)',
     issuer:      'HashiCorp Certified',
+    level:       'Associate',
     abbr:        'HC',
     featured:    true,
     url:         'https://www.credly.com/badges/f8611b40-d882-4f77-9309-951c70450149/linked_in_profile',
@@ -114,8 +115,8 @@ function CertCard({ cert }: { cert: Cert }) {
           </span>
         )}
         {cert.url && (
-          <p className={`mt-1.5 text-xs ${cert.textColor} opacity-70`}>
-            View credential →
+          <p className={`mt-1.5 text-xs ${cert.textColor} opacity-60`}>
+            View credential ↗
           </p>
         )}
       </div>
