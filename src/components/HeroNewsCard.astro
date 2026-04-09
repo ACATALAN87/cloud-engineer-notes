@@ -2,14 +2,9 @@
 /**
  * HeroNewsCard.astro
  *
- * Compact news card for the Hero section.
- * Renders only when valid data is provided — silently hides if not.
- *
- * Props:
- *   title       - Article headline
- *   url         - Link to the full article (external)
- *   publishedAt - ISO date string
- *   source      - Feed label, e.g. "Azure Blog"
+ * Compact horizontal strip showing the latest Azure Blog post.
+ * Positioned between hero and Core Skills as secondary content.
+ * Silently renders nothing if required data is missing.
  */
 
 interface Props {
@@ -21,10 +16,8 @@ interface Props {
 
 const { title, url, publishedAt, source } = Astro.props;
 
-// Guard: hide the card if any required field is missing
 if (!title || !url) return;
 
-// Format date as "Apr 1, 2026"
 const formattedDate = new Date(publishedAt).toLocaleDateString('en-US', {
   year:  'numeric',
   month: 'short',
@@ -32,54 +25,48 @@ const formattedDate = new Date(publishedAt).toLocaleDateString('en-US', {
 });
 ---
 
-<a
-  href={url}
-  target="_blank"
-  rel="noopener noreferrer"
-  class="group inline-flex w-full max-w-xl items-start gap-3 rounded-xl border border-slate-800 px-4 py-3 transition-colors hover:border-slate-700"
-  style="background-color: rgba(15,23,42,0.7);"
-  aria-label={`Read: ${title}`}
->
-  {/* Left accent line */}
-  <span
-    class="mt-0.5 h-full w-0.5 flex-shrink-0 self-stretch rounded-full"
-    style="background: linear-gradient(to bottom, #3b82f6, transparent);"
-    aria-hidden="true"
-  ></span>
-
-  <div class="min-w-0 flex-1">
-    {/* Source + date */}
-    <div class="flex flex-wrap items-center gap-2">
-      <span class="font-mono text-[10px] font-semibold uppercase tracking-widest text-blue-400">
+<div class="border-b border-slate-800/60" style="background-color: #080d1a;">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+    <a
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="group flex flex-wrap items-center gap-x-4 gap-y-1.5 py-3 sm:flex-nowrap"
+      aria-label={`Read on Azure Blog: ${title}`}
+    >
+      {/* Label */}
+      <span
+        class="flex-shrink-0 rounded border border-blue-900/60 px-2 py-0.5 font-mono text-[10px] font-semibold uppercase tracking-widest text-blue-400"
+        style="background-color: rgba(30,58,138,0.15);"
+      >
         {source}
       </span>
-      <span class="text-[10px] text-slate-600" aria-hidden="true">·</span>
-      <time
-        datetime={publishedAt}
-        class="font-mono text-[10px] text-slate-500"
-      >
-        {formattedDate}
-      </time>
-    </div>
 
-    {/* Title */}
-    <p class="mt-1 line-clamp-2 text-sm font-medium leading-snug text-slate-300 group-hover:text-white transition-colors">
-      {title}
-    </p>
+      {/* Separator — hidden on mobile */}
+      <span class="hidden text-slate-700 sm:block" aria-hidden="true">·</span>
+
+      {/* Title */}
+      <span class="min-w-0 flex-1 truncate text-sm text-slate-400 group-hover:text-slate-200 transition-colors">
+        {title}
+      </span>
+
+      {/* Date + icon */}
+      <span class="flex flex-shrink-0 items-center gap-1.5 font-mono text-xs text-slate-600">
+        <time datetime={publishedAt}>{formattedDate}</time>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 12 12"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="h-3 w-3 flex-shrink-0 transition-colors group-hover:text-slate-400"
+          aria-hidden="true"
+        >
+          <path d="M2 10 10 2M5.5 2H10v4.5"/>
+        </svg>
+      </span>
+    </a>
   </div>
-
-  {/* External link icon */}
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 16 16"
-    fill="none"
-    stroke="currentColor"
-    stroke-width="1.5"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-    class="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-slate-600 transition-colors group-hover:text-slate-400"
-    aria-hidden="true"
-  >
-    <path d="M3 13 13 3M7 3h6v6"/>
-  </svg>
-</a>
+</div>
