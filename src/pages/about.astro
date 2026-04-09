@@ -1,152 +1,324 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import ExperienceTimeline from '../components/react/ExperienceTimeline';
-import CertificationsGrid from '../components/react/CertificationsGrid';
 import CTASection from '../components/react/CTASection';
 ---
 
 <BaseLayout
   title="About | Ángel Luis Catalán"
-  description="Senior Cloud Engineer specialised in Azure, Terraform and platform engineering. Professional profile and background."
+  description="Professional background and engineering approach of Ángel Luis Catalán, Senior Cloud Engineer based in Madrid."
 >
-  <!-- Profile header -->
+
+  <!-- ── Header ─────────────────────────────────────────────────────────── -->
   <section class="border-b border-slate-800 py-24" style="background-color: #0a0f1e;">
-    <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
       <span class="font-mono text-xs font-semibold uppercase tracking-widest text-blue-400">
         About
       </span>
-      <h1 class="mt-3 text-3xl font-bold text-white sm:text-4xl lg:text-5xl">
+      <h1 class="mt-3 text-3xl font-bold text-white sm:text-4xl lg:text-5xl leading-tight">
         Ángel Luis Catalán
       </h1>
       <p class="mt-3 text-lg font-medium text-slate-300">
         Senior Cloud Engineer · Azure · Terraform · DevOps
       </p>
-      <p class="mt-1 font-mono text-sm text-slate-500">Madrid, Spain</p>
+      <p class="mt-1 font-mono text-sm text-slate-500">Madrid, Spain · Kyndryl</p>
 
-      <p class="mt-7 max-w-2xl text-base leading-8 text-slate-400">
-        Cloud engineer with a strong foundation in real-world operations, automation, platform
-        engineering and enterprise infrastructure. More than 10 years working in critical
-        environments across multinational companies — from workload automation to full cloud
-        platform design and delivery on Azure.
+      <p class="mt-8 text-base leading-8 text-slate-400">
+        I've spent the last decade working in enterprise environments where reliability,
+        operational discipline and scale aren't optional requirements — they're the baseline.
+        That background shapes how I think about cloud infrastructure: not as a collection
+        of services to provision, but as a platform that needs to be designed, maintained and evolved.
       </p>
-      <p class="mt-4 max-w-2xl text-base leading-8 text-slate-400">
-        Currently focused on Azure infrastructure design, Infrastructure as Code with Terraform,
-        DevOps practices and platform engineering. Evolving towards cloud architecture and
-        enterprise platform design roles.
-      </p>
+    </div>
+  </section>
 
-      <div class="mt-8 flex flex-wrap gap-2">
-        <span class="rounded-md border border-blue-800/70 px-3 py-1 text-sm text-blue-300" style="background-color: rgba(30,58,138,0.15);">
-          Azure
-        </span>
-        <span class="rounded-md border border-violet-800/70 px-3 py-1 text-sm text-violet-300" style="background-color: rgba(76,29,149,0.15);">
-          Terraform
-        </span>
-        <span class="rounded-md border border-slate-700 px-3 py-1 text-sm text-slate-300" style="background-color: rgba(51,65,85,0.3);">
-          Platform Engineering
-        </span>
-        <span class="rounded-md border border-slate-700 px-3 py-1 text-sm text-slate-300" style="background-color: rgba(51,65,85,0.3);">
-          10+ years enterprise
-        </span>
+  <!-- ── Professional journey ──────────────────────────────────────────── -->
+  <section class="border-b border-slate-800 py-20">
+    <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+      <span class="font-mono text-xs font-semibold uppercase tracking-widest text-blue-400">
+        Background
+      </span>
+      <h2 class="mt-2 text-2xl font-bold text-white sm:text-3xl">
+        Professional journey
+      </h2>
+
+      <div class="mt-8 space-y-6 text-base leading-8 text-slate-400">
+        <p>
+          My career started in workload automation — managing enterprise scheduling platforms
+          across critical financial and industrial environments. That meant operating systems
+          that ran continuously, where failures had real consequences and where documentation,
+          runbooks and structured incident response were non-negotiable. Those habits didn't
+          go away when I moved into cloud.
+        </p>
+        <p>
+          Over time, the scope expanded. I moved from managing pipelines and jobs to designing
+          the infrastructure those pipelines run on. First deeper into Linux systems, scripting
+          and database administration. Then into cloud: Azure infrastructure, networking,
+          security, CI/CD, and eventually full platform engineering with Terraform at the centre.
+        </p>
+        <p>
+          The current role at Kyndryl is where those threads come together. Azure infrastructure
+          design and deployment, Terraform automation, DevOps integration, Snowflake provisioning,
+          Couchbase Capella deployment via IaC — all within enterprise delivery constraints.
+          Not proof-of-concept work. Production platforms for real clients.
+        </p>
+        <p>
+          The trajectory is clear: from operational discipline toward cloud architecture and
+          platform design. The hands-on foundation makes the architectural thinking more
+          grounded — I don't propose solutions I haven't had to operate.
+        </p>
       </div>
     </div>
   </section>
 
-  <!-- How I approach infrastructure -->
-  <section class="border-b border-slate-800 py-20">
-    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+  <!-- ── Engineering approach ──────────────────────────────────────────── -->
+  <section class="border-b border-slate-800 py-20" style="background-color: #080d1a;">
+    <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
       <span class="font-mono text-xs font-semibold uppercase tracking-widest text-blue-400">
-        Approach
+        Engineering approach
       </span>
       <h2 class="mt-2 text-2xl font-bold text-white sm:text-3xl">
-        How I think about infrastructure
+        How I approach cloud engineering
       </h2>
 
-      <div class="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      <div class="mt-10 space-y-10">
+
+        <div>
+          <h3 class="text-base font-semibold text-white">Infrastructure as code is not optional</h3>
+          <p class="mt-3 text-base leading-8 text-slate-400">
+            Manual provisioning doesn't scale and doesn't survive team changes. Every environment
+            I work on gets a Terraform codebase — with remote state, consistent naming, modular
+            structure and CI/CD integration from the start. The discipline of writing infrastructure
+            as code forces better design decisions: you can't hide complexity in a portal click.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="text-base font-semibold text-white">Automation with purpose, not automation for its own sake</h3>
+          <p class="mt-3 text-base leading-8 text-slate-400">
+            Not every process needs to be automated, but every process that runs regularly does.
+            The goal is reducing toil and error surface, not building automation that itself becomes
+            a maintenance burden. I approach pipelines the same way: each step should have a clear
+            reason, a clear failure mode and a clear owner.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="text-base font-semibold text-white">Security and networking are first-class concerns</h3>
+          <p class="mt-3 text-base leading-8 text-slate-400">
+            Azure networking is where a lot of enterprise complexity lives: hub-spoke topologies,
+            NSG rule design, Private Endpoints, DNS resolution across peered networks, firewall
+            policy hierarchies. I've debugged enough connectivity issues to treat network design
+            as something that must be right from day one — retrofitting security onto an existing
+            platform is significantly harder than designing it in.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="text-base font-semibold text-white">Operational clarity over clever design</h3>
+          <p class="mt-3 text-base leading-8 text-slate-400">
+            Infrastructure that is hard to understand is infrastructure that will fail at the
+            worst moment. Clear resource naming, consistent tagging, readable Terraform modules,
+            documented runbooks — these aren't polish. They're part of the engineering. An on-call
+            engineer dealing with an incident at 3am should be able to understand the platform
+            without asking questions.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="text-base font-semibold text-white">Platform thinking over one-off deployments</h3>
+          <p class="mt-3 text-base leading-8 text-slate-400">
+            The most valuable infrastructure work is not delivering a single environment — it's
+            building the patterns and tooling that make every subsequent environment cheaper,
+            faster and more consistent to deliver. Reusable Terraform modules, standardised
+            pipeline templates, shared naming conventions and governance guardrails are how
+            you scale platform operations without scaling the team proportionally.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Real environments ──────────────────────────────────────────────── -->
+  <section class="border-b border-slate-800 py-20">
+    <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+      <span class="font-mono text-xs font-semibold uppercase tracking-widest text-blue-400">
+        Experience
+      </span>
+      <h2 class="mt-2 text-2xl font-bold text-white sm:text-3xl">
+        Working in real environments
+      </h2>
+
+      <div class="mt-8 space-y-6 text-base leading-8 text-slate-400">
+        <p>
+          Enterprise environments have constraints that lab environments don't: change approval
+          processes, compliance requirements, integration dependencies, legacy systems that can't
+          be replaced and SLAs that mean something. Working within those constraints for over a
+          decade changes how you evaluate technical decisions.
+        </p>
+        <p>
+          In 24x7 critical environments, you learn that the cost of a wrong decision compounds
+          over time. A poorly designed network segment is easy to overlook in development — it
+          becomes a significant refactor when workloads are running in production and teams are
+          building on top of it. The same applies to IAM design, monitoring gaps and undocumented
+          infrastructure.
+        </p>
+        <p>
+          That experience translates into specific habits: always design with the operational
+          phase in mind, not just the delivery phase. Think about who will need to troubleshoot
+          this at 2am. Consider what happens when the person who built it is no longer available.
+          Design for change, not for the current snapshot.
+        </p>
+      </div>
+
+      <div class="mt-10 grid gap-4 sm:grid-cols-3">
         {[
           {
-            title: 'Infrastructure is a product',
-            desc:  'Cloud infrastructure should be designed like a product: versioned, tested, documented and maintained. Not scripted once and forgotten.',
+            label: '10+',
+            desc:  'Years in enterprise environments',
+            color: 'text-blue-400',
           },
           {
-            title: 'Automation over manual work',
-            desc:  'If something needs to be done more than once, it should be automated. Terraform, GitHub Actions and Azure DevOps pipelines are first-class tools, not shortcuts.',
+            label: '5',
+            desc:  'Active Azure and cloud certifications',
+            color: 'text-violet-400',
           },
           {
-            title: 'Security by design',
-            desc:  'RBAC, network segmentation, least privilege and governance policies are not add-ons — they are part of the design from the start.',
+            label: '24×7',
+            desc:  'Critical production operations experience',
+            color: 'text-slate-300',
           },
-          {
-            title: 'Operational discipline',
-            desc:  'Years in 24x7 critical environments build habits: runbooks, clear documentation, structured incident response and no surprises in production.',
-          },
-          {
-            title: 'Platform thinking',
-            desc:  'Infrastructure should enable teams, not slow them down. Platform engineering means building internal capabilities that scale across projects and people.',
-          },
-          {
-            title: 'Evolving towards architecture',
-            desc:  'Combining hands-on engineering experience with a growing focus on cloud design patterns, networking architecture and enterprise-scale Azure solutions.',
-          },
-        ].map(({ title, desc }) => (
-          <div class="rounded-xl border border-slate-800 p-6" style="background-color: #0d1424;">
-            <h3 class="text-sm font-semibold text-white">{title}</h3>
-            <p class="mt-2.5 text-sm leading-relaxed text-slate-400">{desc}</p>
+        ].map(({ label, desc, color }) => (
+          <div class="rounded-xl border border-slate-800 p-6 text-center" style="background-color: #0d1424;">
+            <p class={`text-3xl font-bold ${color}`}>{label}</p>
+            <p class="mt-2 text-xs leading-relaxed text-slate-500">{desc}</p>
           </div>
         ))}
       </div>
     </div>
   </section>
 
-  <!-- Stack -->
-  <section class="border-b border-slate-800 py-20">
-    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+  <!-- ── Focus areas ────────────────────────────────────────────────────── -->
+  <section class="border-b border-slate-800 py-20" style="background-color: #080d1a;">
+    <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
       <span class="font-mono text-xs font-semibold uppercase tracking-widest text-blue-400">
-        Stack
+        Focus
       </span>
       <h2 class="mt-2 text-2xl font-bold text-white sm:text-3xl">
-        Core technical stack
+        What I focus on
       </h2>
+      <p class="mt-4 text-base leading-8 text-slate-400">
+        Four areas where I spend most of my technical energy and where I have the most
+        depth to contribute.
+      </p>
 
-      <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {[
-          {
-            category: 'Cloud & Networking',
-            accent:   'text-blue-400',
-            items:    ['Microsoft Azure', 'Azure Virtual Networks', 'NSGs & Firewalls', 'VPN Gateway / ExpressRoute', 'Azure DNS', 'Azure Monitor'],
-          },
-          {
-            category: 'IaC & DevOps',
-            accent:   'text-violet-400',
-            items:    ['Terraform', 'Azure DevOps', 'GitHub Actions', 'Azure Pipelines', 'CI/CD', 'Git'],
-          },
-          {
-            category: 'Data & Platforms',
-            accent:   'text-cyan-400',
-            items:    ['Azure Data Factory', 'Snowflake', 'Couchbase Capella', 'SQL Server', 'Appian', 'RBAC'],
-          },
-          {
-            category: 'Infra & OS',
-            accent:   'text-slate-400',
-            items:    ['Linux (RHEL / Ubuntu)', 'Windows Server', 'Bash / Shell', 'IBM InfoSphere', 'Control-M', 'TWS / Workload Scheduler'],
-          },
-        ].map(({ category, accent, items }) => (
-          <div class="rounded-xl border border-slate-800 p-5" style="background-color: #0d1424;">
-            <h3 class={`mb-4 text-xs font-bold uppercase tracking-widest ${accent}`}>{category}</h3>
-            <ul class="space-y-2">
-              {items.map((item) => (
-                <li class="text-sm text-slate-300">{item}</li>
-              ))}
-            </ul>
+      <div class="mt-10 space-y-8">
+
+        <div class="flex gap-6">
+          <span class="mt-1 font-mono text-xs font-bold text-blue-400 flex-shrink-0 w-6">01</span>
+          <div>
+            <h3 class="text-base font-semibold text-white">Azure platform engineering</h3>
+            <p class="mt-2 text-sm leading-7 text-slate-400">
+              Hub-spoke topology design, VNet and subnet architecture, NSG rule management,
+              Private Endpoints, Azure Firewall policy hierarchies, Azure Bastion, DNS zones
+              and resolution across peered networks. The networking layer is where most
+              enterprise Azure complexity lives — and where getting it wrong is most costly.
+            </p>
           </div>
-        ))}
+        </div>
+
+        <div class="flex gap-6">
+          <span class="mt-1 font-mono text-xs font-bold text-violet-400 flex-shrink-0 w-6">02</span>
+          <div>
+            <h3 class="text-base font-semibold text-white">Terraform and Infrastructure as Code</h3>
+            <p class="mt-2 text-sm leading-7 text-slate-400">
+              Module design, remote state with Azure Blob, workspace strategy, variable management,
+              provider version pinning and CI/CD integration. Writing Terraform that other engineers
+              can read, extend and operate — not just Terraform that works once.
+            </p>
+          </div>
+        </div>
+
+        <div class="flex gap-6">
+          <span class="mt-1 font-mono text-xs font-bold text-cyan-400 flex-shrink-0 w-6">03</span>
+          <div>
+            <h3 class="text-base font-semibold text-white">DevOps and CI/CD</h3>
+            <p class="mt-2 text-sm leading-7 text-slate-400">
+              Azure DevOps pipeline design, GitHub Actions workflows, service connections and
+              OIDC-based keyless authentication, environment gating, pipeline-as-code patterns.
+              Integration of infrastructure deployment pipelines with application delivery pipelines
+              — including Azure Data Factory and database deployments.
+            </p>
+          </div>
+        </div>
+
+        <div class="flex gap-6">
+          <span class="mt-1 font-mono text-xs font-bold text-slate-400 flex-shrink-0 w-6">04</span>
+          <div>
+            <h3 class="text-base font-semibold text-white">Reliability and operations</h3>
+            <p class="mt-2 text-sm leading-7 text-slate-400">
+              Monitoring and alerting design with Azure Monitor and Log Analytics, NSG flow logs,
+              diagnostic settings baseline, RBAC and access governance, incident response process
+              and runbook culture. Operational practices built over years in environments where
+              downtime has direct business impact.
+            </p>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
 
-  <ExperienceTimeline />
+  <!-- ── Direction ──────────────────────────────────────────────────────── -->
+  <section class="border-b border-slate-800 py-20">
+    <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+      <span class="font-mono text-xs font-semibold uppercase tracking-widest text-blue-400">
+        Direction
+      </span>
+      <h2 class="mt-2 text-2xl font-bold text-white sm:text-3xl">
+        Where I'm heading
+      </h2>
 
-  <CertificationsGrid />
+      <div class="mt-8 space-y-6 text-base leading-8 text-slate-400">
+        <p>
+          The natural progression from platform engineering is cloud architecture — moving
+          from implementing designs to owning them. The AZ-305 (Azure Solutions Architect Expert)
+          certification reflects that direction: not a credential collected for its own sake,
+          but validation of a shift in how I engage with technical problems.
+        </p>
+        <p>
+          The difference between an engineer who builds what's specified and an architect who
+          defines what should be built is largely about breadth of context: understanding
+          cost implications, organisational constraints, long-term maintainability and
+          cross-service integration patterns. That's the gap I'm actively closing.
+        </p>
+        <p>
+          Specifically, I'm deepening work in three areas: enterprise-scale Azure landing zone
+          design, advanced networking (multi-region, BGP, ExpressRoute integration) and
+          platform engineering at scale — building internal developer platforms that abstract
+          infrastructure complexity without hiding it completely from the teams that need
+          to understand it.
+        </p>
+      </div>
+
+      <div class="mt-10 flex flex-wrap gap-2">
+        {[
+          'Cloud Architecture',
+          'Azure Landing Zones',
+          'Enterprise Networking',
+          'Platform Engineering',
+          'Internal Developer Platforms',
+        ].map((tag) => (
+          <span
+            class="rounded-md border border-blue-800/50 px-3 py-1.5 text-sm text-blue-300/80"
+            style="background-color: rgba(30,58,138,0.12);"
+          >
+            {tag}
+          </span>
+        ))}
+      </div>
+    </div>
+  </section>
 
   <CTASection />
 </BaseLayout>
