@@ -10,17 +10,8 @@ interface Cert {
 
 const certs: Cert[] = [
   {
-    name:        'Azure Solutions Architect Expert',
-    issuer:      'Microsoft',
-    level:       'Expert',
-    abbr:        'MS',
-    borderColor: 'border-blue-700',
-    bgColor:     'rgba(30,58,138,0.15)',
-    textColor:   'text-blue-400',
-  },
-  {
-    name:        'Azure Developer Associate',
-    issuer:      'Microsoft',
+    name:        'Azure Network Engineer Associate',
+    issuer:      'Microsoft Certified',
     level:       'Associate',
     abbr:        'MS',
     borderColor: 'border-blue-700',
@@ -29,7 +20,7 @@ const certs: Cert[] = [
   },
   {
     name:        'Azure Administrator Associate',
-    issuer:      'Microsoft',
+    issuer:      'Microsoft Certified',
     level:       'Associate',
     abbr:        'MS',
     borderColor: 'border-blue-700',
@@ -37,20 +28,29 @@ const certs: Cert[] = [
     textColor:   'text-blue-400',
   },
   {
-    name:        'Terraform Associate',
-    issuer:      'HashiCorp',
+    name:        'Terraform Associate (003)',
+    issuer:      'HashiCorp Certified',
     abbr:        'HC',
     borderColor: 'border-violet-700',
     bgColor:     'rgba(76,29,149,0.15)',
     textColor:   'text-violet-400',
   },
   {
-    name:        'AWS Cloud Practitioner',
+    name:        'AWS Certified Cloud Practitioner (CLF-C02)',
     issuer:      'Amazon Web Services',
     abbr:        'AWS',
     borderColor: 'border-amber-700',
     bgColor:     'rgba(120,53,15,0.15)',
     textColor:   'text-amber-400',
+  },
+  {
+    name:        'Azure Solutions Architect Expert',
+    issuer:      'Microsoft Certified',
+    level:       'Expert',
+    abbr:        'MS',
+    borderColor: 'border-blue-700',
+    bgColor:     'rgba(30,58,138,0.15)',
+    textColor:   'text-blue-400',
   },
   {
     name:        'Associate Cloud Engineer',
@@ -59,6 +59,15 @@ const certs: Cert[] = [
     borderColor: 'border-emerald-700',
     bgColor:     'rgba(6,78,59,0.15)',
     textColor:   'text-emerald-400',
+  },
+  {
+    name:        'Azure Developer Associate',
+    issuer:      'Microsoft Certified',
+    level:       'Associate',
+    abbr:        'MS',
+    borderColor: 'border-blue-700',
+    bgColor:     'rgba(30,58,138,0.15)',
+    textColor:   'text-blue-400',
   },
 ];
 
