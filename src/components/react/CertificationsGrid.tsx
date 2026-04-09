@@ -101,7 +101,7 @@ export default function CertificationsGrid() {
                 </span>
                 <div className="min-w-0">
                   <p className="text-sm font-semibold text-white leading-snug">
-                    Microsoft Certified: {cert.name}
+                    {cert.name}
                   </p>
                   <p className="mt-0.5 text-xs text-slate-400">{cert.issuer}</p>
                   {cert.level && (
