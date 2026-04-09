@@ -17,28 +17,48 @@ const labs = (await getCollection("labs", ({ data }) => !data.draft))
   title="Ángel | Cloud Engineer"
   description="Notas prácticas sobre cloud, Azure y automatización."
 >
-  <section class="hero">
-    <div>
-      <div class="badge">Cloud Engineer · Azure · Automatización</div>
-      <h1>Notas prácticas sobre cloud, Azure y ejecución real.</h1>
-      <p class="lead">
-        Web personal técnica orientada a documentar aprendizaje, compartir análisis
-        útiles y enseñar laboratorios reproducibles sobre cloud engineering.
+  <section class="hero hero-modern">
+    <div class="hero-copy">
+      <div class="hero-badge">Infraestructura · CI/CD · Terraform</div>
+
+      <h1 class="hero-title">
+        Construyendo soluciones cloud
+        <span>con enfoque práctico</span>
+      </h1>
+
+      <p class="hero-text">
+        Notas reales sobre Azure, Terraform y arquitectura cloud.
+        Sin teoría innecesaria, centrado en ejecución.
       </p>
 
-      <div class="button-row">
-	<a class="btn btn-primary" href={`${base}blog/`}>Ver artículos</a>
-	<a class="btn btn-secondary" href={`${base}labs/`}>Ver labs</a>
+      <div class="hero-actions">
+        <a class="hero-btn hero-btn-primary" href={`${base}blog/`}>Ver artículos</a>
+        <a class="hero-btn hero-btn-secondary" href={`${base}labs/`}>Ver labs</a>
       </div>
     </div>
 
-    <div class="card">
-      <p class="muted">Cloud Briefing</p>
-      <h3>Contenido técnico con criterio</h3>
-      <p class="muted">
-        Esta web combina contenido propio, documentación práctica y en el futuro
-        briefings cloud asistidos por IA, siempre revisados manualmente.
-      </p>
+    <div class="hero-panel">
+      <div class="window-card">
+        <div class="window-topbar">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+
+        <div class="window-content">
+          <p class="window-kicker">Lab reciente</p>
+          <h3>Web técnica con Astro</h3>
+          <p>
+            Deploy automático, contenido en Markdown y estructura escalable.
+          </p>
+
+          <div class="window-tags">
+            <span>Astro</span>
+            <span>CI/CD</span>
+            <span>GitHub</span>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -49,7 +69,7 @@ const labs = (await getCollection("labs", ({ data }) => !data.draft))
         <article class="card">
           <p class="muted">{post.data.date.toLocaleDateString("es-ES")}</p>
           <h3>
-            <a href={`${base}blog/${post.slug}/`}>{post.data.title}</a>
+            <a href={`${base}blog/${post.id.replace(/\.md$/, "")}/`}>{post.data.title}</a>
           </h3>
           <p class="muted">{post.data.description}</p>
         </article>
@@ -64,7 +84,7 @@ const labs = (await getCollection("labs", ({ data }) => !data.draft))
         <article class="card">
           <p class="muted">{lab.data.date.toLocaleDateString("es-ES")}</p>
           <h3>
-            <a href={`${base}labs/${lab.slug}/`}>{lab.data.title}</a>
+            <a href={`${base}labs/${lab.id.replace(/\.md$/, "")}/`}>{lab.data.title}</a>
           </h3>
           <p class="muted">{lab.data.description}</p>
         </article>
@@ -85,7 +105,7 @@ const labs = (await getCollection("labs", ({ data }) => !data.draft))
       <article class="card">
         <h3>Labs reproducibles</h3>
         <p class="muted">
-          Proyectos reales con enfoque en ejecución, arquitectura y decisiones técnicas.
+          Proyectos reales con foco en ejecución, arquitectura y decisiones técnicas.
         </p>
       </article>
 

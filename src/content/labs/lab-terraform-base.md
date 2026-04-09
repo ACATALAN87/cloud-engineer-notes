@@ -1,5 +1,5 @@
 ---
-title: "Lab 01 — Base Terraform para entornos cloud"
+title: "Lab 02 — Base Terraform para entornos cloud"
 description: "Laboratorio base para organizar infraestructura reproducible con Terraform."
 date: 2026-04-08
 draft: false
