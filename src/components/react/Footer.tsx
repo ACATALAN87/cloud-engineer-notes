@@ -1,5 +1,3 @@
-import LogoMark from './LogoMark';
-
 interface FooterProps {
   base?: string;
 }
@@ -14,7 +12,6 @@ export default function Footer({ base = '/' }: FooterProps) {
 
           {/* Brand */}
           <div>
-            <LogoMark size={24} className="mb-3" />
             <p className="font-semibold text-slate-200">Ángel Luis Catalán</p>
             <p className="mt-1 text-sm text-slate-500">Senior Cloud Engineer</p>
             <p className="mt-3 text-xs leading-relaxed text-slate-600">
