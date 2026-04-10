@@ -70,12 +70,13 @@ export default function Hero({ base = '/' }: HeroProps) {
             >
               Professional profile
             </a>
-            <a
+            {/* Technical labs button hidden — not enough content yet */}
+            {/* <a
               href={`${base}labs/`}
               className="inline-flex items-center gap-2 rounded-md border border-slate-700 px-5 py-2.5 text-sm font-medium text-slate-300 hover:border-blue-700 hover:text-blue-300 transition-colors"
             >
               Technical labs
-            </a>
+            </a> */}
           </div>
 
           {/* Contact links */}
