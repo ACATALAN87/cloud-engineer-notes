@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import LogoMark from './LogoMark';
 
 interface HeaderProps {
   base?: string;
@@ -21,9 +22,7 @@ export default function Header({ base = '/' }: HeaderProps) {
 
           {/* Brand */}
           <a href={`${base}`} className="group flex items-center gap-3">
-            <span className="flex h-8 w-8 items-center justify-center rounded-md bg-blue-600 font-mono text-sm font-bold text-white select-none">
-              AL
-            </span>
+            <LogoMark size={32} />
             <div className="hidden sm:block">
               <p className="text-sm font-semibold text-slate-200 group-hover:text-white leading-none transition-colors">
                 Ángel Luis Catalán
