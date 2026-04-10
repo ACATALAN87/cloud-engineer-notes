@@ -6,20 +6,20 @@ import SkillGrid from '../components/react/SkillGrid';
 import ExperienceTimeline from '../components/react/ExperienceTimeline';
 import CertificationsGrid from '../components/react/CertificationsGrid';
 import CTASection from '../components/react/CTASection';
-import ProjectCard from '../components/react/ProjectCard';
-import ArticleCard from '../components/react/ArticleCard';
-import { getCollection } from 'astro:content';
+// import ProjectCard from '../components/react/ProjectCard';   // re-enable with Labs section
+// import ArticleCard from '../components/react/ArticleCard';   // re-enable with Blog section
+// import { getCollection } from 'astro:content';               // re-enable with Labs/Blog sections
 
 const rawBase = import.meta.env.BASE_URL ?? '/';
 const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
 
-const posts = (await getCollection('blog', ({ data }) => !data.draft))
-  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
-  .slice(0, 3);
+// const posts = (await getCollection('blog', ({ data }) => !data.draft))
+//   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+//   .slice(0, 3);
 
-const labs = (await getCollection('labs', ({ data }) => !data.draft))
-  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
-  .slice(0, 3);
+// const labs = (await getCollection('labs', ({ data }) => !data.draft))
+//   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+//   .slice(0, 3);
 ---
 
 <BaseLayout
@@ -35,114 +35,6 @@ const labs = (await getCollection('labs', ({ data }) => !data.draft))
   <ExperienceTimeline />
 
   <CertificationsGrid />
-
-  <!-- Featured technical work -->
-  <section class="border-b border-slate-800 py-20">
-    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-
-      <div class="mb-10 flex items-end justify-between gap-4">
-        <div>
-          <span class="text-xs font-semibold uppercase tracking-widest text-blue-400">
-            Technical work
-          </span>
-          <h2 class="mt-2 text-2xl font-bold text-white sm:text-3xl">
-            Featured labs
-          </h2>
-          <p class="mt-2 max-w-xl text-sm text-slate-400">
-            Hands-on technical references covering IaC, Azure platform design and DevOps automation.
-          </p>
-        </div>
-        <a
-          href={`${base}labs/`}
-          class="whitespace-nowrap text-sm font-medium text-blue-400 hover:text-blue-300 transition-colors"
-        >
-          All labs →
-        </a>
-      </div>
-
-      {labs.length > 0 ? (
-        <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {labs.map((lab) => (
-            <ProjectCard
-              title={lab.data.title}
-              description={lab.data.description}
-              stack={lab.data.stack}
-              href={`${base}labs/${lab.id.replace(/\.md$/, '')}/`}
-              date={lab.data.date.toLocaleDateString('en-GB', { year: 'numeric', month: 'short' })}
-            />
-          ))}
-        </div>
-      ) : (
-        <p class="text-sm text-slate-500">No labs published yet.</p>
-      )}
-    </div>
-  </section>
-
-  <!-- Latest articles -->
-  <section class="border-b border-slate-800 py-20">
-    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-
-      <div class="mb-10 flex items-end justify-between gap-4">
-        <div>
-          <span class="text-xs font-semibold uppercase tracking-widest text-blue-400">
-            Writing
-          </span>
-          <h2 class="mt-2 text-2xl font-bold text-white sm:text-3xl">
-            Latest articles
-          </h2>
-          <p class="mt-2 max-w-xl text-sm text-slate-400">
-            Technical notes and deep dives on cloud infrastructure, Terraform and DevOps practices.
-          </p>
-        </div>
-        <a
-          href={`${base}blog/`}
-          class="whitespace-nowrap text-sm font-medium text-blue-400 hover:text-blue-300 transition-colors"
-        >
-          All articles →
-        </a>
-      </div>
-
-      {posts.length > 0 ? (
-        <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {posts.map((post) => (
-            <ArticleCard
-              title={post.data.title}
-              description={post.data.description}
-              href={`${base}blog/${post.id.replace(/\.md$/, '')}/`}
-              date={post.data.date.toLocaleDateString('en-GB', { year: 'numeric', month: 'short' })}
-              tags={post.data.tags}
-            />
-          ))}
-        </div>
-      ) : (
-        <p class="text-sm text-slate-500">No articles published yet.</p>
-      )}
-    </div>
-  </section>
-
-  <!-- Azure Blog reference strip -->
-  <div class="border-b border-slate-800/60 py-5" style="background-color: #060b16;">
-    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-      <div class="flex flex-wrap items-center justify-between gap-3">
-        <div class="flex items-center gap-3">
-          <span class="font-mono text-[10px] font-semibold uppercase tracking-widest text-slate-600">External</span>
-          <span class="h-3 w-px bg-slate-800" aria-hidden="true"></span>
-          <span class="text-xs text-slate-500">Following the Azure Blog for platform and infrastructure updates</span>
-        </div>
-        <a
-          href="https://azure.microsoft.com/en-us/blog/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="inline-flex items-center gap-1.5 text-xs font-medium text-slate-500 hover:text-blue-400 transition-colors"
-        >
-          azure.microsoft.com/blog
-          <svg class="h-3 w-3" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M6 3H3a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-3M9 2h5m0 0v5m0-5L7 10"/>
-          </svg>
-        </a>
-      </div>
-    </div>
-  </div>
 
   <CTASection />
 </BaseLayout>

@@ -10,8 +10,8 @@ export default function Header({ base = '/' }: HeaderProps) {
   const nav = [
     { label: 'Home',  href: `${base}` },
     { label: 'About', href: `${base}about/` },
-    { label: 'Labs',  href: `${base}labs/` },
-    { label: 'Blog',  href: `${base}blog/` },
+    // { label: 'Labs',  href: `${base}labs/` },   // hidden — not enough content yet
+    // { label: 'Blog',  href: `${base}blog/` },   // hidden — not enough content yet
   ];
 
   return (
