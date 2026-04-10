@@ -1,3 +1,5 @@
+import RotatingTag from './RotatingTag';
+
 interface HeroProps {
   base?: string;
 }
@@ -44,7 +46,7 @@ export default function Hero({ base = '/' }: HeroProps) {
           {/* Headline */}
           <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl leading-[1.1]">
             Senior Cloud Engineer
-            <span className="block mt-1 text-blue-400">Azure · Terraform · DevOps</span>
+            <RotatingTag />
           </h1>
 
           {/* Sub-headline */}

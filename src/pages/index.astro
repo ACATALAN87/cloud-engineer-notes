@@ -26,7 +26,7 @@ const labs = (await getCollection('labs', ({ data }) => !data.draft))
   title="Ángel Luis Catalán | Senior Cloud Engineer"
   description="Senior Cloud Engineer specialised in Azure, Terraform, DevOps and enterprise infrastructure. Based in Madrid, Spain."
 >
-  <Hero base={base} />
+  <Hero client:load base={base} />
 
   <ValueProps />
 
