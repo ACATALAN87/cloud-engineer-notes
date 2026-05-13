@@ -16,11 +16,10 @@ const FADE_DURATION = 400; // ms — must match CSS transition duration
  * RotatingTag
  *
  * Cycles through TAGS with a fade + subtle vertical motion.
- * Respects prefers-reduced-motion: if the user has it enabled,
- * the first tag is shown statically with no animation.
+ * Respects prefers-reduced-motion: if enabled, the first tag is shown
+ * statically with no animation.
  *
- * Rendered inside an <h1> as a <span>, so it inherits heading styles.
- * A fixed min-width prevents layout shift between tags.
+ * Rendered as an inline-flex block below the main headline.
  */
 export default function RotatingTag() {
   const [index,   setIndex]   = useState(0);
@@ -28,17 +27,13 @@ export default function RotatingTag() {
   const reducedMotion = useRef(false);
 
   useEffect(() => {
-    // Detect preference once on mount (client only)
     reducedMotion.current =
       window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    if (reducedMotion.current) return; // static — no interval needed
+    if (reducedMotion.current) return;
 
     const timer = setInterval(() => {
-      // Phase 1: fade out
       setVisible(false);
-
-      // Phase 2: swap text mid-transition, then fade in
       setTimeout(() => {
         setIndex((prev) => (prev + 1) % TAGS.length);
         setVisible(true);
@@ -50,24 +45,25 @@ export default function RotatingTag() {
 
   return (
     <span
+      className="mt-3 inline-flex items-center gap-2 text-base sm:text-lg font-mono font-medium text-slate-400"
       aria-live="polite"
       aria-atomic="true"
-      // Fixed height prevents layout shift; width set to longest tag
-      className="block mt-1 text-blue-400"
-      style={{
-        // A single inline style keeps this self-contained without
-        // needing a new CSS file or Tailwind arbitrary transitions
-        transition: reducedMotion.current
-          ? 'none'
-          : `opacity ${FADE_DURATION}ms ease, transform ${FADE_DURATION}ms ease`,
-        opacity:   visible ? 1 : 0,
-        transform: visible ? 'translateY(0)' : 'translateY(4px)',
-        // Reserve height for the tallest tag to avoid reflow
-        minHeight: '1.2em',
-        display:   'block',
-      }}
     >
-      {TAGS[index]}
+      <span className="text-blue-400 select-none">›</span>
+      <span
+        className="inline-block"
+        style={{
+          transition: reducedMotion.current
+            ? 'none'
+            : `opacity ${FADE_DURATION}ms ease, transform ${FADE_DURATION}ms ease`,
+          opacity:   visible ? 1 : 0,
+          transform: visible ? 'translateY(0)' : 'translateY(4px)',
+          minWidth:  '14rem',
+        }}
+      >
+        <span className="text-gradient-static">{TAGS[index]}</span>
+        <span className="ml-0.5 inline-block h-4 w-1.5 translate-y-0.5 bg-blue-400 animate-blink-soft align-middle" />
+      </span>
     </span>
   );
 }

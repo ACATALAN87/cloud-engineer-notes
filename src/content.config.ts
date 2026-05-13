@@ -43,8 +43,27 @@ const briefing = defineCollection({
   }),
 });
 
+const projects = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/projects" }),
+  schema: z.object({
+    title:       z.string(),
+    description: z.string(),
+    date:        z.coerce.date(),
+    draft:       z.boolean().default(false),
+    stack:       z.array(z.string()).default([]),
+    status:      z.enum(['live', 'in-progress', 'archived', 'planned']).default('in-progress'),
+    category:    z.enum(['infrastructure', 'automation', 'platform', 'web', 'data', 'other']).default('other'),
+    featured:    z.boolean().default(false),
+    repoUrl:     z.string().url().optional(),
+    liveUrl:     z.string().url().optional(),
+    cover:       z.string().optional(),
+    highlights:  z.array(z.string()).default([]),
+  }),
+});
+
 export const collections = {
   blog,
   labs,
   briefing,
+  projects,
 };

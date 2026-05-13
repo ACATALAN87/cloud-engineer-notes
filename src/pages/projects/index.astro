@@ -1,0 +1,82 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectsBento, { type ProjectItem } from '../../components/react/ProjectsBento';
+import CTASection from '../../components/react/CTASection';
+import { getCollection } from 'astro:content';
+
+const rawBase = import.meta.env.BASE_URL ?? '/';
+const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
+
+const all = await getCollection('projects', ({ data }) => !data.draft);
+
+const sorted = all.sort((a, b) => {
+  // Featured first, then by date desc
+  if (a.data.featured !== b.data.featured) return a.data.featured ? -1 : 1;
+  return b.data.date.getTime() - a.data.date.getTime();
+});
+
+const dtFormatter = new Intl.DateTimeFormat('en-US', {
+  year: 'numeric',
+  month: 'short',
+});
+
+const items: ProjectItem[] = sorted.map((p) => ({
+  slug:        p.id,
+  title:       p.data.title,
+  description: p.data.description,
+  status:      p.data.status,
+  category:    p.data.category,
+  featured:    p.data.featured,
+  stack:       p.data.stack,
+  highlights:  p.data.highlights,
+  repoUrl:     p.data.repoUrl,
+  liveUrl:     p.data.liveUrl,
+  href:        `${base}projects/${p.id.replace(/\.md$/, '')}/`,
+  date:        dtFormatter.format(p.data.date),
+}));
+---
+
+<BaseLayout
+  title="Projects | Ángel Luis Catalán"
+  description="Proyectos personales y profesionales de Ángel Luis Catalán — infraestructura Azure, Terraform, automatización y plataformas cloud."
+>
+  <!-- Header section -->
+  <section class="relative overflow-hidden border-b border-slate-800/60 py-24 sm:py-28" style="background-color: #050914;">
+    {/* Grid background */}
+    <div
+      class="pointer-events-none absolute inset-0 opacity-[0.04]"
+      aria-hidden="true"
+      style="background-image: linear-gradient(rgba(96,165,250,0.7) 1px, transparent 1px), linear-gradient(90deg, rgba(96,165,250,0.7) 1px, transparent 1px); background-size: 56px 56px; mask-image: radial-gradient(ellipse at center, black 40%, transparent 75%); -webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 75%);"
+    />
+    {/* Blob accent */}
+    <div
+      class="pointer-events-none absolute -right-32 top-0 h-[400px] w-[400px] rounded-full opacity-25 animate-blob"
+      aria-hidden="true"
+      style="background: radial-gradient(circle, rgba(168,85,247,0.5) 0%, transparent 70%); filter: blur(50px);"
+    />
+
+    <div class="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <span class="eyebrow">Projects</span>
+      <h1 class="mt-4 text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl leading-[1.1]">
+        Things I've <span class="text-gradient">built</span>
+      </h1>
+      <p class="mt-5 max-w-2xl text-lg text-slate-300 leading-relaxed">
+        Una selección de proyectos personales y profesionales centrados en
+        infraestructura Azure, automatización con Terraform y plataformas cloud.
+      </p>
+      <p class="mt-3 max-w-2xl text-sm text-slate-500">
+        Algunos proyectos están en desarrollo activo. Iré publicando aquí los hitos
+        relevantes y los aprendizajes técnicos.
+      </p>
+    </div>
+  </section>
+
+  <!-- Bento grid -->
+  <section class="relative py-20 sm:py-24">
+    <div class="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <ProjectsBento projects={items} />
+    </div>
+  </section>
+
+  <CTASection />
+</BaseLayout>

@@ -1,0 +1,184 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+const rawBase = import.meta.env.BASE_URL ?? '/';
+const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects', ({ data }) => !data.draft);
+  return projects.map((project) => ({
+    params: { slug: project.id.replace(/\.md$/, '') },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+
+const STATUS_STYLES: Record<string, { label: string; dot: string; chip: string }> = {
+  live:          { label: 'Live',         dot: 'bg-emerald-400',  chip: 'border-emerald-500/40 text-emerald-300 bg-emerald-500/10' },
+  'in-progress': { label: 'In progress',  dot: 'bg-amber-400',    chip: 'border-amber-500/40 text-amber-300 bg-amber-500/10' },
+  planned:       { label: 'Planned',      dot: 'bg-slate-400',    chip: 'border-slate-500/40 text-slate-300 bg-slate-500/10' },
+  archived:      { label: 'Archived',     dot: 'bg-slate-600',    chip: 'border-slate-700/40 text-slate-400 bg-slate-700/10' },
+};
+
+const status = STATUS_STYLES[project.data.status];
+---
+
+<BaseLayout title={project.data.title} description={project.data.description}>
+  <article class="relative">
+
+    {/* Header */}
+    <section class="relative overflow-hidden border-b border-slate-800/60 py-20" style="background-color: #050914;">
+      <div
+        class="pointer-events-none absolute inset-0 opacity-[0.04]"
+        aria-hidden="true"
+        style="background-image: linear-gradient(rgba(96,165,250,0.7) 1px, transparent 1px), linear-gradient(90deg, rgba(96,165,250,0.7) 1px, transparent 1px); background-size: 56px 56px; mask-image: radial-gradient(ellipse at center, black 40%, transparent 75%); -webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 75%);"
+      />
+      <div
+        class="pointer-events-none absolute -left-32 top-0 h-[360px] w-[360px] rounded-full opacity-25 animate-blob"
+        aria-hidden="true"
+        style="background: radial-gradient(circle, rgba(59,130,246,0.5), transparent 70%); filter: blur(40px);"
+      />
+
+      <div class="relative mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+        <a
+          href={`${base}projects/`}
+          class="mb-6 inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-blue-300 transition-colors"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" aria-hidden="true">
+            <path d="m12 19-7-7 7-7M19 12H5" />
+          </svg>
+          Back to Projects
+        </a>
+
+        <div class="flex flex-wrap items-center gap-2">
+          <span class="font-mono text-xs text-slate-500">
+            {project.data.date.toLocaleDateString('en-GB', { year: 'numeric', month: 'long' })}
+          </span>
+          <span class="text-slate-700">·</span>
+          <span class={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-medium ${status.chip}`}>
+            <span class={`h-1.5 w-1.5 rounded-full ${status.dot}`} />
+            {status.label}
+          </span>
+          <span
+            class="rounded-full border border-slate-700/60 bg-slate-800/40 px-2.5 py-1 font-mono text-xs text-slate-400 uppercase tracking-wider"
+          >
+            {project.data.category}
+          </span>
+        </div>
+
+        <h1 class="mt-5 text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl leading-[1.1]">
+          {project.data.title}
+        </h1>
+        <p class="mt-4 max-w-2xl text-lg text-slate-300 leading-relaxed">
+          {project.data.description}
+        </p>
+
+        {project.data.stack && project.data.stack.length > 0 && (
+          <div class="mt-6 flex flex-wrap gap-2">
+            {project.data.stack.map((tech: string) => (
+              <span
+                class="rounded-md border border-slate-700/60 bg-slate-800/40 px-2.5 py-1 font-mono text-xs text-slate-300"
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
+        )}
+
+        <div class="mt-8 flex flex-wrap items-center gap-3">
+          {project.data.liveUrl && (
+            <a
+              href={project.data.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-primary"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" aria-hidden="true">
+                <circle cx="12" cy="12" r="10" />
+                <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+              </svg>
+              View live
+            </a>
+          )}
+          {project.data.repoUrl && (
+            <a
+              href={project.data.repoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-ghost"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4 text-slate-300" aria-hidden="true">
+                <path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.52-1.33-1.28-1.68-1.28-1.68-1.05-.72.08-.71.08-.71 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.71 1.26 3.37.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.18-3.1-.12-.29-.51-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11.05 11.05 0 0 1 5.8 0c2.21-1.49 3.18-1.18 3.18-1.18.62 1.59.23 2.76.11 3.05.74.81 1.18 1.84 1.18 3.1 0 4.42-2.69 5.39-5.26 5.68.41.35.78 1.05.78 2.12 0 1.53-.01 2.77-.01 3.14 0 .31.21.68.8.56C20.21 21.39 23.5 17.08 23.5 12 23.5 5.65 18.35.5 12 .5z"/>
+              </svg>
+              View repo
+            </a>
+          )}
+        </div>
+      </div>
+    </section>
+
+    {/* Highlights + Content */}
+    <section class="py-16">
+      <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+
+        {project.data.highlights && project.data.highlights.length > 0 && (
+          <div class="mb-12 glass-card rounded-2xl p-6 sm:p-8">
+            <h2 class="text-sm font-mono font-semibold uppercase tracking-widest text-blue-300">
+              Highlights
+            </h2>
+            <ul class="mt-4 grid gap-3 sm:grid-cols-2">
+              {project.data.highlights.map((h: string) => (
+                <li class="flex items-start gap-2.5 text-sm text-slate-300">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="mt-0.5 h-4 w-4 flex-shrink-0 text-blue-400" aria-hidden="true">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                  <span>{h}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {project.data.cover && (
+          <div class="mb-10">
+            <img
+              src={`${base}${project.data.cover.replace(/^\/+/, '')}`}
+              alt={project.data.title}
+              class="w-full rounded-2xl border border-slate-800"
+            />
+          </div>
+        )}
+
+        <div class="prose prose-invert prose-slate max-w-none
+                    prose-headings:font-semibold prose-headings:tracking-tight prose-headings:text-white
+                    prose-h2:mt-10 prose-h2:mb-4 prose-h2:text-xl
+                    prose-h3:mt-6 prose-h3:mb-3 prose-h3:text-lg
+                    prose-p:text-slate-300 prose-p:leading-7
+                    prose-a:text-blue-400 prose-a:no-underline hover:prose-a:underline
+                    prose-strong:text-white prose-strong:font-semibold
+                    prose-code:text-slate-200 prose-code:font-mono prose-code:text-sm
+                    prose-pre:border prose-pre:border-slate-700/80
+                    prose-li:text-slate-300
+                    prose-hr:border-slate-800
+                    prose-blockquote:border-l-blue-500 prose-blockquote:text-slate-300">
+          <Content />
+        </div>
+
+        <div class="mt-16 border-t border-slate-800/60 pt-8">
+          <a
+            href={`${base}projects/`}
+            class="inline-flex items-center gap-1.5 text-sm text-slate-400 hover:text-blue-300 transition-colors"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" aria-hidden="true">
+              <path d="m12 19-7-7 7-7M19 12H5" />
+            </svg>
+            Back to Projects
+          </a>
+        </div>
+      </div>
+    </section>
+  </article>
+</BaseLayout>

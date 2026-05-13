@@ -5,21 +5,37 @@ import ValueProps from '../components/react/ValueProps';
 import SkillGrid from '../components/react/SkillGrid';
 import ExperienceTimeline from '../components/react/ExperienceTimeline';
 import CertificationsGrid from '../components/react/CertificationsGrid';
+import FeaturedProjectsTeaser from '../components/react/FeaturedProjectsTeaser';
 import CTASection from '../components/react/CTASection';
-// import ProjectCard from '../components/react/ProjectCard';   // re-enable with Labs section
-// import ArticleCard from '../components/react/ArticleCard';   // re-enable with Blog section
-// import { getCollection } from 'astro:content';               // re-enable with Labs/Blog sections
+import { getCollection } from 'astro:content';
 
 const rawBase = import.meta.env.BASE_URL ?? '/';
 const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
 
-// const posts = (await getCollection('blog', ({ data }) => !data.draft))
-//   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
-//   .slice(0, 3);
+const allProjects = await getCollection('projects', ({ data }) => !data.draft);
 
-// const labs = (await getCollection('labs', ({ data }) => !data.draft))
-//   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
-//   .slice(0, 3);
+const dtFormatter = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short' });
+
+const featured = allProjects
+  .sort((a, b) => {
+    if (a.data.featured !== b.data.featured) return a.data.featured ? -1 : 1;
+    return b.data.date.getTime() - a.data.date.getTime();
+  })
+  .slice(0, 3)
+  .map((p) => ({
+    slug:        p.id,
+    title:       p.data.title,
+    description: p.data.description,
+    status:      p.data.status,
+    category:    p.data.category,
+    featured:    p.data.featured,
+    stack:       p.data.stack,
+    highlights:  p.data.highlights,
+    repoUrl:     p.data.repoUrl,
+    liveUrl:     p.data.liveUrl,
+    href:        `${base}projects/${p.id.replace(/\.md$/, '')}/`,
+    date:        dtFormatter.format(p.data.date),
+  }));
 ---
 
 <BaseLayout
@@ -28,13 +44,15 @@ const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
 >
   <Hero client:load base={base} />
 
-  <ValueProps />
+  <ValueProps client:visible />
 
-  <SkillGrid />
+  <SkillGrid client:visible />
 
-  <ExperienceTimeline />
+  <ExperienceTimeline client:visible />
 
-  <CertificationsGrid />
+  <CertificationsGrid client:visible />
+
+  <FeaturedProjectsTeaser client:visible projects={featured} base={base} />
 
   <CTASection />
 </BaseLayout>

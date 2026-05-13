@@ -53,80 +53,103 @@ const experience: Role[] = [
 
 export default function ExperienceTimeline() {
   return (
-    <section className="border-b border-slate-800 py-20">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <span className="text-xs font-semibold uppercase tracking-widest text-blue-400">
-          Experience
-        </span>
-        <h2 className="mt-2 text-2xl font-bold text-white sm:text-3xl">
-          Professional background
-        </h2>
-        <p className="mt-3 max-w-2xl text-slate-400">
-          10+ years in enterprise environments. From workload automation to cloud infrastructure engineering.
-        </p>
+    <section className="relative border-b border-slate-800/60 py-24">
+      <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="reveal mb-12 max-w-2xl">
+          <span className="eyebrow">Experience</span>
+          <h2 className="mt-3 text-3xl font-bold text-white sm:text-4xl">
+            Professional <span className="text-gradient-static">background</span>
+          </h2>
+          <p className="mt-4 text-slate-400 leading-relaxed">
+            10+ años en entornos enterprise. De workload automation a cloud
+            infrastructure engineering.
+          </p>
+        </div>
 
-        <div className="mt-12 space-y-0">
-          {experience.map((role, i) => (
-            <div key={i} className="relative flex gap-6 pb-10 last:pb-0">
-              {/* Timeline line */}
-              <div className="flex flex-col items-center flex-shrink-0 w-5">
-                <div
-                  className={`mt-1.5 h-3 w-3 rounded-full border-2 flex-shrink-0 ${
-                    role.current
-                      ? 'border-blue-400 bg-blue-400 shadow-[0_0_8px_rgba(96,165,250,0.5)]'
-                      : 'border-slate-600 bg-slate-900'
-                  }`}
-                />
-                {i < experience.length - 1 && (
-                  <div className="mt-1.5 w-px flex-1 bg-slate-800" />
-                )}
-              </div>
+        <div className="relative">
+          {/* Vertical gradient line */}
+          <div
+            className="absolute left-2 top-2 bottom-2 w-px"
+            aria-hidden="true"
+            style={{
+              background: 'linear-gradient(to bottom, rgba(96,165,250,0.6), rgba(168,85,247,0.4), rgba(51,65,85,0.2))',
+            }}
+          />
 
-              {/* Card */}
+          <div className="space-y-6">
+            {experience.map((role, i) => (
               <div
-                className={`flex-1 min-w-0 rounded-xl border p-5 mb-1 ${
-                  role.current
-                    ? 'border-blue-800/60'
-                    : 'border-slate-800'
-                }`}
-                style={{ backgroundColor: role.current ? 'rgba(10,20,50,0.6)' : '#0d1424' }}
+                key={i}
+                className={`reveal reveal-delay-${Math.min(i + 1, 6)} relative flex gap-6 pl-10`}
               >
-                <div className="flex flex-wrap items-center justify-between gap-2">
-                  <div className="flex flex-wrap items-center gap-2.5">
-                    <h3 className="font-semibold text-white">
-                      {role.title}
-                    </h3>
-                    {role.current && (
-                      <span
-                        className="rounded-full border border-blue-700/80 px-2 py-0.5 text-xs font-medium text-blue-300"
-                        style={{ backgroundColor: 'rgba(30,58,138,0.3)' }}
-                      >
-                        Current
-                      </span>
-                    )}
-                  </div>
-                  <span className="font-mono text-xs text-slate-500 flex-shrink-0">
-                    {role.period}
-                  </span>
+                {/* Node */}
+                <div
+                  className={`absolute left-0 top-3 flex h-5 w-5 items-center justify-center rounded-full ${
+                    role.current ? 'animate-pulse-glow' : ''
+                  }`}
+                  aria-hidden="true"
+                  style={{
+                    background: role.current
+                      ? 'radial-gradient(circle, #60a5fa 30%, rgba(59,130,246,0.2) 70%)'
+                      : 'radial-gradient(circle, #475569 30%, rgba(51,65,85,0.3) 70%)',
+                  }}
+                >
+                  <span
+                    className={`h-2 w-2 rounded-full ${
+                      role.current ? 'bg-white' : 'bg-slate-400'
+                    }`}
+                  />
                 </div>
 
-                <p className="mt-1 text-sm font-medium text-blue-400">
-                  {role.company}
-                </p>
+                {/* Card */}
+                <div
+                  className={`flex-1 min-w-0 glass-card rounded-2xl p-6 ${
+                    role.current ? 'ring-1 ring-blue-500/20' : ''
+                  }`}
+                  style={role.current ? {
+                    background: 'linear-gradient(135deg, rgba(30,58,138,0.25), rgba(15,23,42,0.4))',
+                  } : undefined}
+                >
+                  <div className="flex flex-wrap items-start justify-between gap-2">
+                    <div className="flex flex-wrap items-center gap-2.5">
+                      <h3 className="font-semibold text-white">
+                        {role.title}
+                      </h3>
+                      {role.current && (
+                        <span
+                          className="inline-flex items-center gap-1 rounded-full border border-blue-400/40 px-2 py-0.5 text-xs font-medium text-blue-200"
+                          style={{ background: 'linear-gradient(135deg, rgba(30,58,138,0.5), rgba(76,29,149,0.3))' }}
+                        >
+                          <span className="h-1.5 w-1.5 rounded-full bg-blue-300 animate-blink-soft" />
+                          Current
+                        </span>
+                      )}
+                    </div>
+                    <span className="font-mono text-xs text-slate-500 flex-shrink-0">
+                      {role.period}
+                    </span>
+                  </div>
 
-                {role.bullets && role.bullets.length > 0 && (
-                  <ul className="mt-4 space-y-2">
-                    {role.bullets.map((bullet, j) => (
-                      <li key={j} className="flex items-start gap-2.5 text-sm text-slate-400">
-                        <span className="mt-2 h-1 w-1 flex-shrink-0 rounded-full bg-blue-500" />
-                        {bullet}
-                      </li>
-                    ))}
-                  </ul>
-                )}
+                  <p className="mt-1 text-sm font-medium text-blue-300">
+                    {role.company}
+                  </p>
+
+                  {role.bullets && role.bullets.length > 0 && (
+                    <ul className="mt-4 grid gap-2 sm:grid-cols-2">
+                      {role.bullets.map((bullet, j) => (
+                        <li key={j} className="flex items-start gap-2.5 text-sm text-slate-400">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="mt-1 h-3 w-3 flex-shrink-0 text-blue-400" aria-hidden="true">
+                            <polyline points="20 6 9 17 4 12" />
+                          </svg>
+                          <span>{bullet}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </section>
