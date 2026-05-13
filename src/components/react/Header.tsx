@@ -53,20 +53,20 @@ export default function Header({ base = '/' }: HeaderProps) {
           {/* Brand */}
           <a href={`${base}`} className="group flex items-center gap-3">
             <span
-              className="relative flex h-9 w-9 items-center justify-center overflow-hidden rounded-lg font-mono text-sm font-bold text-white select-none"
+              className="relative flex h-9 w-9 items-center justify-center overflow-hidden rounded-lg font-mono text-[11px] font-bold text-white select-none"
               style={{
                 background: 'linear-gradient(135deg, #3b82f6 0%, #6366f1 50%, #a855f7 100%)',
                 boxShadow: '0 4px 14px -4px rgba(59, 130, 246, 0.5)',
               }}
             >
-              <span className="relative z-10">AC</span>
               <span
                 className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"
+                aria-hidden="true"
                 style={{
                   background: 'linear-gradient(135deg, #a855f7 0%, #3b82f6 100%)',
                 }}
               />
-              <span className="relative z-10">AC</span>
+              <span className="relative z-10 tracking-wider">ACS</span>
             </span>
             <div className="hidden sm:block">
               <p className="text-sm font-semibold text-slate-100 group-hover:text-white leading-none transition-colors">

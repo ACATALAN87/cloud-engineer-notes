@@ -23,13 +23,13 @@ export default function Footer({ base = '/' }: FooterProps) {
           <div className="lg:col-span-2">
             <div className="flex items-center gap-3">
               <span
-                className="flex h-9 w-9 items-center justify-center rounded-lg font-mono text-sm font-bold text-white"
+                className="flex h-9 w-9 items-center justify-center rounded-lg font-mono text-[11px] font-bold tracking-wider text-white"
                 style={{
                   background: 'linear-gradient(135deg, #3b82f6 0%, #6366f1 50%, #a855f7 100%)',
                   boxShadow: '0 4px 14px -4px rgba(59, 130, 246, 0.5)',
                 }}
               >
-                AC
+                ACS
               </span>
               <div>
                 <p className="font-semibold text-slate-100">Ángel Luis Catalán</p>

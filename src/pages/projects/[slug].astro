@@ -14,7 +14,7 @@ export async function getStaticPaths() {
 }
 
 const { project } = Astro.props;
-const { Content } = await render(project);
+const { Content, headings } = await render(project);
 
 const STATUS_STYLES: Record<string, { label: string; dot: string; chip: string }> = {
   live:          { label: 'Live',         dot: 'bg-emerald-400',  chip: 'border-emerald-500/40 text-emerald-300 bg-emerald-500/10' },
@@ -24,6 +24,10 @@ const STATUS_STYLES: Record<string, { label: string; dot: string; chip: string }
 };
 
 const status = STATUS_STYLES[project.data.status];
+
+// Build a flat TOC of h2 headings for long articles
+const toc = headings.filter((h) => h.depth === 2);
+const showToc = toc.length >= 3;
 ---
 
 <BaseLayout title={project.data.title} description={project.data.description}>
@@ -41,8 +45,13 @@ const status = STATUS_STYLES[project.data.status];
         aria-hidden="true"
         style="background: radial-gradient(circle, rgba(59,130,246,0.5), transparent 70%); filter: blur(40px);"
       />
+      <div
+        class="pointer-events-none absolute -right-16 bottom-0 h-[320px] w-[320px] rounded-full opacity-20 animate-blob"
+        aria-hidden="true"
+        style="background: radial-gradient(circle, rgba(168,85,247,0.5), transparent 70%); filter: blur(45px); animation-delay: -8s;"
+      />
 
-      <div class="relative mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+      <div class="relative mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         <a
           href={`${base}projects/`}
           class="mb-6 inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-blue-300 transition-colors"
@@ -72,7 +81,7 @@ const status = STATUS_STYLES[project.data.status];
         <h1 class="mt-5 text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl leading-[1.1]">
           {project.data.title}
         </h1>
-        <p class="mt-4 max-w-2xl text-lg text-slate-300 leading-relaxed">
+        <p class="mt-4 max-w-3xl text-lg text-slate-300 leading-relaxed">
           {project.data.description}
         </p>
 
@@ -120,54 +129,84 @@ const status = STATUS_STYLES[project.data.status];
       </div>
     </section>
 
-    {/* Highlights + Content */}
-    <section class="py-16">
-      <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-
-        {project.data.highlights && project.data.highlights.length > 0 && (
-          <div class="mb-12 glass-card rounded-2xl p-6 sm:p-8">
-            <h2 class="text-sm font-mono font-semibold uppercase tracking-widest text-blue-300">
-              Highlights
-            </h2>
-            <ul class="mt-4 grid gap-3 sm:grid-cols-2">
-              {project.data.highlights.map((h: string) => (
-                <li class="flex items-start gap-2.5 text-sm text-slate-300">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="mt-0.5 h-4 w-4 flex-shrink-0 text-blue-400" aria-hidden="true">
-                    <polyline points="20 6 9 17 4 12" />
-                  </svg>
-                  <span>{h}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-
-        {project.data.cover && (
-          <div class="mb-10">
+    {/* Cover image */}
+    {project.data.cover && (
+      <section class="py-12 sm:py-16" style="background-color: #050914;">
+        <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+          <div class="reveal project-cover">
             <img
               src={`${base}${project.data.cover.replace(/^\/+/, '')}`}
               alt={project.data.title}
-              class="w-full rounded-2xl border border-slate-800"
+              loading="eager"
             />
           </div>
-        )}
+        </div>
+      </section>
+    )}
 
-        <div class="prose prose-invert prose-slate max-w-none
-                    prose-headings:font-semibold prose-headings:tracking-tight prose-headings:text-white
-                    prose-h2:mt-10 prose-h2:mb-4 prose-h2:text-xl
-                    prose-h3:mt-6 prose-h3:mb-3 prose-h3:text-lg
-                    prose-p:text-slate-300 prose-p:leading-7
-                    prose-a:text-blue-400 prose-a:no-underline hover:prose-a:underline
-                    prose-strong:text-white prose-strong:font-semibold
-                    prose-code:text-slate-200 prose-code:font-mono prose-code:text-sm
-                    prose-pre:border prose-pre:border-slate-700/80
-                    prose-li:text-slate-300
-                    prose-hr:border-slate-800
-                    prose-blockquote:border-l-blue-500 prose-blockquote:text-slate-300">
-          <Content />
+    {/* Highlights + Content */}
+    <section class="py-16">
+      <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+
+        <div class={showToc ? "grid gap-10 lg:grid-cols-[1fr_240px]" : ""}>
+
+          <div class="min-w-0">
+
+            {project.data.highlights && project.data.highlights.length > 0 && (
+              <div class="reveal mb-12 glass-card rounded-2xl p-6 sm:p-8">
+                <h2 class="text-sm font-mono font-semibold uppercase tracking-widest text-blue-300">
+                  Highlights
+                </h2>
+                <ul class="mt-4 grid gap-3 sm:grid-cols-2">
+                  {project.data.highlights.map((h: string) => (
+                    <li class="flex items-start gap-2.5 text-sm text-slate-300">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="mt-0.5 h-4 w-4 flex-shrink-0 text-blue-400" aria-hidden="true">
+                        <polyline points="20 6 9 17 4 12" />
+                      </svg>
+                      <span>{h}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            <div class="project-prose prose prose-invert prose-slate max-w-none
+                        prose-headings:font-semibold prose-headings:tracking-tight prose-headings:text-white
+                        prose-h2:mt-14 prose-h2:mb-5 prose-h2:text-2xl prose-h2:border-l-4 prose-h2:border-blue-500 prose-h2:pl-4
+                        prose-h3:mt-8 prose-h3:mb-3 prose-h3:text-lg prose-h3:text-blue-200
+                        prose-p:text-slate-300 prose-p:leading-7
+                        prose-a:text-blue-400 prose-a:no-underline hover:prose-a:underline
+                        prose-strong:text-white prose-strong:font-semibold
+                        prose-code:text-blue-200 prose-code:font-mono prose-code:text-sm
+                        prose-li:text-slate-300
+                        prose-hr:border-slate-800
+                        prose-blockquote:border-l-blue-500 prose-blockquote:text-slate-300 prose-blockquote:bg-blue-500/5 prose-blockquote:py-1 prose-blockquote:rounded-r">
+              <Content />
+            </div>
+          </div>
+
+          {showToc && (
+            <aside class="hidden lg:block">
+              <div class="sticky top-24">
+                <p class="mb-3 text-xs font-mono font-semibold uppercase tracking-widest text-slate-500">
+                  On this page
+                </p>
+                <nav class="space-y-1.5">
+                  {toc.map((h) => (
+                    <a
+                      href={`#${h.slug}`}
+                      class="block text-sm text-slate-400 hover:text-blue-300 transition-colors border-l border-slate-800 hover:border-blue-400 pl-3 py-1"
+                    >
+                      {h.text}
+                    </a>
+                  ))}
+                </nav>
+              </div>
+            </aside>
+          )}
         </div>
 
-        <div class="mt-16 border-t border-slate-800/60 pt-8">
+        <div class="mt-20 border-t border-slate-800/60 pt-8">
           <a
             href={`${base}projects/`}
             class="inline-flex items-center gap-1.5 text-sm text-slate-400 hover:text-blue-300 transition-colors"
@@ -182,3 +221,172 @@ const status = STATUS_STYLES[project.data.status];
     </section>
   </article>
 </BaseLayout>
+
+<style is:global>
+  /* ==== Cover image — glass frame with glow ==== */
+  .project-cover {
+    position: relative;
+    border-radius: 1.25rem;
+    overflow: hidden;
+    border: 1px solid rgba(96, 165, 250, 0.18);
+    background: linear-gradient(135deg, rgba(30,58,138,0.12), rgba(15,23,42,0.4));
+    box-shadow:
+      0 25px 60px -20px rgba(2, 6, 23, 0.7),
+      0 0 0 1px rgba(59, 130, 246, 0.12),
+      0 0 60px -10px rgba(59, 130, 246, 0.25);
+  }
+  .project-cover::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(96,165,250,0.4), rgba(168,85,247,0.25), rgba(34,211,238,0.4));
+    background-size: 200% 200%;
+    animation: gradient-pan 10s ease infinite;
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    pointer-events: none;
+  }
+  .project-cover img {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin: 0;
+  }
+
+  /* ==== Markdown content polish ==== */
+
+  /* Images inside content get the same glass-card treatment + reveal */
+  .project-prose img {
+    width: 100%;
+    height: auto;
+    border-radius: 1rem;
+    border: 1px solid rgba(96, 165, 250, 0.15);
+    background: linear-gradient(135deg, rgba(30,58,138,0.08), rgba(15,23,42,0.3));
+    box-shadow:
+      0 18px 40px -12px rgba(2, 6, 23, 0.7),
+      0 0 30px -10px rgba(59, 130, 246, 0.2);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+  }
+  .project-prose img:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 22px 50px -15px rgba(2, 6, 23, 0.8),
+      0 0 50px -10px rgba(59, 130, 246, 0.35);
+  }
+  .project-prose p:has(img) {
+    margin-top: 2.25rem;
+    margin-bottom: 2.25rem;
+  }
+  .project-prose p img + em,
+  .project-prose figure figcaption {
+    display: block;
+    text-align: center;
+    color: #94a3b8;
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+    font-style: italic;
+  }
+
+  /* Code blocks — modern theme */
+  .project-prose pre {
+    background: linear-gradient(135deg, #0a0f1e 0%, #050914 100%) !important;
+    border: 1px solid rgba(96, 165, 250, 0.15) !important;
+    border-radius: 0.875rem !important;
+    padding: 1.25rem 1.5rem !important;
+    position: relative;
+    overflow-x: auto;
+    box-shadow: 0 8px 24px -12px rgba(0, 0, 0, 0.6);
+  }
+  .project-prose pre::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(96,165,250,0.3), transparent 50%, rgba(168,85,247,0.2));
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0.6;
+  }
+  .project-prose pre code {
+    background: transparent !important;
+    padding: 0 !important;
+    font-size: 0.85rem;
+    line-height: 1.65;
+  }
+
+  /* Inline code */
+  .project-prose :not(pre) > code {
+    background: rgba(59, 130, 246, 0.12) !important;
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    color: #93c5fd !important;
+    padding: 0.1em 0.45em !important;
+    border-radius: 4px;
+    font-size: 0.85em;
+  }
+
+  /* Tables */
+  .project-prose table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
+    border-radius: 0.75rem;
+    border: 1px solid rgba(96, 165, 250, 0.15);
+    background: rgba(15, 23, 42, 0.4);
+    backdrop-filter: blur(10px);
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .project-prose thead th {
+    background: linear-gradient(135deg, rgba(30,58,138,0.4), rgba(76,29,149,0.25));
+    color: #e0e7ff;
+    font-weight: 600;
+    text-align: left;
+    padding: 0.65rem 1rem;
+    font-size: 0.85rem;
+    border-bottom: 1px solid rgba(96, 165, 250, 0.2);
+  }
+  .project-prose tbody td {
+    padding: 0.65rem 1rem;
+    border-top: 1px solid rgba(51, 65, 85, 0.4);
+    color: #cbd5e1;
+    font-size: 0.875rem;
+    vertical-align: top;
+  }
+  .project-prose tbody tr:hover {
+    background: rgba(59, 130, 246, 0.04);
+  }
+
+  /* Lists — nicer bullets */
+  .project-prose ul > li::marker {
+    color: #60a5fa;
+  }
+  .project-prose ol > li::marker {
+    color: #60a5fa;
+    font-weight: 600;
+  }
+
+  /* Blockquotes */
+  .project-prose blockquote {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+  .project-prose blockquote p::before,
+  .project-prose blockquote p::after {
+    content: '';
+  }
+
+  /* Anchor on headings */
+  .project-prose h2,
+  .project-prose h3 {
+    scroll-margin-top: 5rem;
+  }
+</style>

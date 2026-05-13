@@ -1,70 +1,70 @@
 {
-  "fetchedAt": "2026-04-09T21:29:01.387Z",
+  "fetchedAt": "2026-05-13T12:21:14.968Z",
   "latest": {
-    "title": "Azure IaaS: Keep critical applications running with built-in resiliency at scale",
-    "url": "https://azure.microsoft.com/en-us/blog/azure-iaas-keep-critical-applications-running-with-built-in-resiliency-at-scale/",
-    "publishedAt": "2026-04-01T16:00:00.000Z",
+    "title": "Advancing enterprise AI: New SAP on Azure announcements from SAP Sapphire 2026",
+    "url": "https://azure.microsoft.com/en-us/blog/advancing-enterprise-ai-new-sap-on-azure-announcements-from-sap-sapphire-2026/",
+    "publishedAt": "2026-05-12T18:00:00.000Z",
     "source": "Azure Blog"
   },
   "items": [
     {
-      "title": "Azure IaaS: Keep critical applications running with built-in resiliency at scale",
-      "url": "https://azure.microsoft.com/en-us/blog/azure-iaas-keep-critical-applications-running-with-built-in-resiliency-at-scale/",
-      "publishedAt": "2026-04-01T16:00:00.000Z",
+      "title": "Advancing enterprise AI: New SAP on Azure announcements from SAP Sapphire 2026",
+      "url": "https://azure.microsoft.com/en-us/blog/advancing-enterprise-ai-new-sap-on-azure-announcements-from-sap-sapphire-2026/",
+      "publishedAt": "2026-05-12T18:00:00.000Z",
       "source": "Azure Blog"
     },
     {
-      "title": "Building sovereign AI at the edge: Microsoft and Armada collaborate to deliver Azure Local on Galleon modular datacenters",
-      "url": "https://azure.microsoft.com/en-us/blog/building-sovereign-ai-at-the-edge-microsoft-and-armada-collaborate-to-deliver-azure-local-on-galleon-modular-datacenters/",
-      "publishedAt": "2026-03-31T16:00:00.000Z",
+      "title": "Red Hat Summit 2026: Platform modernization and AI on Microsoft Azure Red Hat OpenShift",
+      "url": "https://azure.microsoft.com/en-us/blog/red-hat-summit-2026-platform-modernization-and-ai-on-azure-microsoft-red-hat-openshift/",
+      "publishedAt": "2026-05-11T19:00:00.000Z",
       "source": "Azure Blog"
     },
     {
-      "title": "Navigating digital sovereignty at the frontier of transformation",
-      "url": "https://www.microsoft.com/en-us/microsoft-cloud/blog/2026/03/25/navigating-digital-sovereignty-at-the-frontier-of-transformation/",
-      "publishedAt": "2026-03-30T21:27:39.000Z",
+      "title": "Build AI apps with Azure Cosmos DB: Key trends from Cosmos Conf 2026",
+      "url": "https://azure.microsoft.com/en-us/blog/build-ai-apps-with-azure-cosmos-db-key-trends-from-cosmos-conf-2026/",
+      "publishedAt": "2026-05-11T16:00:00.000Z",
       "source": "Azure Blog"
     },
     {
-      "title": "Microsoft named a Leader in 2026 Gartner® Magic Quadrant™ for Integration Platform as a Service",
-      "url": "https://azure.microsoft.com/en-us/blog/microsoft-named-a-leader-in-2026-gartner-magic-quadrant-for-integration-platform-as-a-service/",
-      "publishedAt": "2026-03-30T16:00:00.000Z",
+      "title": "Scaling cloud and AI: Microsoft Azure&#8217;s commitment to Europe&#8217;s digital future",
+      "url": "https://azure.microsoft.com/en-us/blog/scaling-cloud-and-ai-microsoft-azures-commitment-to-europes-digital-future/",
+      "publishedAt": "2026-05-06T14:00:00.000Z",
       "source": "Azure Blog"
     },
     {
-      "title": "AI for nuclear energy: Powering an intelligent, resilient future",
-      "url": "https://www.microsoft.com/en-us/industry/blog/energy-and-resources/2026/03/24/ai-for-nuclear-energy-powering-an-intelligent-resilient-future/",
-      "publishedAt": "2026-03-25T15:00:00.000Z",
+      "title": "Azure IaaS: Defense in depth built on secure-by-design principles",
+      "url": "https://azure.microsoft.com/en-us/blog/azure-iaas-defense-in-depth-built-on-secure-by-design-principles/",
+      "publishedAt": "2026-05-04T16:00:00.000Z",
       "source": "Azure Blog"
     },
     {
-      "title": "What’s new with Microsoft in open-source and Kubernetes at KubeCon + CloudNativeCon Europe 2026",
-      "url": "https://opensource.microsoft.com/blog/2026/03/24/whats-new-with-microsoft-in-open-source-and-kubernetes-at-kubecon-cloudnativecon-europe-2026/",
-      "publishedAt": "2026-03-24T07:05:00.000Z",
+      "title": "Enforcing trust and transparency: Open-sourcing the Azure Integrated HSM",
+      "url": "https://azure.microsoft.com/en-us/blog/enforcing-trust-and-transparency-open-sourcing-the-azure-integrated-hsm/",
+      "publishedAt": "2026-04-30T18:00:00.000Z",
       "source": "Azure Blog"
     },
     {
-      "title": "Advancing agentic AI with Microsoft databases across a unified data estate",
-      "url": "https://www.microsoft.com/en-us/sql-server/blog/2026/03/18/advancing-agentic-ai-with-microsoft-databases-across-a-unified-data-estate/",
-      "publishedAt": "2026-03-18T12:50:00.000Z",
+      "title": "Microsoft named a Leader in the IDC MarketScape: Worldwide API Management 2026 Vendor Assessment",
+      "url": "https://azure.microsoft.com/en-us/blog/microsoft-named-a-leader-in-the-idc-marketscape-worldwide-api-management-2026-vendor-assessment/",
+      "publishedAt": "2026-04-28T16:00:00.000Z",
       "source": "Azure Blog"
     },
     {
-      "title": "FabCon and SQLCon 2026: Unifying databases and Fabric on a single data platform",
-      "url": "https://azure.microsoft.com/en-us/blog/fabcon-and-sqlcon-2026-unifying-databases-and-fabric-on-a-single-data-platform/",
-      "publishedAt": "2026-03-18T12:45:00.000Z",
+      "title": "Microsoft Sovereign Private Cloud scales to thousands of nodes with Azure Local",
+      "url": "https://blogs.microsoft.com/blog/2026/04/27/microsoft-sovereign-private-cloud-scales-to-thousands-of-nodes-with-azure-local/",
+      "publishedAt": "2026-04-27T18:00:00.000Z",
       "source": "Azure Blog"
     },
     {
-      "title": "Microsoft at NVIDIA GTC: New solutions for Microsoft Foundry, Azure AI infrastructure and Physical AI",
-      "url": "https://blogs.microsoft.com/blog/2026/03/16/microsoft-at-nvidia-gtc-new-solutions-for-microsoft-foundry-azure-ai-infrastructure-and-physical-ai/",
-      "publishedAt": "2026-03-16T21:21:14.000Z",
+      "title": "OpenAI’s GPT-5.5 in Microsoft Foundry: Frontier intelligence on an enterprise ready platform",
+      "url": "https://azure.microsoft.com/en-us/blog/openais-gpt-5-5-in-microsoft-foundry-frontier-intelligence-on-an-enterprise-ready-platform/",
+      "publishedAt": "2026-04-23T22:00:00.000Z",
       "source": "Azure Blog"
     },
     {
-      "title": "From legacy to leadership: How PostgreSQL on Azure powers enterprise agility and innovation",
-      "url": "https://azure.microsoft.com/en-us/blog/from-legacy-to-leadership-how-postgresql-on-azure-powers-enterprise-agility-and-innovation/",
-      "publishedAt": "2026-03-16T17:00:00.000Z",
+      "title": "Microsoft Discovery: Advancing agentic R&#038;D at scale",
+      "url": "https://azure.microsoft.com/en-us/blog/microsoft-discovery-advancing-agentic-rd-at-scale/",
+      "publishedAt": "2026-04-22T16:00:00.000Z",
       "source": "Azure Blog"
     }
   ]

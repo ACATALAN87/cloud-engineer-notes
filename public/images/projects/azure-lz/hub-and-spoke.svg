@@ -1,0 +1,191 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 540" role="img" aria-label="Azure hub-and-spoke topology with shared services and three spoke workloads">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0a0f1e"/>
+      <stop offset="100%" stop-color="#050914"/>
+    </linearGradient>
+    <linearGradient id="hubGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#1d4ed8"/>
+    </linearGradient>
+    <linearGradient id="spokeGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <linearGradient id="onpremGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#475569"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <radialGradient id="hubGlow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0%" stop-color="rgba(59,130,246,0.45)"/>
+      <stop offset="100%" stop-color="rgba(59,130,246,0)"/>
+    </radialGradient>
+    <pattern id="grid" width="36" height="36" patternUnits="userSpaceOnUse">
+      <path d="M 36 0 L 0 0 0 36" fill="none" stroke="rgba(96,165,250,0.08)" stroke-width="0.5"/>
+    </pattern>
+    <filter id="softShadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="3"/>
+      <feOffset dx="0" dy="2" result="off"/>
+      <feFlood flood-color="#000" flood-opacity="0.45"/>
+      <feComposite in2="off" operator="in"/>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <style>
+      .label    { font-family: 'Inter', system-ui, sans-serif; font-weight: 600; fill: #e2e8f0; }
+      .sublabel { font-family: 'Inter', system-ui, sans-serif; font-weight: 400; fill: #94a3b8; }
+      .mono     { font-family: 'JetBrains Mono', monospace; fill: #60a5fa; }
+      .title    { font-family: 'Inter', system-ui, sans-serif; font-weight: 700; fill: #ffffff; }
+
+      @keyframes dash       { to { stroke-dashoffset: -32; } }
+      @keyframes pulseHub   { 0%,100% { opacity: 0.55; transform: scale(1);   } 50% { opacity: 0.85; transform: scale(1.05); } }
+      @keyframes blinkSoft  { 0%,100% { opacity: 1;    } 50% { opacity: 0.35; } }
+
+      .flow         { stroke-dasharray: 6 8; animation: dash 1.6s linear infinite; }
+      .flow-slow    { stroke-dasharray: 4 10; animation: dash 3s linear infinite; }
+      .hub-glow     { transform-origin: 450px 270px; animation: pulseHub 3.5s ease-in-out infinite; }
+      .blink        { animation: blinkSoft 1.8s ease-in-out infinite; }
+
+      @media (prefers-reduced-motion: reduce) {
+        .flow, .flow-slow, .hub-glow, .blink { animation: none; }
+      }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="540" fill="url(#bgGrad)" rx="14"/>
+  <rect width="900" height="540" fill="url(#grid)" rx="14"/>
+
+  <!-- Hub glow -->
+  <circle class="hub-glow" cx="450" cy="270" r="170" fill="url(#hubGlow)"/>
+
+  <!-- ============================================== Edges ============================================== -->
+  <!-- Spoke 1 -->
+  <line x1="450" y1="270" x2="170" y2="120" stroke="rgba(96,165,250,0.5)" stroke-width="2" class="flow"/>
+  <!-- Spoke 2 -->
+  <line x1="450" y1="270" x2="730" y2="120" stroke="rgba(96,165,250,0.5)" stroke-width="2" class="flow"/>
+  <!-- Spoke 3 -->
+  <line x1="450" y1="270" x2="170" y2="420" stroke="rgba(96,165,250,0.5)" stroke-width="2" class="flow"/>
+  <!-- Spoke 4 -->
+  <line x1="450" y1="270" x2="730" y2="420" stroke="rgba(96,165,250,0.5)" stroke-width="2" class="flow"/>
+  <!-- On-prem (slow flow) -->
+  <line x1="450" y1="270" x2="450" y2="470" stroke="rgba(168,85,247,0.55)" stroke-width="2.5" class="flow-slow"/>
+  <!-- Internet (slow flow) -->
+  <line x1="450" y1="270" x2="450" y2="70" stroke="rgba(34,211,238,0.55)" stroke-width="2.5" class="flow-slow"/>
+
+  <!-- ============================================== Internet Edge ============================================== -->
+  <g transform="translate(390 30)" filter="url(#softShadow)">
+    <rect width="120" height="50" rx="10" fill="url(#onpremGrad)" stroke="rgba(34,211,238,0.4)" stroke-width="1"/>
+    <text x="60" y="22" text-anchor="middle" class="label" font-size="13">Internet</text>
+    <text x="60" y="38" text-anchor="middle" class="sublabel" font-size="11">Public ingress</text>
+  </g>
+
+  <!-- ============================================== HUB ============================================== -->
+  <g transform="translate(330 210)" filter="url(#softShadow)">
+    <rect width="240" height="120" rx="16" fill="url(#hubGrad)" stroke="rgba(147,197,253,0.6)" stroke-width="1.5"/>
+    <text x="120" y="32" text-anchor="middle" class="title" font-size="18">Hub VNet</text>
+    <text x="120" y="50" text-anchor="middle" class="mono" font-size="11">10.0.0.0/16</text>
+
+    <!-- Mini icons inside hub -->
+    <g transform="translate(15 64)">
+      <rect width="64" height="42" rx="6" fill="rgba(2,6,23,0.55)" stroke="rgba(96,165,250,0.5)"/>
+      <text x="32" y="17" text-anchor="middle" class="sublabel" font-size="9" fill="#bfdbfe">Firewall</text>
+      <circle cx="32" cy="31" r="3.5" fill="#22d3ee" class="blink"/>
+    </g>
+    <g transform="translate(89 64)">
+      <rect width="62" height="42" rx="6" fill="rgba(2,6,23,0.55)" stroke="rgba(96,165,250,0.5)"/>
+      <text x="31" y="17" text-anchor="middle" class="sublabel" font-size="9" fill="#bfdbfe">VPN Gw</text>
+      <text x="31" y="32" text-anchor="middle" class="sublabel" font-size="8" fill="#94a3b8">ExpressRoute</text>
+    </g>
+    <g transform="translate(161 64)">
+      <rect width="64" height="42" rx="6" fill="rgba(2,6,23,0.55)" stroke="rgba(96,165,250,0.5)"/>
+      <text x="32" y="17" text-anchor="middle" class="sublabel" font-size="9" fill="#bfdbfe">Bastion</text>
+      <text x="32" y="32" text-anchor="middle" class="sublabel" font-size="8" fill="#94a3b8">Private DNS</text>
+    </g>
+  </g>
+
+  <!-- ============================================== Spokes ============================================== -->
+  <!-- Spoke: Identity -->
+  <g transform="translate(80 70)" filter="url(#softShadow)">
+    <rect width="180" height="100" rx="12" fill="url(#spokeGrad)" stroke="rgba(96,165,250,0.4)"/>
+    <text x="90" y="26" text-anchor="middle" class="label" font-size="13">Spoke · Identity</text>
+    <text x="90" y="44" text-anchor="middle" class="mono" font-size="10">10.10.0.0/16</text>
+    <g transform="translate(14 56)">
+      <rect width="74" height="32" rx="5" fill="rgba(2,6,23,0.55)" stroke="rgba(96,165,250,0.25)"/>
+      <text x="37" y="14" text-anchor="middle" class="sublabel" font-size="9" fill="#cbd5e1">Domain</text>
+      <text x="37" y="25" text-anchor="middle" class="sublabel" font-size="8" fill="#94a3b8">Controllers</text>
+    </g>
+    <g transform="translate(92 56)">
+      <rect width="74" height="32" rx="5" fill="rgba(2,6,23,0.55)" stroke="rgba(96,165,250,0.25)"/>
+      <text x="37" y="14" text-anchor="middle" class="sublabel" font-size="9" fill="#cbd5e1">PIM</text>
+      <text x="37" y="25" text-anchor="middle" class="sublabel" font-size="8" fill="#94a3b8">RBAC roles</text>
+    </g>
+  </g>
+
+  <!-- Spoke: Workload Prod -->
+  <g transform="translate(640 70)" filter="url(#softShadow)">
+    <rect width="180" height="100" rx="12" fill="url(#spokeGrad)" stroke="rgba(96,165,250,0.4)"/>
+    <text x="90" y="26" text-anchor="middle" class="label" font-size="13">Spoke · Workload Prod</text>
+    <text x="90" y="44" text-anchor="middle" class="mono" font-size="10">10.20.0.0/16</text>
+    <g transform="translate(14 56)">
+      <rect width="74" height="32" rx="5" fill="rgba(2,6,23,0.55)" stroke="rgba(96,165,250,0.25)"/>
+      <text x="37" y="14" text-anchor="middle" class="sublabel" font-size="9" fill="#cbd5e1">App Service</text>
+      <text x="37" y="25" text-anchor="middle" class="sublabel" font-size="8" fill="#94a3b8">+ Priv Endpoint</text>
+    </g>
+    <g transform="translate(92 56)">
+      <rect width="74" height="32" rx="5" fill="rgba(2,6,23,0.55)" stroke="rgba(96,165,250,0.25)"/>
+      <text x="37" y="14" text-anchor="middle" class="sublabel" font-size="9" fill="#cbd5e1">SQL DB</text>
+      <text x="37" y="25" text-anchor="middle" class="sublabel" font-size="8" fill="#94a3b8">Private</text>
+    </g>
+  </g>
+
+  <!-- Spoke: Workload Dev -->
+  <g transform="translate(80 370)" filter="url(#softShadow)">
+    <rect width="180" height="100" rx="12" fill="url(#spokeGrad)" stroke="rgba(96,165,250,0.4)"/>
+    <text x="90" y="26" text-anchor="middle" class="label" font-size="13">Spoke · Workload Dev</text>
+    <text x="90" y="44" text-anchor="middle" class="mono" font-size="10">10.30.0.0/16</text>
+    <g transform="translate(14 56)">
+      <rect width="74" height="32" rx="5" fill="rgba(2,6,23,0.55)" stroke="rgba(96,165,250,0.25)"/>
+      <text x="37" y="14" text-anchor="middle" class="sublabel" font-size="9" fill="#cbd5e1">AKS</text>
+      <text x="37" y="25" text-anchor="middle" class="sublabel" font-size="8" fill="#94a3b8">Internal LB</text>
+    </g>
+    <g transform="translate(92 56)">
+      <rect width="74" height="32" rx="5" fill="rgba(2,6,23,0.55)" stroke="rgba(96,165,250,0.25)"/>
+      <text x="37" y="14" text-anchor="middle" class="sublabel" font-size="9" fill="#cbd5e1">Storage</text>
+      <text x="37" y="25" text-anchor="middle" class="sublabel" font-size="8" fill="#94a3b8">Private</text>
+    </g>
+  </g>
+
+  <!-- Spoke: Data -->
+  <g transform="translate(640 370)" filter="url(#softShadow)">
+    <rect width="180" height="100" rx="12" fill="url(#spokeGrad)" stroke="rgba(96,165,250,0.4)"/>
+    <text x="90" y="26" text-anchor="middle" class="label" font-size="13">Spoke · Data Platform</text>
+    <text x="90" y="44" text-anchor="middle" class="mono" font-size="10">10.40.0.0/16</text>
+    <g transform="translate(14 56)">
+      <rect width="74" height="32" rx="5" fill="rgba(2,6,23,0.55)" stroke="rgba(96,165,250,0.25)"/>
+      <text x="37" y="14" text-anchor="middle" class="sublabel" font-size="9" fill="#cbd5e1">Data Factory</text>
+      <text x="37" y="25" text-anchor="middle" class="sublabel" font-size="8" fill="#94a3b8">+ SHIR</text>
+    </g>
+    <g transform="translate(92 56)">
+      <rect width="74" height="32" rx="5" fill="rgba(2,6,23,0.55)" stroke="rgba(96,165,250,0.25)"/>
+      <text x="37" y="14" text-anchor="middle" class="sublabel" font-size="9" fill="#cbd5e1">Snowflake</text>
+      <text x="37" y="25" text-anchor="middle" class="sublabel" font-size="8" fill="#94a3b8">+ PrivLink</text>
+    </g>
+  </g>
+
+  <!-- ============================================== On-prem ============================================== -->
+  <g transform="translate(370 480)" filter="url(#softShadow)">
+    <rect width="160" height="44" rx="10" fill="url(#onpremGrad)" stroke="rgba(168,85,247,0.45)"/>
+    <text x="80" y="19" text-anchor="middle" class="label" font-size="12">On-premises</text>
+    <text x="80" y="34" text-anchor="middle" class="sublabel" font-size="10">via ExpressRoute / S2S VPN</text>
+  </g>
+
+  <!-- ============================================== Legend ============================================== -->
+  <g transform="translate(30 510)">
+    <text x="0" y="0" class="sublabel" font-size="10">VNet peering</text>
+    <line x1="80" y1="-4" x2="115" y2="-4" stroke="rgba(96,165,250,0.7)" stroke-width="2" class="flow"/>
+    <text x="135" y="0" class="sublabel" font-size="10">Hybrid connectivity</text>
+    <line x1="245" y1="-4" x2="280" y2="-4" stroke="rgba(168,85,247,0.7)" stroke-width="2" class="flow-slow"/>
+    <text x="300" y="0" class="sublabel" font-size="10">Public traffic (egress via Firewall)</text>
+    <line x1="465" y1="-4" x2="500" y2="-4" stroke="rgba(34,211,238,0.7)" stroke-width="2" class="flow-slow"/>
+  </g>
+</svg>

@@ -34,7 +34,7 @@ export default function LogoMark({
       viewBox="0 0 32 32"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      aria-label="AC — Ángel Luis Catalán"
+      aria-label="ACS — Ángel Luis Catalán Sánchez"
       role="img"
       className={className}
     >
@@ -54,18 +54,18 @@ export default function LogoMark({
         strokeWidth="1"
       />
 
-      {/* Initials "AC" — JetBrains Mono style, tight tracking */}
+      {/* Initials "ACS" — JetBrains Mono style, tight tracking */}
       <text
         x="16"
         y="21"
         textAnchor="middle"
         fill={textCol}
-        fontSize="12"
+        fontSize="11"
         fontWeight="700"
         fontFamily="'JetBrains Mono', 'Fira Code', 'Consolas', monospace"
-        letterSpacing="-0.5"
+        letterSpacing="-0.3"
       >
-        AC
+        ACS
       </text>
 
       {/* Geometric accent: two nodes + connecting line (top-right corner area) */}
