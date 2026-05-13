@@ -15,7 +15,7 @@ const sorted = all.sort((a, b) => {
   return b.data.date.getTime() - a.data.date.getTime();
 });
 
-const dtFormatter = new Intl.DateTimeFormat('en-US', {
+const dtFormatter = new Intl.DateTimeFormat('es-ES', {
   year: 'numeric',
   month: 'short',
 });
@@ -37,7 +37,7 @@ const items: ProjectItem[] = sorted.map((p) => ({
 ---
 
 <BaseLayout
-  title="Projects | Ángel Luis Catalán"
+  title="Proyectos | Ángel Luis Catalán"
   description="Proyectos personales y profesionales de Ángel Luis Catalán — infraestructura Azure, Terraform, automatización y plataformas cloud."
 >
   <!-- Header section -->
@@ -56,9 +56,9 @@ const items: ProjectItem[] = sorted.map((p) => ({
     />
 
     <div class="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-      <span class="eyebrow">Projects</span>
+      <span class="eyebrow">Proyectos</span>
       <h1 class="mt-4 text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl leading-[1.1]">
-        Things I've <span class="text-gradient">built</span>
+        Cosas que he <span class="text-gradient">construido</span>
       </h1>
       <p class="mt-5 max-w-2xl text-lg text-slate-300 leading-relaxed">
         Una selección de proyectos personales y profesionales centrados en

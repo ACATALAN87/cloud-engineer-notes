@@ -12,8 +12,8 @@ interface Prop {
 const props: Prop[] = [
   {
     number: '01',
-    title:  'Enterprise Azure Infrastructure',
-    body:   'Design and deployment of Azure infrastructure for enterprise environments with focus on scalability, security and maintainability. VNets, NSGs, firewalls, VPN gateways, ExpressRoute and beyond.',
+    title:  'Infraestructura Azure empresarial',
+    body:   'Diseño y despliegue de infraestructura Azure en entornos empresariales con foco en escalabilidad, seguridad y mantenibilidad. VNets, NSGs, firewalls, VPN gateways, ExpressRoute y mucho más.',
     accent: 'from-blue-400 to-cyan-400',
     glow:   'rgba(59, 130, 246, 0.25)',
     icon:   (
@@ -26,8 +26,8 @@ const props: Prop[] = [
   },
   {
     number: '02',
-    title:  'IaC & Standardization',
-    body:   'Full platform automation using Terraform, GitHub Actions and Azure DevOps. Reusable modules, remote state, consistent environments and reduced operational friction across the board.',
+    title:  'IaC y estandarización',
+    body:   'Automatización completa de plataforma con Terraform, GitHub Actions y Azure DevOps. Módulos reutilizables, remote state, entornos consistentes y menos fricción operativa.',
     accent: 'from-violet-400 to-fuchsia-400',
     glow:   'rgba(168, 85, 247, 0.25)',
     icon:   (
@@ -38,8 +38,8 @@ const props: Prop[] = [
   },
   {
     number: '03',
-    title:  'Reliability & Operations',
-    body:   'Real-world experience in 24x7 critical systems, complex platform integration, incident troubleshooting and operational discipline built over 10+ years in enterprise environments.',
+    title:  'Fiabilidad y operación',
+    body:   'Experiencia real en sistemas críticos 24x7, integración compleja de plataformas, resolución de incidencias y disciplina operativa construida durante más de 10 años en entornos empresariales.',
     accent: 'from-cyan-400 to-emerald-400',
     glow:   'rgba(34, 211, 238, 0.25)',
     icon:   (
@@ -117,9 +117,9 @@ export default function ValueProps() {
 
       <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="reveal mb-12 max-w-2xl">
-          <span className="eyebrow">What I bring</span>
+          <span className="eyebrow">Lo que aporto</span>
           <h2 className="mt-3 text-3xl font-bold text-white sm:text-4xl">
-            How I <span className="text-gradient-static">work</span>
+            Cómo <span className="text-gradient-static">trabajo</span>
           </h2>
           <p className="mt-4 text-slate-400 leading-relaxed">
             Tres pilares que definen mi enfoque profesional en ingeniería cloud.

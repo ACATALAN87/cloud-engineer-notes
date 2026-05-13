@@ -14,7 +14,7 @@ const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
 
 const allProjects = await getCollection('projects', ({ data }) => !data.draft);
 
-const dtFormatter = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short' });
+const dtFormatter = new Intl.DateTimeFormat('es-ES', { year: 'numeric', month: 'short' });
 
 const featured = allProjects
   .sort((a, b) => {
@@ -40,7 +40,7 @@ const featured = allProjects
 
 <BaseLayout
   title="Ángel Luis Catalán | Senior Cloud Engineer"
-  description="Senior Cloud Engineer specialised in Azure, Terraform, DevOps and enterprise infrastructure. Based in Madrid, Spain."
+  description="Senior Cloud Engineer especializado en Azure, Terraform, DevOps e infraestructura empresarial. Madrid, España."
 >
   <Hero client:load base={base} />
 

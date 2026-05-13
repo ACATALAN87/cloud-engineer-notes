@@ -4,8 +4,8 @@ import CTASection from '../components/react/CTASection';
 ---
 
 <BaseLayout
-  title="About | Ángel Luis Catalán"
-  description="Professional background and engineering approach of Ángel Luis Catalán, Senior Cloud Engineer based in Madrid."
+  title="Sobre mí | Ángel Luis Catalán"
+  description="Trayectoria profesional y enfoque de ingeniería de Ángel Luis Catalán, Senior Cloud Engineer en Madrid."
 >
 
   <!-- ── Header ─────────────────────────────────────────────────────────── -->
@@ -29,21 +29,22 @@ import CTASection from '../components/react/CTASection';
     />
 
     <div class="relative mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-      <span class="eyebrow">About</span>
+      <span class="eyebrow">Sobre mí</span>
       <h1 class="mt-4 text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl leading-[1.1]">
         Ángel Luis <span class="text-gradient">Catalán</span>
       </h1>
       <p class="mt-5 text-lg font-medium text-slate-300">
         Senior Cloud Engineer · Azure · Terraform · DevOps
       </p>
-      <p class="mt-1 font-mono text-sm text-slate-500">Madrid, Spain · Kyndryl</p>
+      <p class="mt-1 font-mono text-sm text-slate-500">Madrid, España · Kyndryl</p>
 
       <p class="mt-8 max-w-3xl text-base leading-8 text-slate-300">
-        I've spent the last decade working in enterprise environments where reliability,
-        operational discipline and scale aren't optional requirements — they're the baseline.
-        That background shapes how I think about cloud infrastructure: not as a collection
-        of services to provision, but as a platform that needs to be <span class="text-white font-semibold">designed,
-        maintained and evolved</span>.
+        He pasado la última década trabajando en entornos empresariales donde la
+        fiabilidad, la disciplina operativa y la escala no son requisitos opcionales:
+        son la base. Esa experiencia define cómo entiendo la infraestructura cloud:
+        no como un conjunto de servicios que provisionar, sino como una plataforma
+        que hay que <span class="text-white font-semibold">diseñar, mantener y
+        evolucionar</span>.
       </p>
     </div>
   </section>
@@ -53,9 +54,9 @@ import CTASection from '../components/react/CTASection';
     <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
       <div class="grid gap-4 sm:grid-cols-3">
         {[
-          { label: '10+',  desc: 'Years in enterprise environments', accent: 'from-blue-400 to-cyan-400'    },
-          { label: '7',    desc: 'Active cloud & DevOps certifications', accent: 'from-violet-400 to-fuchsia-400' },
-          { label: '24×7', desc: 'Critical production operations',   accent: 'from-cyan-400 to-emerald-400' },
+          { label: '10+',  desc: 'Años en entornos empresariales',         accent: 'from-blue-400 to-cyan-400'    },
+          { label: '7',    desc: 'Certificaciones activas cloud y DevOps', accent: 'from-violet-400 to-fuchsia-400' },
+          { label: '24×7', desc: 'Operación crítica en producción',        accent: 'from-cyan-400 to-emerald-400' },
         ].map(({ label, desc, accent }, idx) => (
           <div class={`reveal reveal-delay-${idx + 1} glass-card relative overflow-hidden rounded-2xl p-7 text-center`}>
             <p class={`text-4xl font-bold bg-gradient-to-r ${accent} bg-clip-text text-transparent`}>
@@ -68,88 +69,95 @@ import CTASection from '../components/react/CTASection';
     </div>
   </section>
 
-  <!-- ── Professional journey ──────────────────────────────────────────── -->
+  <!-- ── Trayectoria profesional ──────────────────────────────────────────── -->
   <section class="border-b border-slate-800/60 py-20">
     <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
       <div class="reveal mb-10">
-        <span class="eyebrow">Background</span>
+        <span class="eyebrow">Trayectoria</span>
         <h2 class="mt-3 text-3xl font-bold text-white sm:text-4xl">
-          Professional <span class="text-gradient-static">journey</span>
+          Recorrido <span class="text-gradient-static">profesional</span>
         </h2>
       </div>
 
       <div class="reveal space-y-6 text-base leading-8 text-slate-300">
         <p>
-          My career started in workload automation — managing enterprise scheduling platforms
-          across critical financial and industrial environments. That meant operating systems
-          that ran continuously, where failures had real consequences and where documentation,
-          runbooks and structured incident response were non-negotiable. Those habits didn't
-          go away when I moved into cloud.
+          Empecé mi carrera en workload automation — gestionando plataformas
+          empresariales de scheduling en entornos financieros e industriales
+          críticos. Esto implicaba operar sistemas que funcionaban de forma
+          continua, donde los fallos tenían consecuencias reales y donde la
+          documentación, los runbooks y la respuesta estructurada a incidencias
+          eran innegociables. Esos hábitos no desaparecieron cuando di el salto
+          al cloud.
         </p>
         <p>
-          Over time, the scope expanded. I moved from managing pipelines and jobs to designing
-          the infrastructure those pipelines run on. First deeper into Linux systems, scripting
-          and database administration. Then into cloud: Azure infrastructure, networking,
-          security, CI/CD, and eventually full platform engineering with Terraform at the centre.
+          Con el tiempo, el alcance se amplió. Pasé de gestionar pipelines y
+          jobs a diseñar la infraestructura sobre la que esos pipelines corren.
+          Primero profundizando en sistemas Linux, scripting y administración
+          de bases de datos. Después al cloud: infraestructura Azure, networking,
+          seguridad, CI/CD y, finalmente, platform engineering completo con
+          Terraform en el centro.
         </p>
         <p>
-          The current role at Kyndryl is where those threads come together. Azure infrastructure
-          design and deployment, Terraform automation, DevOps integration, Snowflake provisioning,
-          Couchbase Capella deployment via IaC — all within enterprise delivery constraints.
-          Not proof-of-concept work. <span class="text-white font-semibold">Production platforms for real clients</span>.
+          Mi rol actual en Kyndryl es donde todos esos hilos se unen. Diseño y
+          despliegue de infraestructura Azure, automatización con Terraform,
+          integración DevOps, provisioning de Snowflake, despliegue de Couchbase
+          Capella vía IaC — todo dentro de restricciones de entrega empresariales.
+          No es trabajo de prueba de concepto. Son <span class="text-white font-semibold">plataformas
+          de producción para clientes reales</span>.
         </p>
         <p>
-          The trajectory is clear: from operational discipline toward cloud architecture and
-          platform design. The hands-on foundation makes the architectural thinking more
-          grounded — I don't propose solutions I haven't had to operate.
+          La trayectoria es clara: de la disciplina operativa hacia la arquitectura
+          cloud y el diseño de plataformas. La base hands-on hace que el pensamiento
+          arquitectónico esté más anclado — no propongo soluciones que no haya
+          tenido que operar.
         </p>
       </div>
     </div>
   </section>
 
-  <!-- ── Engineering approach ──────────────────────────────────────────── -->
+  <!-- ── Enfoque de ingeniería ──────────────────────────────────────────── -->
   <section class="relative border-b border-slate-800/60 py-24" style="background-color: #040818;">
     <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
       <div class="reveal mb-12 max-w-2xl">
-        <span class="eyebrow">Engineering approach</span>
+        <span class="eyebrow">Enfoque de ingeniería</span>
         <h2 class="mt-3 text-3xl font-bold text-white sm:text-4xl">
-          How I approach <span class="text-gradient-static">cloud engineering</span>
+          Cómo enfoco la <span class="text-gradient-static">ingeniería cloud</span>
         </h2>
       </div>
 
       <div class="grid gap-5 lg:grid-cols-2">
         {[
           {
-            title: 'Infrastructure as code is not optional',
-            body:  "Manual provisioning doesn't scale and doesn't survive team changes. Every environment I work on gets a Terraform codebase — with remote state, consistent naming, modular structure and CI/CD integration from the start.",
+            title: 'Infrastructure as Code no es opcional',
+            body:  "El provisioning manual no escala y no sobrevive a los cambios de equipo. Cada entorno con el que trabajo recibe una codebase Terraform — con remote state, naming consistente, estructura modular e integración CI/CD desde el día uno.",
             accent: 'from-blue-400 to-cyan-400',
             glow:   'rgba(59, 130, 246, 0.25)',
             num: '01',
           },
           {
-            title: 'Automation with purpose',
-            body:  "Not every process needs to be automated, but every process that runs regularly does. The goal is reducing toil and error surface, not building automation that itself becomes a maintenance burden.",
+            title: 'Automatización con propósito',
+            body:  "No todo proceso necesita estar automatizado, pero todo proceso que se ejecuta de forma regular sí. El objetivo es reducir toil y superficie de error, no construir automatización que se convierta en una carga de mantenimiento.",
             accent: 'from-violet-400 to-fuchsia-400',
             glow:   'rgba(168, 85, 247, 0.25)',
             num: '02',
           },
           {
-            title: 'Security and networking first-class',
-            body:  "Azure networking is where most enterprise complexity lives: hub-spoke topologies, NSG design, Private Endpoints, DNS resolution. Retrofitting security onto an existing platform is significantly harder than designing it in.",
+            title: 'Seguridad y networking de primer nivel',
+            body:  "El networking de Azure es donde vive la mayor parte de la complejidad empresarial: topologías hub-spoke, diseño de NSGs, Private Endpoints, resolución DNS. Reincorporar seguridad a posteriori es mucho más costoso que diseñarla desde el principio.",
             accent: 'from-cyan-400 to-emerald-400',
             glow:   'rgba(34, 211, 238, 0.25)',
             num: '03',
           },
           {
-            title: 'Operational clarity over clever design',
-            body:  "Infrastructure that is hard to understand is infrastructure that will fail at the worst moment. Clear naming, consistent tagging, readable modules, documented runbooks — these aren't polish, they're part of the engineering.",
+            title: 'Claridad operativa sobre diseño ingenioso',
+            body:  "La infraestructura difícil de entender es infraestructura que fallará en el peor momento. Nombres claros, tagging consistente, módulos legibles, runbooks documentados — no son cosméticos, son parte de la ingeniería.",
             accent: 'from-amber-400 to-rose-400',
             glow:   'rgba(245, 158, 11, 0.25)',
             num: '04',
           },
           {
-            title: 'Platform thinking over one-off deployments',
-            body:  "The most valuable infrastructure work is not delivering a single environment — it's building the patterns and tooling that make every subsequent environment cheaper, faster and more consistent to deliver.",
+            title: 'Pensamiento de plataforma',
+            body:  "El trabajo de infraestructura más valioso no es entregar un único entorno — es construir los patrones y el tooling que hacen que cada entorno posterior sea más barato, rápido y consistente de entregar.",
             accent: 'from-fuchsia-400 to-pink-400',
             glow:   'rgba(217, 70, 239, 0.25)',
             num: '05',
@@ -176,17 +184,17 @@ import CTASection from '../components/react/CTASection';
     </div>
   </section>
 
-  <!-- ── Focus areas ────────────────────────────────────────────────────── -->
+  <!-- ── Áreas de foco ────────────────────────────────────────────────────── -->
   <section class="border-b border-slate-800/60 py-20">
     <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
       <div class="reveal mb-12 max-w-2xl">
-        <span class="eyebrow">Focus</span>
+        <span class="eyebrow">Foco</span>
         <h2 class="mt-3 text-3xl font-bold text-white sm:text-4xl">
-          What I <span class="text-gradient-static">focus on</span>
+          En qué me <span class="text-gradient-static">centro</span>
         </h2>
         <p class="mt-4 text-slate-300 leading-relaxed">
           Cuatro áreas donde dedico la mayor parte de mi energía técnica y donde
-          tengo más profundidad para contribuir.
+          tengo más profundidad para aportar.
         </p>
       </div>
 
@@ -195,26 +203,26 @@ import CTASection from '../components/react/CTASection';
           {
             num:   '01',
             color: 'from-blue-400 to-cyan-400',
-            title: 'Azure platform engineering',
-            body:  'Hub-spoke topology design, VNet and subnet architecture, NSG rule management, Private Endpoints, Azure Firewall policy hierarchies, Azure Bastion, DNS zones and resolution across peered networks.',
+            title: 'Platform engineering en Azure',
+            body:  'Diseño de topologías hub-spoke, arquitectura de VNets y subnets, gestión de reglas NSG, Private Endpoints, jerarquías de policies en Azure Firewall, Azure Bastion, zonas DNS y resolución entre redes peeradas.',
           },
           {
             num:   '02',
             color: 'from-violet-400 to-fuchsia-400',
-            title: 'Terraform and Infrastructure as Code',
-            body:  'Module design, remote state with Azure Blob, workspace strategy, variable management, provider version pinning and CI/CD integration. Terraform that other engineers can read, extend and operate.',
+            title: 'Terraform e Infrastructure as Code',
+            body:  'Diseño de módulos, remote state con Azure Blob, estrategia de workspaces, gestión de variables, pinning de versiones de providers e integración CI/CD. Terraform que otros ingenieros pueden leer, extender y operar.',
           },
           {
             num:   '03',
             color: 'from-cyan-400 to-emerald-400',
-            title: 'DevOps and CI/CD',
-            body:  'Azure DevOps pipeline design, GitHub Actions workflows, service connections and OIDC-based keyless authentication, environment gating, pipeline-as-code patterns.',
+            title: 'DevOps y CI/CD',
+            body:  'Diseño de pipelines en Azure DevOps, workflows en GitHub Actions, service connections y autenticación keyless basada en OIDC, environment gating, patrones pipeline-as-code.',
           },
           {
             num:   '04',
             color: 'from-amber-400 to-rose-400',
-            title: 'Reliability and operations',
-            body:  'Monitoring and alerting design with Azure Monitor and Log Analytics, NSG flow logs, diagnostic settings baseline, RBAC and access governance, incident response process and runbook culture.',
+            title: 'Fiabilidad y operación',
+            body:  'Diseño de monitorización y alerting con Azure Monitor y Log Analytics, NSG flow logs, baseline de diagnostic settings, gobernanza de RBAC y accesos, proceso de respuesta a incidencias y cultura de runbooks.',
           },
         ].map((f, idx) => (
           <div class={`reveal reveal-delay-${Math.min(idx + 1, 4)} glass-card flex gap-6 rounded-2xl p-6`}>
@@ -231,35 +239,37 @@ import CTASection from '../components/react/CTASection';
     </div>
   </section>
 
-  <!-- ── Direction ──────────────────────────────────────────────────────── -->
+  <!-- ── Dirección ──────────────────────────────────────────────────────── -->
   <section class="border-b border-slate-800/60 py-20" style="background-color: #040818;">
     <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
       <div class="reveal mb-10">
-        <span class="eyebrow">Direction</span>
+        <span class="eyebrow">Dirección</span>
         <h2 class="mt-3 text-3xl font-bold text-white sm:text-4xl">
-          Where I'm <span class="text-gradient-static">heading</span>
+          Hacia dónde <span class="text-gradient-static">voy</span>
         </h2>
       </div>
 
       <div class="reveal space-y-6 text-base leading-8 text-slate-300">
         <p>
-          The natural progression from platform engineering is cloud architecture — moving
-          from implementing designs to owning them. The AZ-305 (Azure Solutions Architect Expert)
-          certification reflects that direction: not a credential collected for its own sake,
-          but validation of a shift in how I engage with technical problems.
+          La progresión natural desde platform engineering es la arquitectura
+          cloud — pasar de implementar diseños a ser dueño de ellos. La
+          certificación AZ-305 (Azure Solutions Architect Expert) refleja esa
+          dirección: no es una credencial coleccionada por sí misma, sino la
+          validación de un cambio en cómo me enfrento a los problemas técnicos.
         </p>
         <p>
-          I'm currently building deeper expertise in Azure infrastructure, networking and
-          automation, while gradually moving towards <span class="text-white font-semibold">cloud architecture
-          and platform engineering responsibilities</span>.
+          Actualmente estoy construyendo más profundidad en infraestructura,
+          networking y automatización Azure, mientras me muevo gradualmente
+          hacia <span class="text-white font-semibold">responsabilidades de
+          arquitectura cloud y platform engineering</span>.
         </p>
       </div>
 
       <div class="reveal mt-10 flex flex-wrap gap-2">
         {[
-          'Cloud Architecture',
+          'Arquitectura Cloud',
           'Azure Landing Zones',
-          'Enterprise Networking',
+          'Redes empresariales',
           'Platform Engineering',
           'Internal Developer Platforms',
         ].map((tag) => (

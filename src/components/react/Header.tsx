@@ -25,9 +25,9 @@ export default function Header({ base = '/' }: HeaderProps) {
   }, []);
 
   const nav = [
-    { label: 'Home',     href: `${base}` },
-    { label: 'About',    href: `${base}about/` },
-    { label: 'Projects', href: `${base}projects/` },
+    { label: 'Inicio',     href: `${base}` },
+    { label: 'Sobre mí',   href: `${base}about/` },
+    { label: 'Proyectos',  href: `${base}projects/` },
   ];
 
   const isActive = (href: string) => {
@@ -79,7 +79,7 @@ export default function Header({ base = '/' }: HeaderProps) {
           </a>
 
           {/* Desktop nav */}
-          <nav className="hidden md:flex items-center gap-1" aria-label="Main navigation">
+          <nav className="hidden md:flex items-center gap-1" aria-label="Navegación principal">
             {nav.map((item) => {
               const activeItem = isActive(item.href);
               return (
@@ -123,7 +123,7 @@ export default function Header({ base = '/' }: HeaderProps) {
           <button
             onClick={() => setOpen(!open)}
             className="md:hidden rounded-md p-2 text-slate-300 hover:bg-slate-800/60 hover:text-white transition-colors"
-            aria-label="Open menu"
+            aria-label="Abrir menú"
             aria-expanded={open}
           >
             <svg xmlns="http://www.w3.org/2000/svg" className={`h-5 w-5 transition-transform duration-300 ${open ? 'rotate-90' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
@@ -142,7 +142,7 @@ export default function Header({ base = '/' }: HeaderProps) {
             open ? 'max-h-80 opacity-100' : 'max-h-0 opacity-0'
           }`}
         >
-          <nav className="border-t border-slate-800/60 pb-4 pt-3 flex flex-col gap-1" aria-label="Mobile menu">
+          <nav className="border-t border-slate-800/60 pb-4 pt-3 flex flex-col gap-1" aria-label="Menú móvil">
             {nav.map((item) => {
               const activeItem = isActive(item.href);
               return (

@@ -13,9 +13,9 @@ interface SkillDomain {
 
 const domains: SkillDomain[] = [
   {
-    title:   'Cloud & Platform',
+    title:   'Cloud y plataforma',
     label:   '01',
-    skills:  ['Azure', 'Azure Networking', 'Enterprise Infrastructure', 'Platform Engineering', 'Monitoring & Observability', 'RBAC & Governance'],
+    skills:  ['Azure', 'Azure Networking', 'Infraestructura empresarial', 'Platform Engineering', 'Monitorización y observabilidad', 'RBAC y gobernanza'],
     accent:  'from-blue-400 to-cyan-400',
     heading: 'text-blue-300',
     chip:    'border-blue-500/30 text-blue-200 hover:border-blue-400/60 hover:bg-blue-500/10',
@@ -27,9 +27,9 @@ const domains: SkillDomain[] = [
     ),
   },
   {
-    title:   'DevOps & Automation',
+    title:   'DevOps y automatización',
     label:   '02',
-    skills:  ['Terraform', 'Azure DevOps', 'GitHub Actions', 'CI/CD Pipelines', 'Bash / Shell', 'Infrastructure as Code'],
+    skills:  ['Terraform', 'Azure DevOps', 'GitHub Actions', 'Pipelines CI/CD', 'Bash / Shell', 'Infrastructure as Code'],
     accent:  'from-violet-400 to-fuchsia-400',
     heading: 'text-violet-300',
     chip:    'border-violet-500/30 text-violet-200 hover:border-violet-400/60 hover:bg-violet-500/10',
@@ -42,9 +42,9 @@ const domains: SkillDomain[] = [
     ),
   },
   {
-    title:   'Data & Enterprise Platforms',
+    title:   'Datos y plataformas empresariales',
     label:   '03',
-    skills:  ['Snowflake', 'Couchbase Capella', 'Azure Data Factory', 'SQL', 'Appian', 'Platform Configuration'],
+    skills:  ['Snowflake', 'Couchbase Capella', 'Azure Data Factory', 'SQL', 'Appian', 'Configuración de plataformas'],
     accent:  'from-cyan-400 to-emerald-400',
     heading: 'text-cyan-300',
     chip:    'border-cyan-500/30 text-cyan-200 hover:border-cyan-400/60 hover:bg-cyan-500/10',
@@ -111,13 +111,13 @@ export default function SkillGrid() {
     <section className="relative border-b border-slate-800/60 py-24">
       <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="reveal mb-12 max-w-2xl">
-          <span className="eyebrow">Core skills</span>
+          <span className="eyebrow">Habilidades técnicas</span>
           <h2 className="mt-3 text-3xl font-bold text-white sm:text-4xl">
-            Technical <span className="text-gradient-static">stack</span>
+            Stack <span className="text-gradient-static">técnico</span>
           </h2>
           <p className="mt-4 text-slate-400 leading-relaxed">
             Habilidades agrupadas por dominio. Foco en Azure, automatización e
-            infraestructura enterprise.
+            infraestructura empresarial.
           </p>
         </div>
 

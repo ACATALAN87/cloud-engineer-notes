@@ -2,10 +2,10 @@ import { useRef } from 'react';
 import type { ProjectItem } from './ProjectsBento';
 
 const STATUS_STYLES: Record<ProjectItem['status'], { label: string; dot: string }> = {
-  live:          { label: 'Live',         dot: 'bg-emerald-400'  },
-  'in-progress': { label: 'In progress',  dot: 'bg-amber-400'    },
-  planned:       { label: 'Planned',      dot: 'bg-slate-400'    },
-  archived:      { label: 'Archived',     dot: 'bg-slate-600'    },
+  live:          { label: 'En producción', dot: 'bg-emerald-400'  },
+  'in-progress': { label: 'En curso',      dot: 'bg-amber-400'    },
+  planned:       { label: 'Planificado',   dot: 'bg-slate-400'    },
+  archived:      { label: 'Archivado',     dot: 'bg-slate-600'    },
 };
 
 interface Props {
@@ -61,7 +61,7 @@ function MiniCard({ p, idx }: { p: ProjectItem; idx: number }) {
       </div>
 
       <span className="mt-5 inline-flex items-center gap-1 text-xs font-medium text-blue-300 group-hover:gap-2 transition-all">
-        Read more
+        Ver más
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-3.5 w-3.5" aria-hidden="true">
           <path d="M5 12h14M13 5l7 7-7 7" />
         </svg>
@@ -78,9 +78,9 @@ export default function FeaturedProjectsTeaser({ projects, base }: Props) {
       <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="reveal mb-12 flex flex-wrap items-end justify-between gap-4">
           <div className="max-w-2xl">
-            <span className="eyebrow">Featured projects</span>
+            <span className="eyebrow">Proyectos destacados</span>
             <h2 className="mt-3 text-3xl font-bold text-white sm:text-4xl">
-              Recent <span className="text-gradient-static">work</span>
+              Trabajo <span className="text-gradient-static">reciente</span>
             </h2>
             <p className="mt-4 text-slate-400 leading-relaxed">
               Una selección de proyectos en los que estoy trabajando o que he
@@ -88,7 +88,7 @@ export default function FeaturedProjectsTeaser({ projects, base }: Props) {
             </p>
           </div>
           <a href={`${base}projects/`} className="btn-ghost">
-            <span>All projects</span>
+            <span>Ver todos</span>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4" aria-hidden="true">
               <path d="M5 12h14M13 5l7 7-7 7" />
             </svg>

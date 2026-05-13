@@ -38,7 +38,7 @@ export default function Footer({ base = '/' }: FooterProps) {
             </div>
             <p className="mt-5 max-w-md text-sm leading-relaxed text-slate-400">
               Diseño y automatizo plataformas cloud seguras, escalables y
-              mantenibles para entornos enterprise.
+              mantenibles para entornos empresariales.
             </p>
             <div className="mt-5 flex flex-wrap gap-2">
               {['Azure', 'Terraform', 'DevOps', 'Platform Engineering'].map((t) => (
@@ -55,22 +55,22 @@ export default function Footer({ base = '/' }: FooterProps) {
           {/* Nav */}
           <div>
             <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-slate-300">
-              Navigation
+              Navegación
             </p>
             <ul className="space-y-2.5">
               <li><a href={`${base}`}          className="inline-flex items-center gap-1.5 text-sm text-slate-400 hover:text-white transition-colors group">
-                <span className="h-px w-2 bg-slate-700 group-hover:w-4 group-hover:bg-blue-400 transition-all" />Home</a></li>
+                <span className="h-px w-2 bg-slate-700 group-hover:w-4 group-hover:bg-blue-400 transition-all" />Inicio</a></li>
               <li><a href={`${base}about/`}    className="inline-flex items-center gap-1.5 text-sm text-slate-400 hover:text-white transition-colors group">
-                <span className="h-px w-2 bg-slate-700 group-hover:w-4 group-hover:bg-blue-400 transition-all" />About</a></li>
+                <span className="h-px w-2 bg-slate-700 group-hover:w-4 group-hover:bg-blue-400 transition-all" />Sobre mí</a></li>
               <li><a href={`${base}projects/`} className="inline-flex items-center gap-1.5 text-sm text-slate-400 hover:text-white transition-colors group">
-                <span className="h-px w-2 bg-slate-700 group-hover:w-4 group-hover:bg-blue-400 transition-all" />Projects</a></li>
+                <span className="h-px w-2 bg-slate-700 group-hover:w-4 group-hover:bg-blue-400 transition-all" />Proyectos</a></li>
             </ul>
           </div>
 
           {/* Contact */}
           <div>
             <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-slate-300">
-              Contact
+              Contacto
             </p>
             <ul className="space-y-3">
               <li>
@@ -117,10 +117,10 @@ export default function Footer({ base = '/' }: FooterProps) {
 
         <div className="mt-12 border-t border-slate-800/60 pt-6 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-xs text-slate-500">
-            © {year} Ángel Luis Catalán · Personal technical portfolio
+            © {year} Ángel Luis Catalán · Portfolio técnico personal
           </p>
           <p className="text-xs text-slate-600">
-            Built with <span className="text-slate-400">Astro</span> · <span className="text-slate-400">React</span> · <span className="text-slate-400">Tailwind</span> · Deployed on GitHub Pages
+            Construido con <span className="text-slate-400">Astro</span> · <span className="text-slate-400">React</span> · <span className="text-slate-400">Tailwind</span> · Desplegado en GitHub Pages
           </p>
         </div>
       </div>

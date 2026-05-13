@@ -18,7 +18,7 @@ const { title, url, publishedAt, source } = Astro.props;
 
 if (!title || !url) return;
 
-const formattedDate = new Date(publishedAt).toLocaleDateString('en-US', {
+const formattedDate = new Date(publishedAt).toLocaleDateString('es-ES', {
   year:  'numeric',
   month: 'short',
   day:   'numeric',
@@ -32,7 +32,7 @@ const formattedDate = new Date(publishedAt).toLocaleDateString('en-US', {
       target="_blank"
       rel="noopener noreferrer"
       class="group flex flex-wrap items-center gap-x-4 gap-y-1.5 py-3 sm:flex-nowrap"
-      aria-label={`Read on Azure Blog: ${title}`}
+      aria-label={`Leer en Azure Blog: ${title}`}
     >
       {/* Label */}
       <span

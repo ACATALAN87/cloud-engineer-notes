@@ -17,16 +17,16 @@ const { lab } = Astro.props;
 const { Content } = await render(lab);
 
 const DIFFICULTY_MAP: Record<string, { label: string; classes: string }> = {
-  beginner:     { label: 'Beginner',     classes: 'border-emerald-800/60 text-emerald-400' },
-  intermediate: { label: 'Intermediate', classes: 'border-amber-800/60 text-amber-400' },
-  advanced:     { label: 'Advanced',     classes: 'border-red-800/60 text-red-400' },
+  beginner:     { label: 'Básico',       classes: 'border-emerald-800/60 text-emerald-400' },
+  intermediate: { label: 'Intermedio',   classes: 'border-amber-800/60 text-amber-400' },
+  advanced:     { label: 'Avanzado',     classes: 'border-red-800/60 text-red-400' },
 };
 
 const LAB_TYPE_MAP: Record<string, { label: string; classes: string }> = {
-  'hands-on':    { label: 'Hands-on',    classes: 'border-blue-800/60 text-blue-300' },
-  'architecture':{ label: 'Architecture',classes: 'border-violet-800/60 text-violet-300' },
-  'devops':      { label: 'DevOps',      classes: 'border-cyan-800/60 text-cyan-300' },
-  'security':    { label: 'Security',    classes: 'border-rose-800/60 text-rose-300' },
+  'hands-on':    { label: 'Hands-on',     classes: 'border-blue-800/60 text-blue-300' },
+  'architecture':{ label: 'Arquitectura', classes: 'border-violet-800/60 text-violet-300' },
+  'devops':      { label: 'DevOps',       classes: 'border-cyan-800/60 text-cyan-300' },
+  'security':    { label: 'Seguridad',    classes: 'border-rose-800/60 text-rose-300' },
 };
 
 const diff    = lab.data.difficulty ? DIFFICULTY_MAP[lab.data.difficulty] : null;
@@ -41,14 +41,14 @@ const labtype = lab.data.labType    ? LAB_TYPE_MAP[lab.data.labType]      : null
       href={`${base}labs/`}
       class="mb-8 inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-300 transition-colors"
     >
-      ← Back to Labs
+      ← Volver a Labs
     </a>
 
     <!-- Header -->
     <header class="mb-10 border-b border-slate-800 pb-8">
       <div class="mb-4 flex flex-wrap items-center gap-2">
         <p class="font-mono text-xs text-slate-500">
-          {lab.data.date.toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' })}
+          {lab.data.date.toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' })}
         </p>
         {labtype && (
           <span
@@ -97,7 +97,7 @@ const labtype = lab.data.labType    ? LAB_TYPE_MAP[lab.data.labType]      : null
             <svg class="h-3 w-3" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="M6 3H3a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-3M9 2h5m0 0v5m0-5L7 10"/>
             </svg>
-            Reference: {lab.data.sourceName ?? lab.data.source}
+            Referencia: {lab.data.sourceName ?? lab.data.source}
           </a>
         </div>
       )}
@@ -136,7 +136,7 @@ const labtype = lab.data.labType    ? LAB_TYPE_MAP[lab.data.labType]      : null
         href={`${base}labs/`}
         class="text-sm text-slate-400 hover:text-white transition-colors"
       >
-        ← Back to Labs
+        ← Volver a Labs
       </a>
     </div>
   </article>

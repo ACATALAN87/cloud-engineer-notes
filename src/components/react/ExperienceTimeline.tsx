@@ -10,28 +10,28 @@ const experience: Role[] = [
   {
     company: 'Kyndryl',
     title:   'Cloud Infrastructure Engineer',
-    period:  'Jan 2025 – Present',
+    period:  'Ene 2025 – Actualidad',
     current: true,
     bullets: [
-      'Azure infrastructure design and deployment with Terraform',
-      'Azure networking, security and connectivity troubleshooting',
-      'CI/CD integration with Azure DevOps and GitHub for Azure Data Factory',
-      'Azure DevOps environment design: service connections, pipelines, agent pools',
-      'Snowflake provisioning and RBAC administration',
-      'Couchbase Capella deployment automation with GitHub Actions and IaC',
-      'Appian platform support and configuration',
+      'Diseño y despliegue de infraestructura Azure con Terraform',
+      'Networking, seguridad y troubleshooting de conectividad en Azure',
+      'Integración CI/CD con Azure DevOps y GitHub para Azure Data Factory',
+      'Diseño de entornos en Azure DevOps: service connections, pipelines, agent pools',
+      'Provisioning de Snowflake y administración de RBAC',
+      'Automatización del despliegue de Couchbase Capella con GitHub Actions e IaC',
+      'Soporte y configuración de la plataforma Appian',
     ],
   },
   {
     company: 'Kyndryl',
     title:   'Workload Automation Administrator',
-    period:  'Sep 2021 – Jan 2025',
+    period:  'Sep 2021 – Ene 2025',
     bullets: [
-      'Enterprise workload automation platform management',
-      'Shell scripting for process and pipeline automation',
-      'Oracle, DB2 and SQL Server administration',
-      'IBM InfoSphere Data Replication setup and maintenance',
-      '24x7 critical environments operation and secure file transfer',
+      'Gestión de plataforma empresarial de workload automation',
+      'Shell scripting para automatización de procesos y pipelines',
+      'Administración de Oracle, DB2 y SQL Server',
+      'Configuración y mantenimiento de IBM InfoSphere Data Replication',
+      'Operación de entornos críticos 24x7 y transferencia segura de ficheros',
     ],
   },
   {
@@ -47,7 +47,7 @@ const experience: Role[] = [
   {
     company: 'Hewlett Packard Enterprise',
     title:   'Control-M Administrator',
-    period:  'Apr 2014 – Jul 2015',
+    period:  'Abr 2014 – Jul 2015',
   },
 ];
 
@@ -56,13 +56,13 @@ export default function ExperienceTimeline() {
     <section className="relative border-b border-slate-800/60 py-24">
       <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="reveal mb-12 max-w-2xl">
-          <span className="eyebrow">Experience</span>
+          <span className="eyebrow">Experiencia</span>
           <h2 className="mt-3 text-3xl font-bold text-white sm:text-4xl">
-            Professional <span className="text-gradient-static">background</span>
+            Trayectoria <span className="text-gradient-static">profesional</span>
           </h2>
           <p className="mt-4 text-slate-400 leading-relaxed">
-            10+ años en entornos enterprise. De workload automation a cloud
-            infrastructure engineering.
+            Más de 10 años en entornos empresariales. De workload automation a
+            ingeniería de infraestructura cloud.
           </p>
         </div>
 
@@ -121,7 +121,7 @@ export default function ExperienceTimeline() {
                           style={{ background: 'linear-gradient(135deg, rgba(30,58,138,0.5), rgba(76,29,149,0.3))' }}
                         >
                           <span className="h-1.5 w-1.5 rounded-full bg-blue-300 animate-blink-soft" />
-                          Current
+                          Actual
                         </span>
                       )}
                     </div>

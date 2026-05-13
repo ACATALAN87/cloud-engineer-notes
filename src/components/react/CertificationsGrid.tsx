@@ -128,7 +128,7 @@ function CertCard({ cert, idx, featured }: { cert: Cert; idx: number; featured: 
         )}
         {cert.url && (
           <p className={`mt-2 inline-flex items-center gap-1 text-xs ${cert.textColor} opacity-70 group-hover:opacity-100 transition-opacity`}>
-            View credential
+            Ver credencial
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-3 w-3" aria-hidden="true">
               <path d="M7 17 17 7M7 7h10v10" />
             </svg>
@@ -167,9 +167,9 @@ export default function CertificationsGrid() {
     <section className="relative border-b border-slate-800/60 py-24" style={{ backgroundColor: '#040818' }}>
       <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="reveal mb-12 max-w-2xl">
-          <span className="eyebrow">Certifications</span>
+          <span className="eyebrow">Certificaciones</span>
           <h2 className="mt-3 text-3xl font-bold text-white sm:text-4xl">
-            Active <span className="text-gradient-static">credentials</span>
+            Credenciales <span className="text-gradient-static">activas</span>
           </h2>
           <p className="mt-4 text-slate-400 leading-relaxed">
             Certificaciones verificadas en Azure, HashiCorp, AWS y Google Cloud.

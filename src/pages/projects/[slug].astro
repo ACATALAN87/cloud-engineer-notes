@@ -17,10 +17,10 @@ const { project } = Astro.props;
 const { Content, headings } = await render(project);
 
 const STATUS_STYLES: Record<string, { label: string; dot: string; chip: string }> = {
-  live:          { label: 'Live',         dot: 'bg-emerald-400',  chip: 'border-emerald-500/40 text-emerald-300 bg-emerald-500/10' },
-  'in-progress': { label: 'In progress',  dot: 'bg-amber-400',    chip: 'border-amber-500/40 text-amber-300 bg-amber-500/10' },
-  planned:       { label: 'Planned',      dot: 'bg-slate-400',    chip: 'border-slate-500/40 text-slate-300 bg-slate-500/10' },
-  archived:      { label: 'Archived',     dot: 'bg-slate-600',    chip: 'border-slate-700/40 text-slate-400 bg-slate-700/10' },
+  live:          { label: 'En producción', dot: 'bg-emerald-400',  chip: 'border-emerald-500/40 text-emerald-300 bg-emerald-500/10' },
+  'in-progress': { label: 'En curso',      dot: 'bg-amber-400',    chip: 'border-amber-500/40 text-amber-300 bg-amber-500/10' },
+  planned:       { label: 'Planificado',   dot: 'bg-slate-400',    chip: 'border-slate-500/40 text-slate-300 bg-slate-500/10' },
+  archived:      { label: 'Archivado',     dot: 'bg-slate-600',    chip: 'border-slate-700/40 text-slate-400 bg-slate-700/10' },
 };
 
 const status = STATUS_STYLES[project.data.status];
@@ -59,12 +59,12 @@ const showToc = toc.length >= 3;
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" aria-hidden="true">
             <path d="m12 19-7-7 7-7M19 12H5" />
           </svg>
-          Back to Projects
+          Volver a Proyectos
         </a>
 
         <div class="flex flex-wrap items-center gap-2">
           <span class="font-mono text-xs text-slate-500">
-            {project.data.date.toLocaleDateString('en-GB', { year: 'numeric', month: 'long' })}
+            {project.data.date.toLocaleDateString('es-ES', { year: 'numeric', month: 'long' })}
           </span>
           <span class="text-slate-700">·</span>
           <span class={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-medium ${status.chip}`}>
@@ -109,7 +109,7 @@ const showToc = toc.length >= 3;
                 <circle cx="12" cy="12" r="10" />
                 <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
               </svg>
-              View live
+              Ver web
             </a>
           )}
           {project.data.repoUrl && (
@@ -122,7 +122,7 @@ const showToc = toc.length >= 3;
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4 text-slate-300" aria-hidden="true">
                 <path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.52-1.33-1.28-1.68-1.28-1.68-1.05-.72.08-.71.08-.71 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.71 1.26 3.37.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.18-3.1-.12-.29-.51-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11.05 11.05 0 0 1 5.8 0c2.21-1.49 3.18-1.18 3.18-1.18.62 1.59.23 2.76.11 3.05.74.81 1.18 1.84 1.18 3.1 0 4.42-2.69 5.39-5.26 5.68.41.35.78 1.05.78 2.12 0 1.53-.01 2.77-.01 3.14 0 .31.21.68.8.56C20.21 21.39 23.5 17.08 23.5 12 23.5 5.65 18.35.5 12 .5z"/>
               </svg>
-              View repo
+              Ver repositorio
             </a>
           )}
         </div>
@@ -155,7 +155,7 @@ const showToc = toc.length >= 3;
             {project.data.highlights && project.data.highlights.length > 0 && (
               <div class="reveal mb-12 glass-card rounded-2xl p-6 sm:p-8">
                 <h2 class="text-sm font-mono font-semibold uppercase tracking-widest text-blue-300">
-                  Highlights
+                  Aspectos destacados
                 </h2>
                 <ul class="mt-4 grid gap-3 sm:grid-cols-2">
                   {project.data.highlights.map((h: string) => (
@@ -189,7 +189,7 @@ const showToc = toc.length >= 3;
             <aside class="hidden lg:block">
               <div class="sticky top-24">
                 <p class="mb-3 text-xs font-mono font-semibold uppercase tracking-widest text-slate-500">
-                  On this page
+                  En esta página
                 </p>
                 <nav class="space-y-1.5">
                   {toc.map((h) => (
@@ -214,7 +214,7 @@ const showToc = toc.length >= 3;
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" aria-hidden="true">
               <path d="m12 19-7-7 7-7M19 12H5" />
             </svg>
-            Back to Projects
+            Volver a Proyectos
           </a>
         </div>
       </div>

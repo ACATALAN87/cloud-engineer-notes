@@ -16,10 +16,10 @@ export interface ProjectItem {
 }
 
 const STATUS_STYLES: Record<ProjectItem['status'], { label: string; dot: string; chip: string }> = {
-  live:          { label: 'Live',         dot: 'bg-emerald-400',  chip: 'border-emerald-500/40 text-emerald-300 bg-emerald-500/10' },
-  'in-progress': { label: 'In progress',  dot: 'bg-amber-400',    chip: 'border-amber-500/40 text-amber-300 bg-amber-500/10' },
-  planned:       { label: 'Planned',      dot: 'bg-slate-400',    chip: 'border-slate-500/40 text-slate-300 bg-slate-500/10' },
-  archived:      { label: 'Archived',     dot: 'bg-slate-600',    chip: 'border-slate-700/40 text-slate-400 bg-slate-700/10' },
+  live:          { label: 'En producción', dot: 'bg-emerald-400',  chip: 'border-emerald-500/40 text-emerald-300 bg-emerald-500/10' },
+  'in-progress': { label: 'En curso',      dot: 'bg-amber-400',    chip: 'border-amber-500/40 text-amber-300 bg-amber-500/10' },
+  planned:       { label: 'Planificado',   dot: 'bg-slate-400',    chip: 'border-slate-500/40 text-slate-300 bg-slate-500/10' },
+  archived:      { label: 'Archivado',     dot: 'bg-slate-600',    chip: 'border-slate-700/40 text-slate-400 bg-slate-700/10' },
 };
 
 const CATEGORY_ACCENTS: Record<ProjectItem['category'], { gradient: string; glow: string; icon: React.ReactNode }> = {
@@ -179,7 +179,7 @@ function ProjectCard({ p, idx, span = false }: { p: ProjectItem; idx: number; sp
                 <circle cx="12" cy="12" r="10" />
                 <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
               </svg>
-              Live
+              Web
             </span>
           )}
           <span className="font-mono text-xs text-slate-600">{p.date}</span>
@@ -201,7 +201,7 @@ export default function ProjectsBento({ projects }: { projects: ProjectItem[] })
   if (projects.length === 0) {
     return (
       <div className="reveal glass-card mx-auto max-w-2xl rounded-2xl p-12 text-center">
-        <p className="text-slate-300">No projects published yet — coming soon.</p>
+        <p className="text-slate-300">Aún no hay proyectos publicados — próximamente.</p>
       </div>
     );
   }

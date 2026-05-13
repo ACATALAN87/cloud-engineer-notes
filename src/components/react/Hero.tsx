@@ -70,7 +70,7 @@ export default function Hero({ base = '/' }: HeroProps) {
               <span className="relative inline-flex h-2 w-2 rounded-full bg-blue-400" />
             </span>
             <span className="font-mono text-xs font-medium text-blue-200 tracking-wide">
-              Madrid, España · Available for cloud roles
+              Madrid, España · Abierto a oportunidades cloud
             </span>
           </div>
 
@@ -79,8 +79,8 @@ export default function Hero({ base = '/' }: HeroProps) {
             className="text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl leading-[1.1] animate-fade-in-up"
             style={{ animationDelay: '0.1s' }}
           >
-            <span className="block">Senior</span>
-            <span className="block text-gradient">Cloud Engineer</span>
+            <span className="block">Ingeniero</span>
+            <span className="block text-gradient">Cloud Senior</span>
             <RotatingTag />
           </h1>
 
@@ -101,7 +101,7 @@ export default function Hero({ base = '/' }: HeroProps) {
           >
             Más de 10 años de experiencia en sistemas críticos. Especializado en
             infraestructura Azure, platform engineering, networking, CI/CD e
-            Infrastructure as Code. Evolucionando hacia Cloud Architecture.
+            Infrastructure as Code. Evolucionando hacia arquitectura cloud.
           </p>
 
           {/* CTAs */}
@@ -110,7 +110,7 @@ export default function Hero({ base = '/' }: HeroProps) {
             style={{ animationDelay: '0.4s' }}
           >
             <a href={`${base}about/`} className="btn-primary">
-              <span>Professional profile</span>
+              <span>Perfil profesional</span>
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4" aria-hidden="true">
                 <path d="M5 12h14M13 5l7 7-7 7" />
               </svg>
@@ -119,7 +119,7 @@ export default function Hero({ base = '/' }: HeroProps) {
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4 text-blue-400" aria-hidden="true">
                 <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2zM22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
               </svg>
-              <span>View projects</span>
+              <span>Ver proyectos</span>
             </a>
           </div>
 
@@ -169,15 +169,15 @@ export default function Hero({ base = '/' }: HeroProps) {
           >
             <div className="flex items-baseline gap-2">
               <span className="text-2xl font-bold text-gradient-static">10+</span>
-              <span className="text-xs text-slate-500 uppercase tracking-wider">Years</span>
+              <span className="text-xs text-slate-500 uppercase tracking-wider">Años</span>
             </div>
             <div className="flex items-baseline gap-2">
               <span className="text-2xl font-bold text-gradient-static">7</span>
-              <span className="text-xs text-slate-500 uppercase tracking-wider">Certifications</span>
+              <span className="text-xs text-slate-500 uppercase tracking-wider">Certificaciones</span>
             </div>
             <div className="flex items-baseline gap-2">
               <span className="text-2xl font-bold text-gradient-static">24×7</span>
-              <span className="text-xs text-slate-500 uppercase tracking-wider">Production ops</span>
+              <span className="text-xs text-slate-500 uppercase tracking-wider">Operación crítica</span>
             </div>
           </div>
         </div>

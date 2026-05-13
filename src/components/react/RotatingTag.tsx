@@ -1,12 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
 
 const TAGS = [
-  'Azure Infrastructure',
-  'Terraform & IaC',
-  'DevOps & Automation',
-  'Enterprise Networking',
-  'Cloud Operations',
-  'Cloud Architecture',
+  'Infraestructura Azure',
+  'Terraform e IaC',
+  'DevOps y automatización',
+  'Redes empresariales',
+  'Operación cloud',
+  'Arquitectura cloud',
 ] as const;
 
 const INTERVAL_MS   = 2800;

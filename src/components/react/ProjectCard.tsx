@@ -1,14 +1,14 @@
 const DIFFICULTY_STYLES: Record<string, { label: string; classes: string }> = {
-  beginner:     { label: 'Beginner',     classes: 'border-emerald-800/60 text-emerald-400' },
-  intermediate: { label: 'Intermediate', classes: 'border-amber-800/60 text-amber-400' },
-  advanced:     { label: 'Advanced',     classes: 'border-red-800/60 text-red-400' },
+  beginner:     { label: 'Básico',       classes: 'border-emerald-800/60 text-emerald-400' },
+  intermediate: { label: 'Intermedio',   classes: 'border-amber-800/60 text-amber-400' },
+  advanced:     { label: 'Avanzado',     classes: 'border-red-800/60 text-red-400' },
 };
 
 const LAB_TYPE_STYLES: Record<string, { label: string; classes: string }> = {
-  'hands-on':   { label: 'Hands-on',    classes: 'border-blue-800/60 text-blue-300' },
-  'architecture':{ label: 'Architecture',classes: 'border-violet-800/60 text-violet-300' },
-  'devops':     { label: 'DevOps',      classes: 'border-cyan-800/60 text-cyan-300' },
-  'security':   { label: 'Security',    classes: 'border-rose-800/60 text-rose-300' },
+  'hands-on':    { label: 'Hands-on',     classes: 'border-blue-800/60 text-blue-300' },
+  'architecture':{ label: 'Arquitectura', classes: 'border-violet-800/60 text-violet-300' },
+  'devops':      { label: 'DevOps',       classes: 'border-cyan-800/60 text-cyan-300' },
+  'security':    { label: 'Seguridad',    classes: 'border-rose-800/60 text-rose-300' },
 };
 
 interface ProjectCardProps {
