@@ -1,5 +1,6 @@
 import RotatingTag from './RotatingTag';
 import AnimatedBackground from './AnimatedBackground';
+import CloudVisual from './CloudVisual';
 
 interface HeroProps {
   base?: string;
@@ -56,6 +57,7 @@ export default function Hero({ base = '/' }: HeroProps) {
       />
 
       <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,460px)] lg:gap-14">
         <div className="max-w-3xl">
 
           {/* Status badge */}
@@ -179,6 +181,15 @@ export default function Hero({ base = '/' }: HeroProps) {
               <span className="text-2xl font-bold text-gradient-static">24×7</span>
               <span className="text-xs text-slate-500 uppercase tracking-wider">Operación crítica</span>
             </div>
+          </div>
+        </div>
+
+          {/* Right-side cloud visualization (desktop only — kept above background) */}
+          <div
+            className="relative hidden lg:block animate-fade-in-up"
+            style={{ animationDelay: '0.3s' }}
+          >
+            <CloudVisual />
           </div>
         </div>
       </div>

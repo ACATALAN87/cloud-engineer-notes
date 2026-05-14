@@ -1,0 +1,45 @@
+# ──────────────────────────────────────────────────────────────────────────────
+# docker-compose for local preview of the production build.
+#
+#   docker compose up --build       → builds and serves on http://localhost:8080
+#   docker compose --profile dev up → spins up Astro dev server on :4321
+#
+# The "dev" profile is opt-in so a plain `docker compose up` only runs
+# the lightweight nginx-served production build.
+# ──────────────────────────────────────────────────────────────────────────────
+
+services:
+  # ── Production preview (nginx serving the built static site) ──────────────
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: cloud-engineer-notes:latest
+    container_name: cloud-engineer-notes-web
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost/"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+
+  # ── Optional: Astro dev server with HMR ───────────────────────────────────
+  # Run with:  docker compose --profile dev up dev
+  dev:
+    profiles: ["dev"]
+    image: node:22-alpine
+    container_name: cloud-engineer-notes-dev
+    working_dir: /app
+    volumes:
+      - .:/app
+      - node_modules:/app/node_modules
+    command: sh -c "npm install && npm run dev -- --host 0.0.0.0"
+    ports:
+      - "4321:4321"
+    environment:
+      - NODE_ENV=development
+
+volumes:
+  node_modules:

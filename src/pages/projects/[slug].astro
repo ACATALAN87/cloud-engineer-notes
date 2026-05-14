@@ -2,6 +2,12 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection, render } from 'astro:content';
 
+// Landing-Zone interactive components — only rendered for the LZ project
+import InteractiveArchitecture from '../../components/react/lz/InteractiveArchitecture';
+import DeploymentTimeline      from '../../components/react/lz/DeploymentTimeline';
+import IaCSimulator            from '../../components/react/lz/IaCSimulator';
+import LearningMode            from '../../components/react/lz/LearningMode';
+
 const rawBase = import.meta.env.BASE_URL ?? '/';
 const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
 
@@ -15,6 +21,10 @@ export async function getStaticPaths() {
 
 const { project } = Astro.props;
 const { Content, headings } = await render(project);
+
+// Project-specific interactive blocks
+const slug = project.id.replace(/\.md$/, '');
+const isLandingZone = slug === 'azure-terraform-landing-zone';
 
 const STATUS_STYLES: Record<string, { label: string; dot: string; chip: string }> = {
   live:          { label: 'En producción', dot: 'bg-emerald-400',  chip: 'border-emerald-500/40 text-emerald-300 bg-emerald-500/10' },
@@ -142,6 +152,23 @@ const showToc = toc.length >= 3;
           </div>
         </div>
       </section>
+    )}
+
+    {/*
+      ─────────────────────────────────────────────────────────────────────
+      Project-specific interactive sections.
+      For now only the Landing Zone project unlocks these. Each block is
+      hydrated individually with `client:visible` so they don't impact
+      Time-to-Interactive on initial load.
+      ─────────────────────────────────────────────────────────────────────
+    */}
+    {isLandingZone && (
+      <>
+        <InteractiveArchitecture client:visible />
+        <DeploymentTimeline      client:visible />
+        <IaCSimulator            client:visible />
+        <LearningMode            client:visible />
+      </>
     )}
 
     {/* Highlights + Content */}

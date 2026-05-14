@@ -1,0 +1,45 @@
+name: CI · Lint, type-check and build
+
+# Runs on every PR and on pushes to non-main branches so that the deploy
+# workflow on `main` only ever sees code that has already been validated.
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches-ignore: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Validate (lint + typecheck + build)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Astro check (TypeScript + content collections)
+        run: npx astro check
+
+      - name: Build
+        run: npm run build
+
+      # Future: enable when an explicit lint script is wired up.
+      # - name: Lint
+      #   run: npm run lint
