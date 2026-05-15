@@ -18,6 +18,7 @@ highlights:
   - "Motor de detección de problemas: CIDRs solapados, peerings rotos, subnets sin NSG"
   - "Entorno de prueba reproducible aprovisionado con Terraform"
   - "Solo lectura — cero escrituras a Azure, coste operativo nulo"
+cover: "images/projects/azure-network-analyzer/app-02-graph-problems.png"
 ---
 
 Hay un problema recurrente en entornos Azure de mediana complejidad: nadie tiene
@@ -434,11 +435,11 @@ Con el entorno aprovisionado, compruebo en el portal que la topología es la
 esperada antes de ejecutar el analizador.
 
 <div style="margin:2rem 0;border-radius:.75rem;overflow:hidden;border:1px solid rgba(148,163,184,.12);box-shadow:0 4px 24px -8px rgba(0,0,0,.5)">
-  <img src="/images/projects/azure-network-analyzer/portal-01-resource-group.png" alt="Portal Azure — Resource Group rg-network-analyzer-test con los 16 recursos desplegados por Terraform" style="width:100%;display:block" />
+  <img src="../../images/projects/azure-network-analyzer/portal-01-resource-group.png" alt="Portal Azure — Resource Group rg-network-analyzer-test con los 16 recursos desplegados por Terraform" style="width:100%;display:block" />
 </div>
 
 <div style="margin:2rem 0;border-radius:.75rem;overflow:hidden;border:1px solid rgba(148,163,184,.12);box-shadow:0 4px 24px -8px rgba(0,0,0,.5)">
-  <img src="/images/projects/azure-network-analyzer/portal-02-vnet-topology.png" alt="Portal Azure — Vista de topología de VNet A con las dos subnets y el peering hacia VNet B" style="width:100%;display:block" />
+  <img src="../../images/projects/azure-network-analyzer/portal-02-vnet-topology.png" alt="Portal Azure — Vista de topología de VNet A con las dos subnets y el peering hacia VNet B" style="width:100%;display:block" />
 </div>
 
 ---
@@ -488,7 +489,7 @@ intencionado: la herramienta no sabe nada de tu suscripción hasta que tú se lo
 dices.
 
 <div style="margin:2rem 0;border-radius:.75rem;overflow:hidden;border:1px solid rgba(148,163,184,.12);box-shadow:0 4px 24px -8px rgba(0,0,0,.5)">
-  <img src="/images/projects/azure-network-analyzer/app-01-empty-state.png" alt="Azure Network Analyzer — Estado inicial vacío antes de cargar ninguna topología" style="width:100%;display:block" />
+  <img src="../../images/projects/azure-network-analyzer/app-01-empty-state.png" alt="Azure Network Analyzer — Estado inicial vacío antes de cargar ninguna topología" style="width:100%;display:block" />
 </div>
 
 Para cualquier persona que trabaje con Azure, este tipo de herramienta resuelve
@@ -507,7 +508,7 @@ pasando bastante más de lo que parece: tres rondas de llamadas a la API de Azur
 para que las resoluciones de referencias sean O(1) al montar el grafo.
 
 <div style="margin:2rem 0;border-radius:.75rem;overflow:hidden;border:1px solid rgba(148,163,184,.12);box-shadow:0 4px 24px -8px rgba(0,0,0,.5)">
-  <img src="/images/projects/azure-network-analyzer/app-05-loading.png" alt="Azure Network Analyzer — Spinner de carga con 'Analizando suscripción Azure...' y barra de progreso" style="width:100%;display:block" />
+  <img src="../../images/projects/azure-network-analyzer/app-05-loading.png" alt="Azure Network Analyzer — Spinner de carga con 'Analizando suscripción Azure...' y barra de progreso" style="width:100%;display:block" />
 </div>
 
 En suscripciones pequeñas como la del entorno de prueba tarda 3-4 segundos.
@@ -525,7 +526,7 @@ aparecen resaltados — en naranja para advertencias, en azul para informaciones
 No tienes que buscar nada: lo que requiere atención te salta a la vista.
 
 <div style="margin:2rem 0;border-radius:.75rem;overflow:hidden;border:1px solid rgba(148,163,184,.12);box-shadow:0 4px 24px -8px rgba(0,0,0,.5)">
-  <img src="/images/projects/azure-network-analyzer/app-02-graph-problems.png" alt="Azure Network Analyzer — Grafo de topología con panel de problemas: 3 Advertencias y 5 Información detectadas (Subscription ID parcialmente ofuscado: c9f8xx70-76fc-4d5f-b6fa-0dbcbed5cb8a)" style="width:100%;display:block" />
+  <img src="../../images/projects/azure-network-analyzer/app-02-graph-problems.png" alt="Azure Network Analyzer — Grafo de topología con panel de problemas: 3 Advertencias y 5 Información detectadas (Subscription ID parcialmente ofuscado: c9f8xx70-76fc-4d5f-b6fa-0dbcbed5cb8a)" style="width:100%;display:block" />
 </div>
 
 Lo que más me gusta de esta vista es que no es solo un inventario: es una
@@ -552,7 +553,7 @@ Terraform: tres problemas, todos deliberados, todos detectados.
   peering configurado. Está aislada del resto de la red.
 
 <div style="margin:2rem 0;border-radius:.75rem;overflow:hidden;border:1px solid rgba(148,163,184,.12);box-shadow:0 4px 24px -8px rgba(0,0,0,.5)">
-  <img src="/images/projects/azure-network-analyzer/app-04-graph-zoomed.png" alt="Azure Network Analyzer — Grafo con zoom out mostrando las tres VNets y el panel lateral de problemas activo" style="width:100%;display:block" />
+  <img src="../../images/projects/azure-network-analyzer/app-04-graph-zoomed.png" alt="Azure Network Analyzer — Grafo con zoom out mostrando las tres VNets y el panel lateral de problemas activo" style="width:100%;display:block" />
 </div>
 
 Esta es la parte que más valor tiene para equipos Cloud. No es raro que en un
@@ -569,7 +570,7 @@ en formato tabular: nueve en este entorno (3 VNets, 4 subnets, 2 NSGs). Cada
 fila muestra el nombre, el tipo y si tiene problemas asociados.
 
 <div style="margin:2rem 0;border-radius:.75rem;overflow:hidden;border:1px solid rgba(148,163,184,.12);box-shadow:0 4px 24px -8px rgba(0,0,0,.5)">
-  <img src="/images/projects/azure-network-analyzer/app-03-resources-tab.png" alt="Azure Network Analyzer — Pestaña Recursos con los 9 recursos descubiertos: vnet-a, subnet-a1, subnet-a2, vnet-b, subnet-b1, vnet-c, subnet-c1, nsg-empty, nsg-with-rules" style="width:100%;display:block" />
+  <img src="../../images/projects/azure-network-analyzer/app-03-resources-tab.png" alt="Azure Network Analyzer — Pestaña Recursos con los 9 recursos descubiertos: vnet-a, subnet-a1, subnet-a2, vnet-b, subnet-b1, vnet-c, subnet-c1, nsg-empty, nsg-with-rules" style="width:100%;display:block" />
 </div>
 
 Esta vista tiene utilidad práctica más allá del análisis visual: si necesitas
