@@ -32,6 +32,42 @@ interactivo con los problemas de configuración marcados en rojo.
 
 ---
 
+## De un vistazo
+
+La aplicación descubre y analiza toda la topología de red de una suscripción Azure
+con una sola llamada. Solo lectura, sin base de datos, sin estado persistente —
+cero coste operativo.
+
+```text
+azure-network-analyzer/
+├── main.py                  ✓  FastAPI · 2 endpoints REST
+├── analyzer/
+│   ├── __init__.py
+│   ├── topology.py          ✓  Descubrimiento: VNets, Subnets, Peerings, NSGs, Route Tables
+│   └── problems.py          ✓  7 checks automáticos (critical / warning / info)
+├── static/
+│   ├── index.html           ✓  UI dark-mode completa (single page)
+│   ├── app.js               ✓  Grafo vis.js + modal de detalle + panel de problemas
+│   └── styles.css           ✓  Variables CSS para theming
+├── .env.example
+├── README.md
+└── requirements.txt
+```
+
+### Checks automáticos
+
+| Severidad | Check |
+|-----------|-------|
+| 🔴 Crítico | Peering en estado Disconnected / Not Connected |
+| 🔴 Crítico | Rangos CIDR solapados entre VNets |
+| 🟡 Warning | Subnet sin NSG asociado |
+| 🟡 Warning | NSG sin reglas personalizadas |
+| 🟡 Warning | Ruta `0.0.0.0/0` con Next Hop inválido |
+| 🔵 Info | VNet sin peerings configurados |
+| 🔵 Info | Subnet vacía (sin recursos) |
+
+---
+
 ## Arquitectura de la herramienta
 
 El diseño es deliberadamente simple. Sin base de datos, sin estado persistente,
@@ -397,42 +433,113 @@ Resource actions are indicated with the following symbols:</span>
 Con el entorno aprovisionado, compruebo en el portal que la topología es la
 esperada antes de ejecutar el analizador.
 
-<!-- SCREENSHOT: Portal Azure — Resource Group con los 14 recursos listados -->
+<div style="margin:2rem 0;border-radius:.75rem;overflow:hidden;border:1px solid rgba(148,163,184,.12);box-shadow:0 4px 24px -8px rgba(0,0,0,.5)">
+  <img src="/images/projects/azure-network-analyzer/portal-01-resource-group.png" alt="Portal Azure — Resource Group rg-network-analyzer-test con los 16 recursos desplegados por Terraform" style="width:100%;display:block" />
+</div>
 
-<!-- SCREENSHOT: Portal Azure — Topología de VNet A mostrando las dos subnets y el peering -->
+<div style="margin:2rem 0;border-radius:.75rem;overflow:hidden;border:1px solid rgba(148,163,184,.12);box-shadow:0 4px 24px -8px rgba(0,0,0,.5)">
+  <img src="/images/projects/azure-network-analyzer/portal-02-vnet-topology.png" alt="Portal Azure — Vista de topología de VNet A con las dos subnets y el peering hacia VNet B" style="width:100%;display:block" />
+</div>
 
 ---
 
 ## Ejecución del analizador
 
-Con el entorno desplegado, arranco la herramienta localmente:
+Con el entorno desplegado, arranco la herramienta en local. La autenticación la
+gestiona `DefaultAzureCredential`, que reutiliza automáticamente la sesión activa
+de `az login` — sin configurar variables de entorno ni secrets.
 
 ```bash
-cd azure-network-analyzer
-python -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt
+# 1. Autenticarse con Azure
+az login
 
-# DefaultAzureCredential usa el az login activo
+# 2. Ir al directorio del proyecto
+cd ~/Desktop/WebCloudEngineer/azure-network-analyzer
+
+# 3. Activar el entorno virtual
+source .venv/bin/activate
+
+# 4. Arrancar el servidor
 uvicorn main:app --reload
 ```
 
-Abro `http://localhost:8000`, introduzco el Subscription ID y pulso **Analizar**.
+<div style="margin:2.5rem 0;border-radius:.875rem;overflow:hidden;border:1px solid rgba(96,165,250,.15);box-shadow:0 8px 32px -12px rgba(0,0,0,.7),0 0 0 1px rgba(59,130,246,.08)">
+  <div style="background:#1e1e20;padding:.55rem 1rem;display:flex;align-items:center;gap:.5rem;border-bottom:1px solid rgba(255,255,255,.06)">
+    <span style="width:12px;height:12px;border-radius:50%;background:#ff5f57;flex-shrink:0;display:inline-block"></span>
+    <span style="width:12px;height:12px;border-radius:50%;background:#febc2e;flex-shrink:0;display:inline-block"></span>
+    <span style="width:12px;height:12px;border-radius:50%;background:#28c840;flex-shrink:0;display:inline-block"></span>
+    <span style="flex:1;text-align:center;font-family:'JetBrains Mono',monospace;font-size:.72rem;color:#64748b;letter-spacing:.02em">azure-network-analyzer — uvicorn</span>
+  </div>
+  <div style="background:linear-gradient(135deg,#0a0f1e,#050914);padding:1.25rem 1.5rem;overflow-x:auto;font-family:'JetBrains Mono','Fira Code',ui-monospace,monospace;font-size:.78rem;line-height:1.7;color:#cbd5e1;white-space:pre"><span style="color:#e2e8f0;font-weight:600">angelluiscatalan@MacBook-M3-Pro-de-Angel</span><span style="color:#64748b"> azure-network-analyzer</span><span style="color:#94a3b8"> % </span><span style="color:#f8fafc">uvicorn main:app --reload</span>
+<span style="color:#60a5fa">INFO</span><span style="color:#64748b">:     </span><span style="color:#94a3b8">Will watch for changes in these directories: [</span><span style="color:#fde68a">'/Users/angelluiscatalan/Desktop/WebCloudEngineer/azure-network-analyzer'</span><span style="color:#94a3b8">]</span>
+<span style="color:#60a5fa">INFO</span><span style="color:#64748b">:     </span><span style="color:#94a3b8">Uvicorn running on </span><span style="color:#4ade80;font-weight:600">http://127.0.0.1:8000</span><span style="color:#94a3b8"> (Press CTRL+C to quit)</span>
+<span style="color:#60a5fa">INFO</span><span style="color:#64748b">:     </span><span style="color:#94a3b8">Started reloader process [</span><span style="color:#c084fc">12847</span><span style="color:#94a3b8">] using StatReload</span>
+<span style="color:#60a5fa">INFO</span><span style="color:#64748b">:     </span><span style="color:#94a3b8">Started server process [</span><span style="color:#c084fc">12849</span><span style="color:#94a3b8">]</span>
+<span style="color:#60a5fa">INFO</span><span style="color:#64748b">:     </span><span style="color:#94a3b8">Waiting for application startup.</span>
+<span style="color:#60a5fa">INFO</span><span style="color:#64748b">:     </span><span style="color:#4ade80">Application startup complete.</span></div>
+</div>
 
-<!-- SCREENSHOT: UI del analizador — campo Subscription ID antes de analizar -->
+### La interfaz — estado inicial
+
+Abro `http://localhost:8000` y lo primero que encuentro es una pantalla limpia
+con un campo para el Subscription ID. Nada más. Sin dashboards precargados, sin
+datos de muestra, sin estado guardado de sesiones anteriores. Esto es
+intencionado: la herramienta no sabe nada de tu suscripción hasta que tú se lo
+dices.
+
+<div style="margin:2rem 0;border-radius:.75rem;overflow:hidden;border:1px solid rgba(148,163,184,.12);box-shadow:0 4px 24px -8px rgba(0,0,0,.5)">
+  <img src="/images/projects/azure-network-analyzer/app-01-empty-state.png" alt="Azure Network Analyzer — Estado inicial vacío antes de cargar ninguna topología" style="width:100%;display:block" />
+</div>
+
+Para cualquier persona que trabaje con Azure, este tipo de herramienta resuelve
+un problema muy concreto: el portal de Azure muestra los recursos, pero no la
+relación entre ellos. Puedes abrir cada VNet, cada subnet, cada NSG por
+separado — pero no hay una vista unificada que te diga "esta subnet no tiene NSG,
+este peering está roto, esta VNet está flotando en el vacío". Eso es exactamente
+lo que quiero resolver.
+
+### Durante el análisis
+
+Al pulsar Analizar, la interfaz muestra un spinner con el mensaje
+**"Analizando suscripción Azure..."** y una barra de progreso. Por debajo está
+pasando bastante más de lo que parece: tres rondas de llamadas a la API de Azure
+(`NSGs → Route Tables → VNets`) en paralelo, construyendo los lookups en memoria
+para que las resoluciones de referencias sean O(1) al montar el grafo.
+
+<div style="margin:2rem 0;border-radius:.75rem;overflow:hidden;border:1px solid rgba(148,163,184,.12);box-shadow:0 4px 24px -8px rgba(0,0,0,.5)">
+  <img src="/images/projects/azure-network-analyzer/app-05-loading.png" alt="Azure Network Analyzer — Spinner de carga con 'Analizando suscripción Azure...' y barra de progreso" style="width:100%;display:block" />
+</div>
+
+En suscripciones pequeñas como la del entorno de prueba tarda 3-4 segundos.
+En entornos de producción con decenas de VNets distribuidas entre varios resource
+groups, el tiempo sube — pero sigue siendo órdenes de magnitud más rápido que
+hacer el mismo recorrido a mano por el portal.
 
 ---
 
 ## Validación de resultados
 
-El analizador tarda unos segundos en llamar a la API de Azure y construir el
-grafo. El resultado muestra exactamente los problemas que definí en el entorno
-de prueba.
+El grafo carga y de un vistazo ya tienes la topología completa: tres VNets,
+cuatro subnets, dos NSGs, un peering bidireccional. Los nodos con problemas
+aparecen resaltados — en naranja para advertencias, en azul para informaciones.
+No tienes que buscar nada: lo que requiere atención te salta a la vista.
 
-<!-- SCREENSHOT: Grafo completo — las tres VNets, las subnets, los NSGs y el peering, con nodos en naranja/azul marcados -->
+<div style="margin:2rem 0;border-radius:.75rem;overflow:hidden;border:1px solid rgba(148,163,184,.12);box-shadow:0 4px 24px -8px rgba(0,0,0,.5)">
+  <img src="/images/projects/azure-network-analyzer/app-02-graph-problems.png" alt="Azure Network Analyzer — Grafo de topología con panel de problemas: 3 Advertencias y 5 Información detectadas (Subscription ID parcialmente ofuscado: c9f8xx70-76fc-4d5f-b6fa-0dbcbed5cb8a)" style="width:100%;display:block" />
+</div>
+
+Lo que más me gusta de esta vista es que no es solo un inventario: es una
+representación espacial de cómo están conectadas las cosas. Cuando un equipo
+Cloud revisa una arquitectura en reunión, tener este grafo proyectado es mucho
+más útil que leer una lista de recursos. La VNet aislada se ve sola. El
+peering bidireccional se ve como lo que es. La subnet sin NSG tiene su nodo en
+naranja. Sin necesidad de explicación adicional.
 
 ### Problemas detectados
 
-El panel lateral agrupa los hallazgos por severidad:
+El panel lateral agrupa los hallazgos por severidad. En este entorno de prueba
+el resultado es exactamente el que esperaba al diseñar la infraestructura
+Terraform: tres problemas, todos deliberados, todos detectados.
 
 **Advertencias (🟡)**
 - `subnet-a2-no-nsg` — La subnet `10.0.2.0/24` en `vnet-network-analyzer-a`
@@ -444,22 +551,31 @@ El panel lateral agrupa los hallazgos por severidad:
 - `vnet-network-analyzer-c-isolated` — La VNet `10.2.0.0/16` no tiene ningún
   peering configurado. Está aislada del resto de la red.
 
-<!-- SCREENSHOT: Panel lateral con los problemas listados por severidad -->
+<div style="margin:2rem 0;border-radius:.75rem;overflow:hidden;border:1px solid rgba(148,163,184,.12);box-shadow:0 4px 24px -8px rgba(0,0,0,.5)">
+  <img src="/images/projects/azure-network-analyzer/app-04-graph-zoomed.png" alt="Azure Network Analyzer — Grafo con zoom out mostrando las tres VNets y el panel lateral de problemas activo" style="width:100%;display:block" />
+</div>
 
-### Detalle de nodo — Subnet con NSG correcto
+Esta es la parte que más valor tiene para equipos Cloud. No es raro que en un
+entorno de producción haya subnets que llevan meses sin NSG porque nadie notó
+que la asociación no se creó correctamente. O NSGs que existen pero están vacíos,
+dando una falsa sensación de seguridad. Este tipo de comprobaciones son las que
+se pasan por alto en revisiones manuales y las que aparecen en los informes de
+auditoría de seguridad.
 
-Al hacer clic en `subnet-a1-with-nsg`, el panel de detalle muestra las reglas
-NSG asociadas: `allow-https-inbound (100, Allow, TCP:443)` y
-`deny-http-inbound (200, Deny, TCP:80)`.
+### Inventario completo — pestaña Recursos
 
-<!-- SCREENSHOT: Panel de detalle de subnet-a1-with-nsg con reglas NSG expandidas -->
+Además del grafo, la pestaña **Recursos** lista todos los recursos descubiertos
+en formato tabular: nueve en este entorno (3 VNets, 4 subnets, 2 NSGs). Cada
+fila muestra el nombre, el tipo y si tiene problemas asociados.
 
-### Detalle de nodo — VNet aislada
+<div style="margin:2rem 0;border-radius:.75rem;overflow:hidden;border:1px solid rgba(148,163,184,.12);box-shadow:0 4px 24px -8px rgba(0,0,0,.5)">
+  <img src="/images/projects/azure-network-analyzer/app-03-resources-tab.png" alt="Azure Network Analyzer — Pestaña Recursos con los 9 recursos descubiertos: vnet-a, subnet-a1, subnet-a2, vnet-b, subnet-b1, vnet-c, subnet-c1, nsg-empty, nsg-with-rules" style="width:100%;display:block" />
+</div>
 
-Al hacer clic en `vnet-network-analyzer-c-isolated`, el panel confirma que
-no tiene peerings y la marca como recurso a revisar.
-
-<!-- SCREENSHOT: Panel de detalle de vnet-c con el aviso de VNet sin peerings -->
+Esta vista tiene utilidad práctica más allá del análisis visual: si necesitas
+generar un inventario rápido de los recursos de red de una suscripción para
+documentación o para un ticket de cambio, tienes aquí la base. En las próximas
+versiones quiero añadir exportación a CSV desde este panel.
 
 ---
 
