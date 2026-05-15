@@ -150,12 +150,14 @@ export default function CloudVisual() {
     const animations: ReturnType<typeof animate>[] = [];
 
     // 1. Cloud "breathing" — gentle scale around its centre.
-    animations.push(animate('.cl-cloud', {
-      scale:           [1, 1.025, 1],
-      duration:        4500,
-      ease:            'inOutSine',
-      loop:            true,
-      transformOrigin: `${CLOUD_CX}px ${CLOUD_CY}px`,
+    //    The element has `transform-box: fill-box; transform-origin: center`
+    //    set inline so the scale is around the cloud's own centre regardless
+    //    of where in the viewBox it sits.
+    animations.push(animate('.cl-cloud-anim', {
+      scale:    [1, 1.025, 1],
+      duration: 4500,
+      ease:     'inOutSine',
+      loop:     true,
     } as AnimationParams));
 
     // 2. Halo intensity pulse (separate from the cloud so the glow can
@@ -180,7 +182,10 @@ export default function CloudVisual() {
     } as AnimationParams));
 
     // 4. Service tiles bob up-and-down with staggered phase from the centre.
-    animations.push(animate('.cl-tile-group', {
+    //    We animate the INNER <g class="cl-tile-bob"> so anime.js's CSS
+    //    transform does not collide with the outer <g transform="translate(...)">
+    //    that anchors each tile to its grid position.
+    animations.push(animate('.cl-tile-bob', {
       translateY: [0, -5, 0],
       duration:   4500,
       ease:       'inOutSine',
@@ -303,8 +308,10 @@ export default function CloudVisual() {
           />
         ))}
 
-        {/* ─── 3. Cloud silhouette (made of overlapping shapes for a soft outline) ─── */}
-        <g className="cl-cloud" filter="url(#cloudShadow)">
+        {/* ─── 3. Cloud silhouette (made of overlapping shapes for a soft outline) ───
+            Outer <g> holds nothing transformable — anime.js animates the inner
+            <g class="cl-cloud-anim"> so the scale doesn't fight any SVG attr. */}
+        <g className="cl-cloud-anim" filter="url(#cloudShadow)" style={{ transformBox: 'fill-box', transformOrigin: 'center' }}>
           {/* Bottom flat ellipse anchors the cloud silhouette */}
           <path
             d="
@@ -390,89 +397,110 @@ export default function CloudVisual() {
           />
         ))}
 
-        {/* ─── 6. Service tiles ────────────────────────────────────── */}
+        {/* ─── 6. Service tiles ──────────────────────────────────────
+            Structure:
+              <g transform="translate(x y)">      ← anchors the tile
+                <g class="cl-tile-bob">           ← anime.js animates this
+                  …visible tile content…
+                </g>
+              </g>
+            Splitting the positioning from the animated layer is what
+            prevents anime.js's CSS transform from cancelling the SVG
+            `transform="translate(...)"` attribute. */}
         {SERVICES.map((s) => {
           const isActive = hovered === s.id;
           return (
             <g
               key={s.id}
-              className="cl-tile-group"
               transform={`translate(${s.x - TILE_W / 2} ${s.y - TILE_H / 2})`}
-              onMouseEnter={() => setHovered(s.id)}
-              onMouseLeave={() => setHovered(null)}
-              onFocus={() => setHovered(s.id)}
-              onBlur={() => setHovered(null)}
-              tabIndex={0}
-              role="button"
-              aria-label={`${s.label}: ${s.short}`}
-              style={{ cursor: 'pointer', outline: 'none' }}
             >
-              {/* Glow when active */}
-              {isActive && (
+              <g
+                className="cl-tile-bob"
+                onMouseEnter={() => setHovered(s.id)}
+                onMouseLeave={() => setHovered(null)}
+                onFocus={() => setHovered(s.id)}
+                onBlur={() => setHovered(null)}
+                tabIndex={0}
+                role="button"
+                aria-label={`${s.label}: ${s.short}`}
+                style={{ cursor: 'pointer', outline: 'none' }}
+              >
+                {/* Glow when active */}
+                {isActive && (
+                  <rect
+                    x={-4} y={-4}
+                    width={TILE_W + 8} height={TILE_H + 8}
+                    rx={14}
+                    fill={s.glow}
+                    opacity={0.35}
+                    filter="url(#cloudShadow)"
+                  />
+                )}
+
+                {/* Tile body */}
                 <rect
-                  x={-4} y={-4}
-                  width={TILE_W + 8} height={TILE_H + 8}
-                  rx={14}
-                  fill={s.glow}
-                  opacity={0.35}
-                  filter="url(#cloudShadow)"
+                  width={TILE_W} height={TILE_H}
+                  rx={12}
+                  fill="rgba(15, 23, 42, 0.85)"
+                  stroke={isActive ? 'rgba(96, 165, 250, 0.9)' : 'rgba(96, 165, 250, 0.3)'}
+                  strokeWidth={isActive ? 1.5 : 1}
+                  style={{ transition: 'stroke 0.25s ease, stroke-width 0.25s ease' }}
                 />
-              )}
 
-              {/* Tile body */}
-              <rect
-                width={TILE_W} height={TILE_H}
-                rx={12}
-                fill="rgba(15, 23, 42, 0.85)"
-                stroke={isActive ? 'rgba(96, 165, 250, 0.9)' : 'rgba(96, 165, 250, 0.3)'}
-                strokeWidth={isActive ? 1.5 : 1}
-                style={{ transition: 'stroke 0.25s ease, stroke-width 0.25s ease' }}
-              />
+                {/* Icon disk */}
+                <foreignObject x={8} y={(TILE_H - 32) / 2} width={32} height={32}>
+                  <div
+                    className={`flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br ${s.accent} text-white`}
+                    style={{ boxShadow: `0 6px 14px -4px ${s.glow}` }}
+                  >
+                    <div className="h-4 w-4">{s.icon}</div>
+                  </div>
+                </foreignObject>
 
-              {/* Icon disk */}
-              <foreignObject x={8} y={(TILE_H - 32) / 2} width={32} height={32}>
-                <div
-                  className={`flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br ${s.accent} text-white`}
-                  style={{ boxShadow: `0 6px 14px -4px ${s.glow}` }}
+                {/* Labels */}
+                <text
+                  x={48}
+                  y={28}
+                  fontFamily="'Inter', system-ui, sans-serif"
+                  fontSize="12"
+                  fontWeight="600"
+                  fill="#f1f5f9"
                 >
-                  <div className="h-4 w-4">{s.icon}</div>
-                </div>
-              </foreignObject>
-
-              {/* Labels */}
-              <text
-                x={48}
-                y={28}
-                fontFamily="'Inter', system-ui, sans-serif"
-                fontSize="12"
-                fontWeight="600"
-                fill="#f1f5f9"
-              >
-                {s.label}
-              </text>
-              <text
-                x={48}
-                y={44}
-                fontFamily="'JetBrains Mono', monospace"
-                fontSize="9"
-                fill="#94a3b8"
-              >
-                {s.short}
-              </text>
+                  {s.label}
+                </text>
+                <text
+                  x={48}
+                  y={44}
+                  fontFamily="'JetBrains Mono', monospace"
+                  fontSize="9"
+                  fill="#94a3b8"
+                >
+                  {s.short}
+                </text>
+              </g>
             </g>
           );
         })}
       </svg>
 
-      {/* Hover hint tooltip rendered in HTML so it can wrap nicely */}
+      {/* Hover hint tooltip — positioned near the hovered tile in % of the
+          square wrapper so it tracks the SVG coordinate system. */}
       {hovered && (() => {
         const s = SERVICES.find((x) => x.id === hovered)!;
+        const leftPct = (s.x / VB) * 100;
+        // Place tooltip just ABOVE the tile (above the top edge by ~14% of VB)
+        const topPct  = ((s.y - TILE_H / 2 - 70) / VB) * 100;
         return (
           <div
-            className="pointer-events-none absolute left-1/2 top-3 -translate-x-1/2 z-10 animate-fade-in"
+            className="pointer-events-none absolute z-10 animate-fade-in"
+            style={{
+              left: `${leftPct}%`,
+              top:  `${Math.max(0, topPct)}%`,
+              transform: 'translateX(-50%)',
+            }}
           >
-            <div className="glass-card rounded-xl px-3 py-2 text-center max-w-[220px]">
-              <p className="text-xs font-semibold text-white">{s.label}</p>
+            <div className="glass-card rounded-lg px-3 py-1.5 text-center w-max max-w-[200px]">
+              <p className="text-xs font-semibold text-white whitespace-nowrap">{s.label}</p>
               <p className="mt-0.5 text-[10px] leading-snug text-slate-400">{s.hint}</p>
             </div>
           </div>
