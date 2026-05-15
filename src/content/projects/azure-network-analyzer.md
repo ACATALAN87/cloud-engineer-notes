@@ -259,26 +259,138 @@ terraform init
 
 <!-- SCREENSHOT: terraform init completado — output con "Terraform has been successfully initialized" -->
 
-### Paso 2 — Plan
+### Paso 2 — Plan y Apply
 
-Antes de aplicar, verifico que el plan coincide exactamente con el diseño:
+Sin `-auto-approve`, `terraform apply` presenta primero el plan completo y espera
+confirmación explícita antes de crear nada. El plan muestra **16 recursos** a crear:
+1 resource group, 3 VNets, 5 subnets, 2 peerings bidireccionales, 2 NSGs,
+1 route table y 3 asociaciones.
 
-```bash
-terraform plan
-```
+<div style="margin:2.5rem 0;border-radius:.875rem;overflow:hidden;border:1px solid rgba(96,165,250,.15);box-shadow:0 8px 32px -12px rgba(0,0,0,.7),0 0 0 1px rgba(59,130,246,.08)">
+  <div style="background:#1e1e20;padding:.55rem 1rem;display:flex;align-items:center;gap:.5rem;border-bottom:1px solid rgba(255,255,255,.06)">
+    <span style="width:12px;height:12px;border-radius:50%;background:#ff5f57;flex-shrink:0;display:inline-block"></span>
+    <span style="width:12px;height:12px;border-radius:50%;background:#febc2e;flex-shrink:0;display:inline-block"></span>
+    <span style="width:12px;height:12px;border-radius:50%;background:#28c840;flex-shrink:0;display:inline-block"></span>
+    <span style="flex:1;text-align:center;font-family:'JetBrains Mono',monospace;font-size:.72rem;color:#64748b;letter-spacing:.02em">az_deploy_network_resources — terraform apply</span>
+  </div>
+  <div style="background:linear-gradient(135deg,#0a0f1e,#050914);padding:1.25rem 1.5rem;overflow-x:auto;font-family:'JetBrains Mono','Fira Code',ui-monospace,monospace;font-size:.78rem;line-height:1.7;color:#cbd5e1;white-space:pre"><span style="color:#e2e8f0;font-weight:600">angelluiscatalan@MacBook-M3-Pro-de-Angel</span><span style="color:#64748b"> az_deploy_network_resources</span><span style="color:#94a3b8"> % </span><span style="color:#f8fafc">terraform apply</span>
 
-El plan debe mostrar **14 recursos** a crear: 1 resource group, 3 VNets,
-5 subnets, 2 peerings, 2 NSGs, 1 route table y 2 asociaciones.
+<span style="color:#94a3b8">Terraform used the selected providers to generate the following execution plan.
+Resource actions are indicated with the following symbols:</span>
+  <span style="color:#4ade80;font-weight:600">+</span><span style="color:#94a3b8"> create</span>
 
-<!-- SCREENSHOT: terraform plan output — 14 to add, 0 to change, 0 to destroy -->
+<span style="color:#94a3b8">Terraform will perform the following actions:</span>
 
-### Paso 3 — Apply
+  <span style="color:#64748b"># azurerm_resource_group.rg will be created</span>
+  <span style="color:#4ade80">+</span> resource <span style="color:#67e8f9">"azurerm_resource_group"</span> <span style="color:#c084fc">"rg"</span> {
+      <span style="color:#4ade80">+</span> <span style="color:#94a3b8">location</span> = <span style="color:#fde68a">"westeurope"</span>
+      <span style="color:#4ade80">+</span> <span style="color:#94a3b8">name</span>     = <span style="color:#fde68a">"rg-network-analyzer-test"</span>
+      <span style="color:#4ade80">+</span> <span style="color:#94a3b8">tags</span>     = { environment = <span style="color:#fde68a">"test"</span>, managed_by = <span style="color:#fde68a">"terraform"</span>, project = <span style="color:#fde68a">"azure-network-analyzer"</span> }
+    }
 
-```bash
-terraform apply -auto-approve
-```
+  <span style="color:#64748b"># azurerm_virtual_network.vnet_a will be created</span>
+  <span style="color:#4ade80">+</span> resource <span style="color:#67e8f9">"azurerm_virtual_network"</span> <span style="color:#c084fc">"vnet_a"</span> {
+      <span style="color:#4ade80">+</span> <span style="color:#94a3b8">address_space</span> = [<span style="color:#fde68a">"10.0.0.0/16"</span>]
+      <span style="color:#4ade80">+</span> <span style="color:#94a3b8">name</span>          = <span style="color:#fde68a">"vnet-network-analyzer-a"</span>
+    }
 
-<!-- SCREENSHOT: terraform apply completado — outputs con los IDs de las VNets y el resumen de problemas esperados -->
+  <span style="color:#64748b"># azurerm_virtual_network.vnet_b will be created</span>
+  <span style="color:#4ade80">+</span> resource <span style="color:#67e8f9">"azurerm_virtual_network"</span> <span style="color:#c084fc">"vnet_b"</span> {
+      <span style="color:#4ade80">+</span> <span style="color:#94a3b8">address_space</span> = [<span style="color:#fde68a">"10.1.0.0/16"</span>]
+      <span style="color:#4ade80">+</span> <span style="color:#94a3b8">name</span>          = <span style="color:#fde68a">"vnet-network-analyzer-b"</span>
+    }
+
+  <span style="color:#64748b"># azurerm_virtual_network.vnet_c will be created</span>
+  <span style="color:#4ade80">+</span> resource <span style="color:#67e8f9">"azurerm_virtual_network"</span> <span style="color:#c084fc">"vnet_c"</span> {
+      <span style="color:#4ade80">+</span> <span style="color:#94a3b8">address_space</span> = [<span style="color:#fde68a">"10.2.0.0/16"</span>]
+      <span style="color:#4ade80">+</span> <span style="color:#94a3b8">name</span>          = <span style="color:#fde68a">"vnet-network-analyzer-c-isolated"</span>
+    }
+
+  <span style="color:#64748b"># azurerm_network_security_group.nsg_correct will be created</span>
+  <span style="color:#4ade80">+</span> resource <span style="color:#67e8f9">"azurerm_network_security_group"</span> <span style="color:#c084fc">"nsg_correct"</span> {
+      <span style="color:#4ade80">+</span> <span style="color:#94a3b8">name</span> = <span style="color:#fde68a">"nsg-with-rules"</span>
+      <span style="color:#4ade80">+</span> <span style="color:#94a3b8">security_rule</span> = [allow-https-inbound (100, Allow, Tcp:443), deny-http-inbound (200, Deny, Tcp:80)]
+    }
+
+  <span style="color:#64748b"># azurerm_network_security_group.nsg_empty will be created</span>
+  <span style="color:#4ade80">+</span> resource <span style="color:#67e8f9">"azurerm_network_security_group"</span> <span style="color:#c084fc">"nsg_empty"</span> {
+      <span style="color:#4ade80">+</span> <span style="color:#94a3b8">name</span>          = <span style="color:#fde68a">"nsg-empty-no-custom-rules"</span>
+      <span style="color:#4ade80">+</span> <span style="color:#94a3b8">security_rule</span> = <span style="color:#64748b">(known after apply)</span>
+    }
+
+  <span style="color:#64748b"># azurerm_route_table.rt_basic / 4 subnets / 2 peerings / 3 associations will be created</span>
+  <span style="color:#64748b">  [... 10 recursos adicionales omitidos por brevedad ...]</span>
+
+<span style="color:#4ade80;font-weight:700">Plan: 16 to add, 0 to change, 0 to destroy.</span>
+
+<span style="color:#94a3b8">Changes to Outputs:</span>
+  <span style="color:#4ade80">+</span> <span style="color:#c084fc">problemas_esperados</span> = {
+      <span style="color:#4ade80">+</span> <span style="color:#fbbf24">warnings</span> = [
+          <span style="color:#4ade80">+</span> <span style="color:#fde68a">"subnet-a2-no-nsg → Subnet sin NSG asociado"</span>,
+          <span style="color:#4ade80">+</span> <span style="color:#fde68a">"nsg-empty-no-custom-rules → NSG sin reglas personalizadas"</span>,
+        ]
+      <span style="color:#4ade80">+</span> <span style="color:#60a5fa">info</span>     = [
+          <span style="color:#4ade80">+</span> <span style="color:#fde68a">"vnet-network-analyzer-c-isolated → VNet sin peerings"</span>,
+        ]
+    }
+  <span style="color:#4ade80">+</span> <span style="color:#c084fc">resource_group_name</span>      = <span style="color:#fde68a">"rg-network-analyzer-test"</span>
+  <span style="color:#4ade80">+</span> <span style="color:#c084fc">subscription_id_reminder</span> = <span style="color:#fde68a">"Ejecuta: az account show --query id -o tsv"</span>
+
+<span style="color:#94a3b8">Do you want to perform these actions?
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: </span><span style="color:#f8fafc;font-weight:600">yes</span>
+
+<span style="color:#67e8f9">azurerm_resource_group.rg</span><span style="color:#94a3b8">: Creating...</span>
+<span style="color:#67e8f9">azurerm_resource_group.rg</span><span style="color:#fbbf24">: Still creating... [10s elapsed]</span>
+<span style="color:#67e8f9">azurerm_resource_group.rg</span><span style="color:#4ade80">: Creation complete after 12s</span>
+<span style="color:#67e8f9">azurerm_network_security_group.nsg_empty</span><span style="color:#94a3b8">: Creating...</span>
+<span style="color:#67e8f9">azurerm_virtual_network.vnet_a</span><span style="color:#94a3b8">: Creating...</span>
+<span style="color:#67e8f9">azurerm_virtual_network.vnet_b</span><span style="color:#94a3b8">: Creating...</span>
+<span style="color:#67e8f9">azurerm_virtual_network.vnet_c</span><span style="color:#94a3b8">: Creating...</span>
+<span style="color:#67e8f9">azurerm_network_security_group.nsg_correct</span><span style="color:#94a3b8">: Creating...</span>
+<span style="color:#67e8f9">azurerm_route_table.rt_basic</span><span style="color:#94a3b8">: Creating...</span>
+<span style="color:#67e8f9">azurerm_network_security_group.nsg_empty</span><span style="color:#4ade80">: Creation complete after 3s</span>
+<span style="color:#67e8f9">azurerm_network_security_group.nsg_correct</span><span style="color:#4ade80">: Creation complete after 3s</span>
+<span style="color:#67e8f9">azurerm_route_table.rt_basic</span><span style="color:#4ade80">: Creation complete after 4s</span>
+<span style="color:#67e8f9">azurerm_virtual_network.vnet_b</span><span style="color:#4ade80">: Creation complete after 5s</span>
+<span style="color:#67e8f9">azurerm_virtual_network.vnet_a</span><span style="color:#4ade80">: Creation complete after 5s</span>
+<span style="color:#67e8f9">azurerm_virtual_network.vnet_c</span><span style="color:#4ade80">: Creation complete after 5s</span>
+<span style="color:#67e8f9">azurerm_subnet.subnet_a1</span><span style="color:#94a3b8">: Creating...</span>
+<span style="color:#67e8f9">azurerm_subnet.subnet_a2</span><span style="color:#94a3b8">: Creating...</span>
+<span style="color:#67e8f9">azurerm_subnet.subnet_b1</span><span style="color:#94a3b8">: Creating...</span>
+<span style="color:#67e8f9">azurerm_subnet.subnet_c1</span><span style="color:#94a3b8">: Creating...</span>
+<span style="color:#67e8f9">azurerm_virtual_network_peering.peering_a_to_b</span><span style="color:#94a3b8">: Creating...</span>
+<span style="color:#67e8f9">azurerm_virtual_network_peering.peering_b_to_a</span><span style="color:#94a3b8">: Creating...</span>
+<span style="color:#67e8f9">azurerm_subnet.subnet_a1</span><span style="color:#4ade80">: Creation complete after 5s</span>
+<span style="color:#67e8f9">azurerm_subnet.subnet_b1</span><span style="color:#4ade80">: Creation complete after 6s</span>
+<span style="color:#67e8f9">azurerm_subnet.subnet_c1</span><span style="color:#4ade80">: Creation complete after 6s</span>
+<span style="color:#67e8f9">azurerm_subnet_network_security_group_association.nsg_empty_assoc</span><span style="color:#4ade80">: Creation complete after 6s</span>
+<span style="color:#67e8f9">azurerm_subnet.subnet_a2</span><span style="color:#4ade80">: Creation complete after 10s</span>
+<span style="color:#67e8f9">azurerm_subnet_network_security_group_association.nsg_correct_assoc</span><span style="color:#4ade80">: Creation complete after 11s</span>
+<span style="color:#67e8f9">azurerm_subnet_route_table_association.rt_assoc</span><span style="color:#4ade80">: Creation complete after 12s</span>
+<span style="color:#67e8f9">azurerm_virtual_network_peering.peering_a_to_b</span><span style="color:#4ade80">: Creation complete after 27s</span>
+<span style="color:#67e8f9">azurerm_virtual_network_peering.peering_b_to_a</span><span style="color:#fbbf24">: Still creating... [30s elapsed]</span>
+<span style="color:#67e8f9">azurerm_virtual_network_peering.peering_b_to_a</span><span style="color:#fbbf24">: Still creating... [40s elapsed]</span>
+<span style="color:#67e8f9">azurerm_virtual_network_peering.peering_b_to_a</span><span style="color:#fbbf24">: Still creating... [50s elapsed]</span>
+<span style="color:#67e8f9">azurerm_virtual_network_peering.peering_b_to_a</span><span style="color:#4ade80">: Creation complete after 53s</span>
+
+<span style="color:#4ade80;font-weight:700">Apply complete! Resources: 16 added, 0 changed, 0 destroyed.</span>
+
+<span style="color:#94a3b8">Outputs:</span>
+
+<span style="color:#c084fc">problemas_esperados</span> = {
+  <span style="color:#fbbf24">"warnings"</span> = [
+    <span style="color:#fde68a">"subnet-a2-no-nsg → Subnet sin NSG asociado"</span>,
+    <span style="color:#fde68a">"nsg-empty-no-custom-rules → NSG sin reglas personalizadas"</span>,
+  ]
+  <span style="color:#60a5fa">"info"</span> = [
+    <span style="color:#fde68a">"vnet-network-analyzer-c-isolated → VNet sin peerings"</span>,
+  ]
+}
+<span style="color:#c084fc">resource_group_name</span>      = <span style="color:#fde68a">"rg-network-analyzer-test"</span>
+<span style="color:#c084fc">subscription_id_reminder</span> = <span style="color:#fde68a">"Ejecuta: az account show --query id -o tsv"</span></div>
+</div>
 
 ### Verificación en el portal de Azure
 
