@@ -1,6 +1,8 @@
 interface Role {
   company:     string;
   title:       string;
+  /** Optional context line — e.g. "Cliente retail · entorno empresarial" */
+  context?:    string;
   period:      string;
   current?:    boolean;
   bullets?:    string[];
@@ -25,13 +27,17 @@ const experience: Role[] = [
   {
     company: 'Kyndryl',
     title:   'Workload Automation Administrator',
+    context: 'Cliente retail · entorno empresarial',
     period:  'Sep 2021 – Ene 2025',
     bullets: [
-      'Gestión de plataforma empresarial de workload automation',
-      'Shell scripting para automatización de procesos y pipelines',
-      'Administración de Oracle, DB2 y SQL Server',
-      'Configuración y mantenimiento de IBM InfoSphere Data Replication',
-      'Operación de entornos críticos 24x7 y transferencia segura de ficheros',
+      'Administración de Tivoli Workload Scheduler (z/OS y Distribuido) para diseñar, planificar y mantener procesos batch críticos en operaciones retail de gran escala.',
+      'Automatización de workflows de despliegue de aplicaciones, implementando secuencias controladas de stop/start para garantizar releases fiables y consistentes.',
+      'Desarrollo de shell scripts para automatizar tareas de mantenimiento de bases de datos en entornos Oracle, DB2 y SQL Server.',
+      'Gestión de procesos de replicación de datos con IBM InfoSphere Data Replication, incluyendo configuraciones avanzadas (filtros, mappings y user exits) para asegurar la consistencia entre sistemas.',
+      'Soporte de integraciones de transferencia segura de ficheros con GoAnywhere para el intercambio fiable de datos con partners externos.',
+      'Mantenimiento y monitorización de la infraestructura IBM UrbanCode Deploy, garantizando la estabilidad de los despliegues y la correcta ejecución de los procesos de release.',
+      'Planificación y gestión de los procesos de backup de MongoDB con MongoDB Ops Manager.',
+      'Soporte 24x7 en producción, troubleshooting de incidencias críticas y garantía de alta disponibilidad de los sistemas empresariales.',
     ],
   },
   {
@@ -133,6 +139,11 @@ export default function ExperienceTimeline() {
                   <p className="mt-1 text-sm font-medium text-blue-300">
                     {role.company}
                   </p>
+                  {role.context && (
+                    <p className="mt-0.5 font-mono text-xs text-slate-500">
+                      {role.context}
+                    </p>
+                  )}
 
                   {role.bullets && role.bullets.length > 0 && (
                     <ul className="mt-4 grid gap-2 sm:grid-cols-2">
