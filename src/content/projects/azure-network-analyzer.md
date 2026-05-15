@@ -455,7 +455,7 @@ de `az login` — sin configurar variables de entorno ni secrets.
 az login
 
 # 2. Ir al directorio del proyecto
-cd ~/Desktop/WebCloudEngineer/azure-network-analyzer
+cd ~/Desktop/azure-network-analyzer
 
 # 3. Activar el entorno virtual
 source .venv/bin/activate
@@ -472,7 +472,7 @@ uvicorn main:app --reload
     <span style="flex:1;text-align:center;font-family:'JetBrains Mono',monospace;font-size:.72rem;color:#64748b;letter-spacing:.02em">azure-network-analyzer — uvicorn</span>
   </div>
   <div style="background:linear-gradient(135deg,#0a0f1e,#050914);padding:1.25rem 1.5rem;overflow-x:auto;font-family:'JetBrains Mono','Fira Code',ui-monospace,monospace;font-size:.78rem;line-height:1.7;color:#cbd5e1;white-space:pre"><span style="color:#e2e8f0;font-weight:600">angelluiscatalan@MacBook-M3-Pro-de-Angel</span><span style="color:#64748b"> azure-network-analyzer</span><span style="color:#94a3b8"> % </span><span style="color:#f8fafc">uvicorn main:app --reload</span>
-<span style="color:#60a5fa">INFO</span><span style="color:#64748b">:     </span><span style="color:#94a3b8">Will watch for changes in these directories: [</span><span style="color:#fde68a">'/Users/angelluiscatalan/Desktop/WebCloudEngineer/azure-network-analyzer'</span><span style="color:#94a3b8">]</span>
+<span style="color:#60a5fa">INFO</span><span style="color:#64748b">:     </span><span style="color:#94a3b8">Will watch for changes in these directories: [</span><span style="color:#fde68a">'/Users/angelluiscatalan/Desktop/azure-network-analyzer'</span><span style="color:#94a3b8">]</span>
 <span style="color:#60a5fa">INFO</span><span style="color:#64748b">:     </span><span style="color:#94a3b8">Uvicorn running on </span><span style="color:#4ade80;font-weight:600">http://127.0.0.1:8000</span><span style="color:#94a3b8"> (Press CTRL+C to quit)</span>
 <span style="color:#60a5fa">INFO</span><span style="color:#64748b">:     </span><span style="color:#94a3b8">Started reloader process [</span><span style="color:#c084fc">12847</span><span style="color:#94a3b8">] using StatReload</span>
 <span style="color:#60a5fa">INFO</span><span style="color:#64748b">:     </span><span style="color:#94a3b8">Started server process [</span><span style="color:#c084fc">12849</span><span style="color:#94a3b8">]</span>
