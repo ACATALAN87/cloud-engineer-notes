@@ -2,178 +2,368 @@ import { useEffect, useRef, useState } from 'react';
 import { animate, stagger, type AnimationParams } from 'animejs';
 
 /**
- * CloudVisual
+ * CloudVisual — "AI Cloud Console"
  *
- * Hero-side cloud visualisation animated with anime.js v4.
+ * Hero-side visualisation that combines three storytelling layers:
  *
- * Composition (top → bottom inside a 480 × 480 viewBox):
+ *   1. A stylised cloud silhouette that doubles as a neural network
+ *      (cloud + brain), with synapse lines pulsing and node activations
+ *      orchestrated by anime.js.
  *
- *   1. Halo + 3 radar rings emanating from the cloud centre.
- *   2. A stylised cloud silhouette ("Azure cloud") that breathes.
- *   3. 6 service tiles arranged in a 3×2 grid below the cloud:
- *        Network · Compute · Storage
- *        Identity · Security · DevOps
- *   4. Curved connectors from the cloud bottom to each tile.
- *   5. Data dots that travel along each connector in a loop.
+ *   2. A console / terminal panel that types live messages from a rotating
+ *      queue covering cloud, AI, DevOps and security topics. Each message
+ *      is typewriter-animated, paused briefly, then replaced.
  *
- * All motion is driven by anime.js timelines so the animations can be
- * paused / cancelled cleanly on unmount and respect prefers-reduced-motion.
+ *   3. A row of floating concept chips bobbing with a staggered phase.
+ *
+ * All animations honour `prefers-reduced-motion` and clean up on unmount.
  */
 
-interface Service {
-  id:     string;
-  label:  string;
-  short:  string;
-  hint:   string;
-  /** Centre of the tile in viewBox coordinates */
-  x:      number;
-  y:      number;
-  accent: string; // tailwind gradient classes
-  glow:   string; // rgba glow color
-  icon:   React.ReactNode;
+interface Message {
+  /** Single-glyph "kind" prefix (looks like a shell prompt) */
+  prefix:  string;
+  /** Hex color for the prefix glyph */
+  color:   string;
+  /** Sentence body — typed character by character */
+  text:    string;
+  /** Tag shown at the right of the line */
+  tag:     string;
 }
 
-const VB         = 480;
-const CLOUD_CX   = 240;
-const CLOUD_CY   = 130;
-const CLOUD_BASE = 178;          // y of the cloud bottom (where data dots start)
-const TILE_W     = 110;
-const TILE_H     = 70;
-
-const SERVICES: Service[] = [
-  {
-    id: 'network', label: 'Network', short: 'VNet · Firewall',
-    hint: 'Hub-and-spoke con NSGs y Azure Firewall',
-    x: 90,  y: 290,
-    accent: 'from-blue-400 to-cyan-400',
-    glow:   'rgba(59, 130, 246, 0.55)',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-        <circle cx="12" cy="12" r="9"/>
-        <path d="M3 12h18M12 3a13.5 13.5 0 0 1 0 18M12 3a13.5 13.5 0 0 0 0 18"/>
-      </svg>
-    ),
-  },
-  {
-    id: 'compute', label: 'Compute', short: 'AKS · App Service',
-    hint: 'Workloads sobre Kubernetes y PaaS',
-    x: 240, y: 290,
-    accent: 'from-violet-400 to-fuchsia-400',
-    glow:   'rgba(168, 85, 247, 0.55)',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-        <rect x="2" y="3" width="20" height="14" rx="2"/>
-        <path d="M8 21h8M12 17v4"/>
-      </svg>
-    ),
-  },
-  {
-    id: 'storage', label: 'Storage', short: 'Blob · Files · KV',
-    hint: 'Almacenamiento privado con Private Endpoints',
-    x: 390, y: 290,
-    accent: 'from-cyan-400 to-emerald-400',
-    glow:   'rgba(34, 211, 238, 0.55)',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-        <ellipse cx="12" cy="5" rx="9" ry="3"/>
-        <path d="M3 5v14a9 3 0 0 0 18 0V5"/>
-        <path d="M3 12a9 3 0 0 0 18 0"/>
-      </svg>
-    ),
-  },
-  {
-    id: 'identity', label: 'Identity', short: 'Entra ID · PIM',
-    hint: 'SSO empresarial con MFA y JIT access',
-    x: 90,  y: 400,
-    accent: 'from-rose-400 to-pink-500',
-    glow:   'rgba(244, 63, 94, 0.55)',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-        <circle cx="12" cy="8" r="4"/>
-        <path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/>
-      </svg>
-    ),
-  },
-  {
-    id: 'security', label: 'Security', short: 'Defender · Policy',
-    hint: 'Defense-in-depth con CSPM y Azure Policy',
-    x: 240, y: 400,
-    accent: 'from-emerald-400 to-teal-500',
-    glow:   'rgba(16, 185, 129, 0.55)',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-        <path d="m9 12 2 2 4-4"/>
-      </svg>
-    ),
-  },
-  {
-    id: 'devops', label: 'DevOps', short: 'IaC · CI/CD',
-    hint: 'Terraform + GitHub Actions con OIDC',
-    x: 390, y: 400,
-    accent: 'from-amber-400 to-orange-500',
-    glow:   'rgba(245, 158, 11, 0.55)',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-        <path d="m18 16 4-4-4-4M6 8l-4 4 4 4M14.5 4l-5 16"/>
-      </svg>
-    ),
-  },
+const MESSAGES: Message[] = [
+  { prefix: '$',  color: '#60a5fa', text: 'terraform apply alz-prod ...',          tag: 'IaC' },
+  { prefix: '✓',  color: '#34d399', text: 'AKS cluster scaled 8 → 16 nodes',       tag: 'Kubernetes' },
+  { prefix: '↻',  color: '#a78bfa', text: 'Azure OpenAI endpoint warming up',      tag: 'AI' },
+  { prefix: '⚡', color: '#fbbf24', text: 'AI cost agent: −23% monthly spend',      tag: 'FinOps' },
+  { prefix: '◉',  color: '#22d3ee', text: 'VNet peering hub ↔ spoke-prod',         tag: 'Network' },
+  { prefix: '✦',  color: '#f472b6', text: 'OIDC token issued · zero secrets',      tag: 'CI/CD' },
+  { prefix: '⌬', color: '#c084fc', text: 'Training Azure ML model v2.3',           tag: 'ML' },
+  { prefix: '⌖', color: '#fb7185', text: 'Defender alert auto-mitigated',          tag: 'Security' },
+  { prefix: '◈',  color: '#34d399', text: 'Sentinel: 0 incidents · 24h healthy',   tag: 'SIEM' },
+  { prefix: '⌘', color: '#60a5fa', text: 'Copilot deployed across 14 repos',      tag: 'DevEx' },
 ];
 
-/**
- * Build a quadratic-Bezier path from the cloud bottom to a tile top, with
- * the control point pulled outward along the X axis to give the connector
- * a soft sweep instead of a straight line.
- */
-function connectorPath(targetX: number, targetY: number): string {
-  const startX = CLOUD_CX;
-  const startY = CLOUD_BASE;
-  const endY   = targetY - TILE_H / 2 - 4;
-  const cpX    = startX + (targetX - startX) * 0.5;
-  const cpY    = (startY + endY) / 2 - 30;
-  return `M ${startX} ${startY} Q ${cpX} ${cpY} ${targetX} ${endY}`;
+const CONCEPT_TAGS = [
+  'Azure',
+  'OpenAI',
+  'Terraform',
+  'Kubernetes',
+  'OIDC',
+  'Sentinel',
+];
+
+const TYPE_SPEED_MS    = 32;     // ms per character
+const PAUSE_AFTER_TYPE = 1700;   // pause before next message
+const PAUSE_BETWEEN    = 250;    // gap between erase + new type
+
+/* ────────────────────────────────────────────────────────────────────────
+   Neural-cloud SVG sub-component
+   ──────────────────────────────────────────────────────────────────────── */
+
+const NEURAL_NODES: { x: number; y: number; r: number }[] = [
+  { x: 240, y: 88,  r: 5 },   // top centre
+  { x: 200, y: 108, r: 4 },   // left
+  { x: 280, y: 108, r: 4 },   // right
+  { x: 220, y: 132, r: 5 },   // bottom-left
+  { x: 260, y: 132, r: 5 },   // bottom-right
+  { x: 240, y: 112, r: 6 },   // centre (slightly bigger — "central neuron")
+];
+
+/** Synapse lines connecting neighbouring nodes — drawn behind the nodes. */
+const NEURAL_LINES: [number, number][] = [
+  [0, 1], [0, 2], [0, 5],
+  [1, 5], [2, 5],
+  [1, 3], [2, 4],
+  [3, 5], [4, 5],
+  [3, 4],
+];
+
+function NeuralCloud() {
+  return (
+    <svg
+      viewBox="0 0 480 220"
+      className="absolute inset-x-0 top-0 w-full"
+      role="img"
+      aria-hidden="true"
+    >
+      <defs>
+        <radialGradient id="nc-halo" cx="0.5" cy="0.5" r="0.5">
+          <stop offset="0%"   stopColor="rgba(96, 165, 250, 0.55)" />
+          <stop offset="60%"  stopColor="rgba(96, 165, 250, 0.10)" />
+          <stop offset="100%" stopColor="rgba(96, 165, 250, 0)" />
+        </radialGradient>
+        <linearGradient id="nc-cloud" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%"   stopColor="#60a5fa" />
+          <stop offset="50%"  stopColor="#6366f1" />
+          <stop offset="100%" stopColor="#a855f7" />
+        </linearGradient>
+        <linearGradient id="nc-highlight" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%"   stopColor="rgba(255,255,255,0.45)" />
+          <stop offset="100%" stopColor="rgba(255,255,255,0)" />
+        </linearGradient>
+        <filter id="nc-shadow" x="-30%" y="-30%" width="160%" height="160%">
+          <feGaussianBlur in="SourceAlpha" stdDeviation="6" />
+          <feOffset dy="4" result="o" />
+          <feFlood floodColor="#3b82f6" floodOpacity="0.35" />
+          <feComposite in2="o" operator="in" />
+          <feMerge><feMergeNode /><feMergeNode in="SourceGraphic" /></feMerge>
+        </filter>
+      </defs>
+
+      {/* Halo */}
+      <circle className="nc-halo" cx="240" cy="110" r="130" fill="url(#nc-halo)" />
+
+      {/* Radar rings */}
+      {[0, 1, 2].map((i) => (
+        <circle
+          key={i}
+          className="nc-radar"
+          cx="240" cy="110" r="50"
+          fill="none"
+          stroke="rgba(147, 197, 253, 0.6)"
+          strokeWidth="1"
+        />
+      ))}
+
+      {/* Cloud silhouette + brain inside */}
+      <g
+        className="nc-cloud"
+        filter="url(#nc-shadow)"
+        style={{ transformBox: 'fill-box', transformOrigin: 'center' }}
+      >
+        {/* Outer cloud shape */}
+        <path
+          d="
+            M 165,155
+            Q 138,155 132,138
+            Q 120,125 138,110
+            Q 134,85 165,80
+            Q 175,58 205,60
+            Q 220,40 250,50
+            Q 275,40 295,60
+            Q 325,58 335,85
+            Q 358,90 350,118
+            Q 358,138 332,148
+            Q 325,158 305,155
+            Z
+          "
+          fill="url(#nc-cloud)"
+          stroke="rgba(147, 197, 253, 0.4)"
+          strokeWidth="1.5"
+        />
+        {/* Light highlight at the top */}
+        <path
+          d="
+            M 175,85
+            Q 200,60 245,55
+            Q 285,55 320,80
+            L 320,90
+            Q 280,68 245,68
+            Q 205,68 175,95 Z
+          "
+          fill="url(#nc-highlight)"
+        />
+
+        {/* Synapse lines (drawn first, behind nodes) */}
+        <g className="nc-synapses">
+          {NEURAL_LINES.map(([a, b], idx) => {
+            const A = NEURAL_NODES[a];
+            const B = NEURAL_NODES[b];
+            return (
+              <line
+                key={idx}
+                className="nc-synapse"
+                x1={A.x} y1={A.y} x2={B.x} y2={B.y}
+                stroke="rgba(255,255,255,0.4)"
+                strokeWidth="0.7"
+              />
+            );
+          })}
+        </g>
+
+        {/* Neural nodes */}
+        <g className="nc-nodes">
+          {NEURAL_NODES.map((n, idx) => (
+            <g key={idx}>
+              <circle
+                className="nc-node-glow"
+                cx={n.x} cy={n.y} r={n.r * 2.5}
+                fill="rgba(147, 197, 253, 0.55)"
+              />
+              <circle
+                className="nc-node"
+                cx={n.x} cy={n.y} r={n.r}
+                fill="#ffffff"
+                stroke="rgba(15,23,42,0.4)"
+                strokeWidth="0.5"
+              />
+            </g>
+          ))}
+        </g>
+      </g>
+
+      {/* Label below cloud */}
+      <text
+        x="240" y="200"
+        textAnchor="middle"
+        fontFamily="'JetBrains Mono', monospace"
+        fontSize="9"
+        fill="#94a3b8"
+        letterSpacing="3"
+      >
+        AI · CLOUD · PLATFORM
+      </text>
+    </svg>
+  );
 }
+
+/* ────────────────────────────────────────────────────────────────────────
+   Console with typewriter
+   ──────────────────────────────────────────────────────────────────────── */
+
+function useTypewriter() {
+  const [index,     setIndex]     = useState(0);
+  const [displayed, setDisplayed] = useState('');
+  const [phase,     setPhase]     = useState<'typing' | 'paused' | 'erasing'>('typing');
+
+  useEffect(() => {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // With reduced motion, just cycle the message every few seconds with no typing.
+    if (reduce) {
+      setDisplayed(MESSAGES[index].text);
+      const t = setTimeout(() => setIndex((i) => (i + 1) % MESSAGES.length), 4000);
+      return () => clearTimeout(t);
+    }
+
+    const msg = MESSAGES[index].text;
+    let timer: ReturnType<typeof setTimeout>;
+
+    if (phase === 'typing') {
+      if (displayed.length < msg.length) {
+        timer = setTimeout(() => {
+          setDisplayed(msg.slice(0, displayed.length + 1));
+        }, TYPE_SPEED_MS);
+      } else {
+        timer = setTimeout(() => setPhase('paused'), PAUSE_AFTER_TYPE);
+      }
+    } else if (phase === 'paused') {
+      timer = setTimeout(() => setPhase('erasing'), 0);
+    } else {
+      // erasing
+      if (displayed.length > 0) {
+        timer = setTimeout(() => setDisplayed(displayed.slice(0, -1)), TYPE_SPEED_MS / 2);
+      } else {
+        timer = setTimeout(() => {
+          setIndex((i) => (i + 1) % MESSAGES.length);
+          setPhase('typing');
+        }, PAUSE_BETWEEN);
+      }
+    }
+
+    return () => clearTimeout(timer);
+  }, [displayed, phase, index]);
+
+  return { message: MESSAGES[index], displayed };
+}
+
+function Console() {
+  const { message, displayed } = useTypewriter();
+
+  return (
+    <div className="absolute inset-x-0 top-[44%]">
+      <div className="mx-auto w-[88%] max-w-[420px]">
+        <div className="glass-card relative overflow-hidden rounded-xl">
+          {/* Window header */}
+          <div className="flex items-center gap-1.5 border-b border-slate-700/40 px-3 py-1.5">
+            <span className="h-2 w-2 rounded-full bg-rose-500/60" />
+            <span className="h-2 w-2 rounded-full bg-amber-500/60" />
+            <span className="h-2 w-2 rounded-full bg-emerald-500/60" />
+            <span className="ml-2 font-mono text-[9px] text-slate-500">
+              ai-cloud · live
+            </span>
+            <span className="ml-auto inline-flex items-center gap-1 font-mono text-[9px] text-emerald-300">
+              <span className="relative flex h-1.5 w-1.5">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
+              </span>
+              connected
+            </span>
+          </div>
+
+          {/* Terminal body */}
+          <div className="px-4 py-3 font-mono text-[12px] leading-snug">
+            <div className="flex items-baseline gap-2">
+              <span
+                className="text-[15px] font-bold leading-none"
+                style={{ color: message.color }}
+              >
+                {message.prefix}
+              </span>
+              <span className="flex-1 truncate text-slate-200">
+                {displayed}
+                <span className="ml-0.5 inline-block h-3.5 w-1.5 translate-y-0.5 bg-blue-400 align-middle animate-blink-soft" />
+              </span>
+              <span
+                className="flex-shrink-0 rounded border px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wider"
+                style={{
+                  borderColor: `${message.color}55`,
+                  color: message.color,
+                  backgroundColor: `${message.color}11`,
+                }}
+              >
+                {message.tag}
+              </span>
+            </div>
+
+            {/* Idle line below — subtle */}
+            <div className="mt-1 flex items-center gap-2 opacity-50">
+              <span className="text-slate-500">›</span>
+              <span className="text-slate-500 text-[10px]">
+                tail -f /var/log/cloud.log
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ────────────────────────────────────────────────────────────────────────
+   Main component
+   ──────────────────────────────────────────────────────────────────────── */
 
 export default function CloudVisual() {
   const wrapperRef = useRef<HTMLDivElement>(null);
-  const [hovered, setHovered] = useState<string | null>(null);
 
-  // ─── Anime.js orchestration ────────────────────────────────────────────
   useEffect(() => {
     if (typeof window === 'undefined') return;
-
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (reduce) return;
 
-    // Each call returns an Animation; we keep refs to pause them on unmount.
     const animations: ReturnType<typeof animate>[] = [];
 
-    // 1. Cloud "breathing" — gentle scale around its centre.
-    //    The element has `transform-box: fill-box; transform-origin: center`
-    //    set inline so the scale is around the cloud's own centre regardless
-    //    of where in the viewBox it sits.
-    animations.push(animate('.cl-cloud-anim', {
+    // 1. Cloud breathing — gentle scale around its centre.
+    animations.push(animate('.nc-cloud', {
       scale:    [1, 1.025, 1],
       duration: 4500,
       ease:     'inOutSine',
       loop:     true,
     } as AnimationParams));
 
-    // 2. Halo intensity pulse (separate from the cloud so the glow can
-    //    breathe at a different rhythm than the silhouette).
-    animations.push(animate('.cl-halo', {
-      opacity:  [0.35, 0.65],
-      duration: 2800,
-      ease:     'inOutSine',
-      loop:     true,
+    // 2. Halo intensity pulse.
+    animations.push(animate('.nc-halo', {
+      opacity:   [0.35, 0.7],
+      duration:  2800,
+      ease:      'inOutSine',
+      loop:      true,
       alternate: true,
     } as AnimationParams));
 
-    // 3. Three radar rings emanating from the cloud, staggered so one is
-    //    always near the centre and another fading out near the edges.
-    animations.push(animate('.cl-radar', {
-      r:        [55, 165],
+    // 3. Radar rings — staggered emanation from the cloud centre.
+    animations.push(animate('.nc-radar', {
+      r:        [50, 160],
       opacity:  [0.55, 0],
       duration: 3600,
       ease:     'outQuad',
@@ -181,55 +371,43 @@ export default function CloudVisual() {
       delay:    stagger(1200),
     } as AnimationParams));
 
-    // 4. Service tiles bob up-and-down with staggered phase from the centre.
-    //    We animate the INNER <g class="cl-tile-bob"> so anime.js's CSS
-    //    transform does not collide with the outer <g transform="translate(...)">
-    //    that anchors each tile to its grid position.
-    animations.push(animate('.cl-tile-bob', {
-      translateY: [0, -5, 0],
-      duration:   4500,
+    // 4. Neural nodes — irregular firing with stagger.
+    animations.push(animate('.nc-node', {
+      opacity:  [1, 0.35, 1],
+      duration: 1800,
+      ease:     'inOutSine',
+      loop:     true,
+      delay:    stagger(220, { from: 'random' }),
+    } as AnimationParams));
+
+    // 5. Neural-node glow halos — slower and overlap with node firing.
+    animations.push(animate('.nc-node-glow', {
+      opacity:  [0.35, 0.85, 0.35],
+      scale:    [1, 1.4, 1],
+      duration: 2400,
+      ease:     'inOutSine',
+      loop:     true,
+      delay:    stagger(180, { from: 'random' }),
+    } as AnimationParams));
+
+    // 6. Synapse lines — fade in/out at different rhythms.
+    animations.push(animate('.nc-synapse', {
+      opacity:  [0.15, 0.75, 0.15],
+      duration: 2200,
+      ease:     'inOutSine',
+      loop:     true,
+      delay:    stagger(140, { from: 'random' }),
+    } as AnimationParams));
+
+    // 7. Concept chips floating.
+    animations.push(animate('.cl-chip', {
+      translateY: [0, -4, 0],
+      duration:   4200,
       ease:       'inOutSine',
       loop:       true,
       delay:      stagger(280, { from: 'center' }),
     } as AnimationParams));
 
-    // 5. Data dots travel from the cloud to each tile.
-    SERVICES.forEach((s, i) => {
-      const dotEl = document.getElementById(`cl-dot-${s.id}`);
-      if (!dotEl) return;
-
-      const targetY = s.y - TILE_H / 2 - 4;
-      const cpX     = CLOUD_CX + (s.x - CLOUD_CX) * 0.5;
-      const cpY     = (CLOUD_BASE + targetY) / 2 - 30;
-
-      // Sample the quadratic Bezier at three key points to give the dot a
-      // gentle curved motion. Anime.js will tween between them.
-      const midX = (CLOUD_CX + 2 * cpX + s.x) / 4;        // t=0.5 of quad bezier x
-      const midY = (CLOUD_BASE + 2 * cpY + targetY) / 4;  // t=0.5 of quad bezier y
-
-      animations.push(animate(dotEl, {
-        cx: [
-          { value: CLOUD_CX, duration: 0 },
-          { value: midX,     duration: 800,  ease: 'inOutQuad' },
-          { value: s.x,      duration: 800,  ease: 'inOutQuad' },
-        ],
-        cy: [
-          { value: CLOUD_BASE, duration: 0 },
-          { value: midY,       duration: 800, ease: 'inOutQuad' },
-          { value: targetY,    duration: 800, ease: 'inOutQuad' },
-        ],
-        opacity: [
-          { value: 0, duration: 0 },
-          { value: 1, duration: 250 },
-          { value: 1, duration: 1100 },
-          { value: 0, duration: 250 },
-        ],
-        loop:  true,
-        delay: i * 280 + 400,
-      } as AnimationParams));
-    });
-
-    // ─── Cleanup: pause every animation on unmount ──────────────────────
     return () => {
       animations.forEach((a) => {
         try { a.pause(); } catch { /* noop */ }
@@ -240,272 +418,35 @@ export default function CloudVisual() {
   return (
     <div
       ref={wrapperRef}
-      className="relative mx-auto aspect-square w-full max-w-[480px]"
-      aria-label="Visualización de servicios cloud Azure"
+      className="relative mx-auto w-full max-w-[480px] aspect-square"
+      aria-label="Visualización AI Cloud con consola en vivo"
     >
-      <svg
-        viewBox={`0 0 ${VB} ${VB}`}
-        className="h-full w-full"
-        role="img"
-        aria-labelledby="cloud-visual-title"
-      >
-        <title id="cloud-visual-title">Plataforma cloud Azure con servicios conectados</title>
+      {/* Layer 1 — Neural cloud */}
+      <NeuralCloud />
 
-        <defs>
-          <radialGradient id="haloGrad" cx="0.5" cy="0.5" r="0.5">
-            <stop offset="0%"   stopColor="rgba(96, 165, 250, 0.55)"/>
-            <stop offset="60%"  stopColor="rgba(96, 165, 250, 0.10)"/>
-            <stop offset="100%" stopColor="rgba(96, 165, 250, 0)"/>
-          </radialGradient>
+      {/* Layer 2 — Console */}
+      <Console />
 
-          <linearGradient id="cloudGrad" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%"   stopColor="#60a5fa"/>
-            <stop offset="50%"  stopColor="#6366f1"/>
-            <stop offset="100%" stopColor="#a855f7"/>
-          </linearGradient>
-
-          <linearGradient id="cloudHighlight" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%"   stopColor="rgba(255,255,255,0.4)"/>
-            <stop offset="100%" stopColor="rgba(255,255,255,0)"/>
-          </linearGradient>
-
-          <filter id="cloudShadow" x="-30%" y="-30%" width="160%" height="160%">
-            <feGaussianBlur in="SourceAlpha" stdDeviation="6"/>
-            <feOffset dy="4" result="offsetblur"/>
-            <feFlood floodColor="#3b82f6" floodOpacity="0.35"/>
-            <feComposite in2="offsetblur" operator="in"/>
-            <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
-          </filter>
-
-          {/* Per-service gradient definitions for tile icon backgrounds */}
-          {SERVICES.map((s) => (
-            <radialGradient key={`g-${s.id}`} id={`gradDot-${s.id}`} cx="0.5" cy="0.5" r="0.5">
-              <stop offset="0%"   stopColor="#ffffff"/>
-              <stop offset="60%"  stopColor="#bfdbfe"/>
-              <stop offset="100%" stopColor="rgba(96,165,250,0)"/>
-            </radialGradient>
-          ))}
-        </defs>
-
-        {/* ─── 1. Halo behind the cloud ─────────────────────────────── */}
-        <circle
-          className="cl-halo"
-          cx={CLOUD_CX} cy={CLOUD_CY}
-          r={130}
-          fill="url(#haloGrad)"
-        />
-
-        {/* ─── 2. Radar rings ───────────────────────────────────────── */}
-        {[0, 1, 2].map((i) => (
-          <circle
-            key={`radar-${i}`}
-            className="cl-radar"
-            cx={CLOUD_CX} cy={CLOUD_CY}
-            r={55}
-            fill="none"
-            stroke="rgba(147, 197, 253, 0.6)"
-            strokeWidth="1"
-          />
-        ))}
-
-        {/* ─── 3. Cloud silhouette (made of overlapping shapes for a soft outline) ───
-            Outer <g> holds nothing transformable — anime.js animates the inner
-            <g class="cl-cloud-anim"> so the scale doesn't fight any SVG attr. */}
-        <g className="cl-cloud-anim" filter="url(#cloudShadow)" style={{ transformBox: 'fill-box', transformOrigin: 'center' }}>
-          {/* Bottom flat ellipse anchors the cloud silhouette */}
-          <path
-            d="
-              M 165 175
-              Q 138 175 132 158
-              Q 120 145 138 130
-              Q 134 105 165 100
-              Q 175 78 205 80
-              Q 220 60 250 70
-              Q 275 60 295 80
-              Q 325 78 335 105
-              Q 358 110 350 138
-              Q 358 158 332 168
-              Q 325 178 305 175
-              Z
-            "
-            fill="url(#cloudGrad)"
-            stroke="rgba(147, 197, 253, 0.4)"
-            strokeWidth="1.5"
-          />
-          {/* Subtle highlight at the top */}
-          <path
-            d="
-              M 175 105
-              Q 200 80 245 75
-              Q 285 75 320 100
-              L 320 110
-              Q 280 88 245 88
-              Q 205 88 175 115 Z
-            "
-            fill="url(#cloudHighlight)"
-          />
-
-          {/* Tiny inline service hints inside the cloud */}
-          <g opacity="0.85">
-            <circle cx="200" cy="135" r="10" fill="rgba(15,23,42,0.6)" stroke="rgba(255,255,255,0.45)"/>
-            <circle cx="240" cy="120" r="11" fill="rgba(15,23,42,0.6)" stroke="rgba(255,255,255,0.45)"/>
-            <circle cx="280" cy="135" r="10" fill="rgba(15,23,42,0.6)" stroke="rgba(255,255,255,0.45)"/>
-            <circle cx="220" cy="155" r="9"  fill="rgba(15,23,42,0.6)" stroke="rgba(255,255,255,0.45)"/>
-            <circle cx="260" cy="155" r="9"  fill="rgba(15,23,42,0.6)" stroke="rgba(255,255,255,0.45)"/>
-          </g>
-        </g>
-
-        {/* Cloud label */}
-        <text
-          x={CLOUD_CX}
-          y={CLOUD_CY + 75}
-          textAnchor="middle"
-          fontFamily="'JetBrains Mono', monospace"
-          fontSize="10"
-          fill="#94a3b8"
-          letterSpacing="3"
-        >
-          AZURE · CLOUD PLATFORM
-        </text>
-
-        {/* ─── 4. Connectors from cloud to tiles ────────────────────── */}
-        {SERVICES.map((s) => {
-          const isActive = hovered === s.id;
-          return (
-            <path
-              key={`conn-${s.id}`}
-              d={connectorPath(s.x, s.y)}
-              stroke={isActive ? 'rgba(255,255,255,0.7)' : 'rgba(96,165,250,0.25)'}
-              strokeWidth={isActive ? 1.6 : 1}
-              strokeDasharray={isActive ? '0' : '4 6'}
-              fill="none"
-              style={{ transition: 'stroke 0.25s ease, stroke-width 0.25s ease' }}
-            />
-          );
-        })}
-
-        {/* ─── 5. Data dots travelling along the connectors ─────────── */}
-        {SERVICES.map((s) => (
-          <circle
-            key={`dot-${s.id}`}
-            id={`cl-dot-${s.id}`}
-            cx={CLOUD_CX}
-            cy={CLOUD_BASE}
-            r={4}
-            fill={`url(#gradDot-${s.id})`}
-            opacity={0}
-          />
-        ))}
-
-        {/* ─── 6. Service tiles ──────────────────────────────────────
-            Structure:
-              <g transform="translate(x y)">      ← anchors the tile
-                <g class="cl-tile-bob">           ← anime.js animates this
-                  …visible tile content…
-                </g>
-              </g>
-            Splitting the positioning from the animated layer is what
-            prevents anime.js's CSS transform from cancelling the SVG
-            `transform="translate(...)"` attribute. */}
-        {SERVICES.map((s) => {
-          const isActive = hovered === s.id;
-          return (
-            <g
-              key={s.id}
-              transform={`translate(${s.x - TILE_W / 2} ${s.y - TILE_H / 2})`}
+      {/* Layer 3 — Concept chips */}
+      <div className="absolute inset-x-0 bottom-2">
+        <div className="mx-auto flex w-[88%] max-w-[420px] flex-wrap items-center justify-center gap-2">
+          {CONCEPT_TAGS.map((tag, i) => (
+            <span
+              key={tag}
+              className="cl-chip inline-flex items-center gap-1 rounded-full border border-blue-500/30 bg-blue-500/10 px-2.5 py-0.5 font-mono text-[10px] font-medium text-blue-200 backdrop-blur-sm"
+              style={{ animationDelay: `${i * 0.1}s` }}
             >
-              <g
-                className="cl-tile-bob"
-                onMouseEnter={() => setHovered(s.id)}
-                onMouseLeave={() => setHovered(null)}
-                onFocus={() => setHovered(s.id)}
-                onBlur={() => setHovered(null)}
-                tabIndex={0}
-                role="button"
-                aria-label={`${s.label}: ${s.short}`}
-                style={{ cursor: 'pointer', outline: 'none' }}
-              >
-                {/* Glow when active */}
-                {isActive && (
-                  <rect
-                    x={-4} y={-4}
-                    width={TILE_W + 8} height={TILE_H + 8}
-                    rx={14}
-                    fill={s.glow}
-                    opacity={0.35}
-                    filter="url(#cloudShadow)"
-                  />
-                )}
-
-                {/* Tile body */}
-                <rect
-                  width={TILE_W} height={TILE_H}
-                  rx={12}
-                  fill="rgba(15, 23, 42, 0.85)"
-                  stroke={isActive ? 'rgba(96, 165, 250, 0.9)' : 'rgba(96, 165, 250, 0.3)'}
-                  strokeWidth={isActive ? 1.5 : 1}
-                  style={{ transition: 'stroke 0.25s ease, stroke-width 0.25s ease' }}
-                />
-
-                {/* Icon disk */}
-                <foreignObject x={8} y={(TILE_H - 32) / 2} width={32} height={32}>
-                  <div
-                    className={`flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br ${s.accent} text-white`}
-                    style={{ boxShadow: `0 6px 14px -4px ${s.glow}` }}
-                  >
-                    <div className="h-4 w-4">{s.icon}</div>
-                  </div>
-                </foreignObject>
-
-                {/* Labels */}
-                <text
-                  x={48}
-                  y={28}
-                  fontFamily="'Inter', system-ui, sans-serif"
-                  fontSize="12"
-                  fontWeight="600"
-                  fill="#f1f5f9"
-                >
-                  {s.label}
-                </text>
-                <text
-                  x={48}
-                  y={44}
-                  fontFamily="'JetBrains Mono', monospace"
-                  fontSize="9"
-                  fill="#94a3b8"
-                >
-                  {s.short}
-                </text>
-              </g>
-            </g>
-          );
-        })}
-      </svg>
-
-      {/* Hover hint tooltip — positioned near the hovered tile in % of the
-          square wrapper so it tracks the SVG coordinate system. */}
-      {hovered && (() => {
-        const s = SERVICES.find((x) => x.id === hovered)!;
-        const leftPct = (s.x / VB) * 100;
-        // Place tooltip just ABOVE the tile (above the top edge by ~14% of VB)
-        const topPct  = ((s.y - TILE_H / 2 - 70) / VB) * 100;
-        return (
-          <div
-            className="pointer-events-none absolute z-10 animate-fade-in"
-            style={{
-              left: `${leftPct}%`,
-              top:  `${Math.max(0, topPct)}%`,
-              transform: 'translateX(-50%)',
-            }}
-          >
-            <div className="glass-card rounded-lg px-3 py-1.5 text-center w-max max-w-[200px]">
-              <p className="text-xs font-semibold text-white whitespace-nowrap">{s.label}</p>
-              <p className="mt-0.5 text-[10px] leading-snug text-slate-400">{s.hint}</p>
-            </div>
-          </div>
-        );
-      })()}
+              <span
+                className="h-1 w-1 rounded-full"
+                style={{
+                  backgroundColor: ['#60a5fa', '#a78bfa', '#22d3ee', '#34d399', '#fbbf24', '#f472b6'][i % 6],
+                }}
+              />
+              {tag}
+            </span>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
