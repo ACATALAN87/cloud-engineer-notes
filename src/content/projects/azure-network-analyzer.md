@@ -19,6 +19,7 @@ highlights:
   - "Entorno de prueba reproducible aprovisionado con Terraform"
   - "Solo lectura — cero escrituras a Azure, coste operativo nulo"
 cover: "images/projects/azure-network-analyzer/app-02-graph-problems.png"
+repoUrl: "https://github.com/ACATALAN87/azure-network-analyzer"
 ---
 
 Hay un problema recurrente en entornos Azure de mediana complejidad: nadie tiene
