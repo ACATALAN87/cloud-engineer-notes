@@ -139,13 +139,18 @@ const showToc = toc.length >= 3;
       </div>
     </section>
 
-    {/* Cover image */}
+    {/* Cover image — accepts either a path relative to /public (e.g.
+        "images/foo.png") or a fully-qualified URL ("https://..."). */}
     {project.data.cover && (
       <section class="py-12 sm:py-16" style="background-color: #050914;">
         <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
           <div class="reveal project-cover">
             <img
-              src={`${base}${project.data.cover.replace(/^\/+/, '')}`}
+              src={
+                /^https?:\/\//.test(project.data.cover)
+                  ? project.data.cover
+                  : `${base}${project.data.cover.replace(/^\/+/, '')}`
+              }
               alt={project.data.title}
               loading="eager"
             />
