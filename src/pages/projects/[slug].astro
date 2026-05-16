@@ -139,25 +139,43 @@ const showToc = toc.length >= 3;
       </div>
     </section>
 
-    {/* Cover image — accepts either a path relative to /public (e.g.
-        "images/foo.png") or a fully-qualified URL ("https://..."). */}
-    {project.data.cover && (
-      <section class="py-12 sm:py-16" style="background-color: #050914;">
-        <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-          <div class="reveal project-cover">
-            <img
-              src={
-                /^https?:\/\//.test(project.data.cover)
-                  ? project.data.cover
-                  : `${base}${project.data.cover.replace(/^\/+/, '')}`
-              }
-              alt={project.data.title}
-              loading="eager"
-            />
+    {/* Cover — accepts either an image (png/jpg/gif/webp/svg) or a video
+        (mp4/webm). For videos we render an autoplay+loop+muted+playsinline
+        element so it behaves visually like an animated image but with much
+        smaller payload. Source can be a /public path or an absolute URL. */}
+    {project.data.cover && (() => {
+      const isAbsolute = /^https?:\/\//.test(project.data.cover);
+      const coverSrc   = isAbsolute
+        ? project.data.cover
+        : `${base}${project.data.cover.replace(/^\/+/, '')}`;
+      const isVideo    = /\.(mp4|webm|mov)$/i.test(project.data.cover);
+
+      return (
+        <section class="py-12 sm:py-16" style="background-color: #050914;">
+          <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+            <div class="reveal project-cover">
+              {isVideo ? (
+                <video
+                  src={coverSrc}
+                  autoplay
+                  loop
+                  muted
+                  playsinline
+                  preload="auto"
+                  aria-label={project.data.title}
+                />
+              ) : (
+                <img
+                  src={coverSrc}
+                  alt={project.data.title}
+                  loading="eager"
+                />
+              )}
+            </div>
           </div>
-        </div>
-      </section>
-    )}
+        </section>
+      );
+    })()}
 
     {/*
       ─────────────────────────────────────────────────────────────────────
@@ -282,7 +300,8 @@ const showToc = toc.length >= 3;
             mask-composite: exclude;
     pointer-events: none;
   }
-  .project-cover img {
+  .project-cover img,
+  .project-cover video {
     display: block;
     width: 100%;
     height: auto;

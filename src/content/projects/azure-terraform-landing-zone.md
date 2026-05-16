@@ -5,7 +5,7 @@ date: 2026-03-01
 status: in-progress
 category: infrastructure
 featured: true
-cover: images/projects/azure-lz/ESLZ.gif
+cover: images/projects/azure-lz/ESLZ.mp4
 stack:
   - Azure
   - Terraform
