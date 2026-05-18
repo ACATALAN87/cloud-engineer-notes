@@ -101,9 +101,10 @@ export default function Hero({ base = '/' }: HeroProps) {
             className="mt-4 text-base leading-7 text-slate-400 max-w-2xl animate-fade-in-up"
             style={{ animationDelay: '0.3s' }}
           >
-            Más de 10 años de experiencia en sistemas críticos. Especializado en
-            infraestructura Azure, platform engineering, networking, CI/CD e
-            Infrastructure as Code. Evolucionando hacia arquitectura cloud.
+            Más de 15 años de experiencia en sistemas críticos empresariales,
+            de la administración de planificadores Control-M y TWS al diseño
+            de infraestructura Azure, platform engineering, networking, CI/CD
+            e Infrastructure as Code. Evolucionando hacia arquitectura cloud.
           </p>
 
           {/* CTAs */}
@@ -170,7 +171,7 @@ export default function Hero({ base = '/' }: HeroProps) {
             style={{ animationDelay: '0.6s' }}
           >
             <div className="flex items-baseline gap-2">
-              <span className="text-2xl font-bold text-gradient-static">10+</span>
+              <span className="text-2xl font-bold text-gradient-static">15+</span>
               <span className="text-xs text-slate-500 uppercase tracking-wider">Años</span>
             </div>
             <div className="flex items-baseline gap-2">

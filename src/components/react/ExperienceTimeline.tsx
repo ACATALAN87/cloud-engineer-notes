@@ -57,6 +57,21 @@ const experience: Role[] = [
     title:   'Control-M Administrator',
     period:  'Abr 2014 – Jul 2015',
   },
+  {
+    company: 'Accenture',
+    title:   'Control-M Administrator',
+    context: 'Sector telecomunicaciones · entorno empresarial',
+    period:  'Ene 2010 – Feb 2014',
+    bullets: [
+      'Administración y mantenimiento de la infraestructura Control-M en operaciones empresariales de gran escala del sector telecomunicaciones.',
+      'Instalación y mantenimiento de agentes Control-M en entornos heterogéneos: HP-UX, Solaris, AIX, Linux y Windows.',
+      'Diseño y gestión de workflows de scheduling, garantizando la ejecución fiable de procesos de negocio críticos.',
+      'Monitorización del rendimiento e identificación proactiva de cuellos de botella, fallos de ejecución y problemas de recursos.',
+      'Mantenimiento y parcheo de la infraestructura Control-M, incluyendo gestión de filesystems y administración de la base de datos Oracle 10g subyacente.',
+      'Generación de informes operativos sobre planificación de workloads para análisis de rendimiento y visibilidad del sistema.',
+      'Soporte 24x7 en producción y gestión de incidencias mediante herramientas empresariales de ticketing, garantizando resolución rápida y mínimo impacto.',
+    ],
+  },
 ];
 
 export default function ExperienceTimeline() {
@@ -69,8 +84,8 @@ export default function ExperienceTimeline() {
             Trayectoria <span className="text-gradient-static">profesional</span>
           </h2>
           <p className="mt-4 text-slate-400 leading-relaxed">
-            Más de 10 años en entornos empresariales. De workload automation a
-            ingeniería de infraestructura cloud.
+            Más de 15 años en entornos empresariales. De Control-M y workload
+            automation a ingeniería de infraestructura cloud.
           </p>
         </div>
 

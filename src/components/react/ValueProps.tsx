@@ -39,7 +39,7 @@ const props: Prop[] = [
   {
     number: '03',
     title:  'Fiabilidad y operación',
-    body:   'Experiencia real en sistemas críticos 24x7, integración compleja de plataformas, resolución de incidencias y disciplina operativa construida durante más de 10 años en entornos empresariales.',
+    body:   'Experiencia real en sistemas críticos 24x7, integración compleja de plataformas, resolución de incidencias y disciplina operativa construida durante más de 15 años en entornos empresariales.',
     accent: 'from-cyan-400 to-emerald-400',
     glow:   'rgba(34, 211, 238, 0.25)',
     icon:   (
